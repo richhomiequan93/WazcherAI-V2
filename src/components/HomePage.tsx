@@ -393,9 +393,9 @@ export default function HomePage() {
     const words = el.querySelectorAll<HTMLElement>('.rev-word');
     const st = ScrollTrigger.create({
       trigger: el,
-      start: 'top 62%',
-      end: 'bottom 75%',
-      scrub: 0.7,
+      start: 'top 75%',
+      end: 'bottom 55%',
+      scrub: 1.8,
       onUpdate(self) {
         const p = self.progress;
         words.forEach((w, i) => {
@@ -854,7 +854,7 @@ export default function HomePage() {
 
       {/* ── PLATFORM TABS ── */}
       <section className="section section-bg2" id="platform">
-        <div className="container" style={{textAlign:'center'}}>
+        <div className="container">
           <div className="s-tag anim">{s.plat_tag}</div>
           <h2 className="s-title anim d1">{s.plat_title}</h2>
           <p className="s-sub anim d2">{s.plat_sub}</p>

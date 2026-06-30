@@ -619,7 +619,7 @@ body {
 .s-sub {
   font-size: 16px;
   line-height: 1.72;
-  color: var(--text2);
+  color: #fff;
   max-width: 540px;
   margin-bottom: 64px;
 }
@@ -839,7 +839,7 @@ body {
   padding:6px;
   margin-bottom:36px;
   overflow-x:auto; scrollbar-width:none;
-  width:fit-content; margin-left:auto; margin-right:auto;
+  width:fit-content; margin-left:0; margin-right:auto;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.35);
 }
 .ptabs-bar::-webkit-scrollbar { display:none; }
@@ -859,8 +859,8 @@ body {
 
 /* Per-tab description */
 .plat-tab-desc {
-  text-align:center; font-size:14px; color:var(--text2);
-  line-height:1.65; max-width:560px; margin:0 auto 28px;
+  text-align:left; font-size:14px; color:#fff;
+  line-height:1.65; max-width:560px; margin:0 0 28px;
   animation:plat-fade-up 0.35s ease both;
 }
 
