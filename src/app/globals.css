@@ -22,12 +22,21 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: url('/hero-bg.jpg') var(--bg) fixed 68% 62% / cover no-repeat;
+  background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+/* Fixed hero background — pseudo-element avoids iOS background-attachment:fixed bug */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: url('/hero-bg.jpg') var(--bg) 68% 62% / cover no-repeat;
+  will-change: transform;
 }
 
 ::-webkit-scrollbar { width: 4px; }
