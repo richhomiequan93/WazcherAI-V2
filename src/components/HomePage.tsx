@@ -693,6 +693,8 @@ export default function HomePage() {
 
   return (
     <>
+      {/* Fixed background — real DOM element for reliable iOS backdrop-filter support */}
+      <div className="bg-fixed" aria-hidden="true" />
       {/* ── NAVBAR ── */}
       <nav className={`navbar${scrolled ? ' scrolled' : ''}${menuOpen ? ' menu-open' : ''}`}>
         <div className="container navbar-inner">
