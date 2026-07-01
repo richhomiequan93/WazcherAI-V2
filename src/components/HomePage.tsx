@@ -1023,7 +1023,7 @@ export default function HomePage() {
                           {/* Control polygon */}
                           <path d={poly(ctrlPts)} fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.22)" strokeWidth="1.2" strokeDasharray="3 2"/>
                           {/* Variant A polygon */}
-                          <path d={poly(variPts)} fill="rgba(107,185,63,0.16)" stroke="rgba(107,185,63,0.85)" strokeWidth="1.8"/>
+                          <path d={poly(variPts)} fill="rgba(56,215,24,0.16)" stroke="rgba(56,215,24,0.85)" strokeWidth="1.8"/>
                           {/* Variant dots */}
                           {variPts.map((p,i)=>(
                             <circle key={i} cx={p.x.toFixed(1)} cy={p.y.toFixed(1)} r="3.5" fill="var(--primary)" stroke="rgba(0,0,0,0.35)" strokeWidth="1.2"/>
@@ -1183,8 +1183,8 @@ export default function HomePage() {
                     <svg viewBox={`0 0 ${W} ${H+22}`} className="plat-geo-svg" style={{width:'100%',height:'auto',overflow:'visible'}}>
                       <defs>
                         <linearGradient id="geoGrad2" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#6BB93F" stopOpacity="0.22"/>
-                          <stop offset="100%" stopColor="#6BB93F" stopOpacity="0"/>
+                          <stop offset="0%" stopColor="#38D718" stopOpacity="0.22"/>
+                          <stop offset="100%" stopColor="#38D718" stopOpacity="0"/>
                         </linearGradient>
                       </defs>
                       {/* Y-axis grid + labels */}
@@ -1197,10 +1197,10 @@ export default function HomePage() {
                       {/* Area fill */}
                       <path d={areaPath} fill="url(#geoGrad2)"/>
                       {/* Line */}
-                      <path d={linePath} fill="none" stroke="#6BB93F" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" className="plat-geo-line"/>
+                      <path d={linePath} fill="none" stroke="#38D718" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" className="plat-geo-line"/>
                       {/* Regular dots */}
                       {pts.map((p,i)=>!anomalies.find(a=>a.i===i) && i<pts.length-1 && (
-                        <circle key={i} cx={p.x.toFixed(1)} cy={p.y.toFixed(1)} r="2.8" fill="#6BB93F" stroke="rgba(0,0,0,0.4)" strokeWidth="1"/>
+                        <circle key={i} cx={p.x.toFixed(1)} cy={p.y.toFixed(1)} r="2.8" fill="#38D718" stroke="rgba(0,0,0,0.4)" strokeWidth="1"/>
                       ))}
                       {/* Anomaly dots + labels */}
                       {anomalies.map(a=>(
@@ -1210,7 +1210,7 @@ export default function HomePage() {
                         </g>
                       ))}
                       {/* Last point badge */}
-                      <rect x={(pts[pts.length-1].x-12).toFixed(1)} y={(pts[pts.length-1].y-10).toFixed(1)} width="24" height="14" rx="7" fill="#6BB93F"/>
+                      <rect x={(pts[pts.length-1].x-12).toFixed(1)} y={(pts[pts.length-1].y-10).toFixed(1)} width="24" height="14" rx="7" fill="#38D718"/>
                       <text x={pts[pts.length-1].x.toFixed(1)} y={(pts[pts.length-1].y+1.5).toFixed(1)} textAnchor="middle" fontSize="8.5" fontWeight="800" fill="#000" fontFamily="var(--font-body)">76</text>
                       {/* X-axis labels */}
                       {geoData.map((_,i)=>(
