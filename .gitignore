@@ -40,6 +40,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# citora connector — contains API credentials, restored from CITORA_MJS_B64 env var at build
+citora-sync.mjs
+citora-sync*.mjs
+
 # screenshots & temp dev files
 /screenshots/
 screenshot.mjs

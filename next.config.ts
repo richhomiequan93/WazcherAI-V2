@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   turbopack: {},
+  outputFileTracingIncludes: {
+    '/llms.txt': ['./citora-sync.mjs'],
+  },
   webpack(config, { isServer }) {
     if (isServer) {
       // Keep citora-sync.mjs unbundled so import.meta.url stays correct for its integrity check
