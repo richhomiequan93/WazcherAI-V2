@@ -5,7 +5,7 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { CITORA_URL, EMAIL, LINKEDIN_URL, LOCALES, X_URL, type Dict, type Locale } from './i18n';
 import { useLocale } from './useLocale';
-import { AdStrategyCard, ENGINES, EngineLogo, OpportunityMap } from './Visuals';
+import { AdStrategyCard, ENGINES, EngineLogo, Mark, OpportunityMap } from './Visuals';
 
 // The scanning eye is canvas only: it loads in its own client chunk after hydration and never
 // runs during SSR. The .hero-eye box below reserves its space, so the late mount causes no shift.
@@ -219,13 +219,16 @@ function Shift({ t }: { t: Dict['shift'] }) {
           <h2 id="shift-title" className="h2">{t.title}</h2>
         </header>
         <div className="stats rv">
-          <p className="mono-label sub-label">{t.statsLabel}</p>
+          <p className="sub-label">{t.statsLabel}</p>
           <dl className="stat-row">
             {t.stats.map((st) => (
-              <div key={st.v} className="stat">
+              <div key={st.n} className="stat">
                 <dt className="stat-d">{st.d}</dt>
-                <dd className="stat-v">{st.v}</dd>
-                <dd className="src">{st.s}</dd>
+                <dd className="stat-v">
+                  {st.n}
+                  <span className="u">{st.u}</span>
+                </dd>
+                <dd className="stat-src">{st.s}</dd>
               </div>
             ))}
           </dl>
@@ -246,7 +249,7 @@ function Shift({ t }: { t: Dict['shift'] }) {
   );
 }
 
-function CitoraSection({ t }: { t: Dict['citora'] }) {
+function CitoraSection({ t, note }: { t: Dict['citora']; note: string }) {
   return (
     <section className="sec" id="citora" aria-labelledby="citora-title">
       <div className="wrap">
@@ -256,37 +259,36 @@ function CitoraSection({ t }: { t: Dict['citora'] }) {
           <p className="intro">{t.intro}</p>
         </header>
 
-        <div className="split">
-          <ol className="pillars">
-            {t.pillars.map((p, i) => (
-              <li key={p.n} className="rv">
-                <span className="idx">{pad(i + 1)}</span>
-                <h3 className="pillar-n">{p.n}</h3>
-                <dl className="ba">
-                  <div>
-                    <dt>{t.beforeLabel}</dt>
-                    <dd>{p.before}</dd>
-                  </div>
-                  <div className="now">
-                    <dt>{t.nowLabel}</dt>
-                    <dd>{p.now}</dd>
-                  </div>
-                </dl>
-                <ul className="keys">
-                  {p.k.map((k) => (
-                    <li key={k}>{k}</li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ol>
-          <div className="aside rv">
-            <OpportunityMap t={t.map} />
-          </div>
+        <ol className="pillars">
+          {t.pillars.map((p, i) => (
+            <li key={p.n} className="rv">
+              <span className="idx">{pad(i + 1)}</span>
+              <h3 className="pillar-n">{p.n}</h3>
+              <dl className="ba">
+                <div className="ba-before">
+                  <dt>{t.beforeLabel}</dt>
+                  <dd>{p.before}</dd>
+                </div>
+                <div className="ba-now">
+                  <dt>{t.nowLabel}</dt>
+                  <dd>{p.now}</dd>
+                </div>
+              </dl>
+              <ul className="keys">
+                {p.k.map((k) => (
+                  <li key={k}>{k}</li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ol>
+
+        <div className="omap-wrap rv">
+          <OpportunityMap t={t.map} note={note} />
         </div>
 
         <div className="loop5 rv">
-          <p className="mono-label sub-label">{t.loopLabel}</p>
+          <p className="sub-label">{t.loopLabel}</p>
           <h3 className="h3">{t.loopTitle}</h3>
           <p className="loop5-note">{t.loopNote}</p>
           <ol className="flow-nodes loop-nodes">
@@ -300,19 +302,22 @@ function CitoraSection({ t }: { t: Dict['citora'] }) {
           </ol>
           <div className="flow-back loop-back" aria-hidden="true">
             <span className="flow-back-line" />
-            <span className="mono-label">{t.loopBack}</span>
-          </div>
-          <div className="research">
-            <span className="stat-v">{t.research.v}</span>
-            <div>
-              <p>{t.research.d}</p>
-              <p className="src">{t.research.s}</p>
-            </div>
+            <span className="flow-back-l">{t.loopBack}</span>
           </div>
         </div>
 
         <div className="modules rv">
-          <p className="mono-label sub-label">{t.modulesLabel}</p>
+          <div className="mod-side">
+            <p className="mod-count">{t.modules.length}</p>
+            <p className="sub-label">{t.modulesLabel}</p>
+            <p className="live">
+              <span>{t.liveLabel}</span>
+              <a href={CITORA_URL} target="_blank" rel="noopener noreferrer" className="inline-link">
+                {t.liveLink}
+                <ArrowOut />
+              </a>
+            </p>
+          </div>
           <dl className="mod-list">
             {t.modules.map(([k, v]) => (
               <div key={k}>
@@ -321,21 +326,13 @@ function CitoraSection({ t }: { t: Dict['citora'] }) {
               </div>
             ))}
           </dl>
-          <p className="live">
-            <span className="sq on" aria-hidden="true" />
-            <span>{t.liveLabel}</span>
-            <a href={CITORA_URL} target="_blank" rel="noopener noreferrer" className="inline-link mono">
-              {t.liveLink}
-              <ArrowOut />
-            </a>
-          </p>
         </div>
       </div>
     </section>
   );
 }
 
-function AdsSection({ t }: { t: Dict['ads'] }) {
+function AdsSection({ t, note }: { t: Dict['ads']; note: string }) {
   return (
     <section className="sec" id="ads" aria-labelledby="ads-title">
       <div className="wrap">
@@ -349,20 +346,28 @@ function AdsSection({ t }: { t: Dict['ads'] }) {
           <p className="intro">{t.intro}</p>
         </header>
 
-        <div className="split">
-          <div>
-            <p className="mono-label sub-label rv">{t.tiersLabel}</p>
-            <dl className="tiers rv">
+        <div className="rv">
+          <AdStrategyCard t={t.card} note={note} />
+        </div>
+
+        <div className="ads-grid">
+          <div className="rv">
+            <p className="sub-label">{t.tiersLabel}</p>
+            <dl className="tiers">
               {t.tiers.map((x) => (
                 <div key={x.n}>
-                  <dt>{x.n}</dt>
+                  <dt>
+                    <Mark id="chatgpt" />
+                    {x.n}
+                  </dt>
                   <dd>{x.d}</dd>
                 </div>
               ))}
             </dl>
-
-            <p className="mono-label sub-label rv">{t.flowLabel}</p>
-            <ol className="steps4 rv">
+          </div>
+          <div className="rv">
+            <p className="sub-label">{t.flowLabel}</p>
+            <ol className="steps4">
               {t.flow.map((s, i) => (
                 <li key={s.n}>
                   <span className="idx">{pad(i + 1)}</span>
@@ -371,13 +376,10 @@ function AdsSection({ t }: { t: Dict['ads'] }) {
                 </li>
               ))}
             </ol>
-            <p className="paid rv">
+            <p className="paid">
               <span className="ticker">$CIT</span>
               <span>{t.paid}</span>
             </p>
-          </div>
-          <div className="aside rv">
-            <AdStrategyCard t={t.card} />
           </div>
         </div>
       </div>
@@ -397,7 +399,7 @@ function TokenSection({ t }: { t: Dict['token'] }) {
 
         <div className="split">
           <div className="rv">
-            <p className="mono-label sub-label">{t.utilLabel}</p>
+            <p className="sub-label">{t.utilLabel}</p>
             <ol className="utils">
               {t.utils.map(([k, v], i) => (
                 <li key={k}>
@@ -409,25 +411,34 @@ function TokenSection({ t }: { t: Dict['token'] }) {
             </ol>
           </div>
           <aside className="aside rv" aria-label={t.statusLabel}>
-            <div className="card status">
-              <div className="card-head">
-                <span className="card-title">{t.statusLabel}</span>
-              </div>
-              <dl className="spec">
-                {t.status.map(([k, v], i) => (
-                  <div key={k}>
-                    <dt>{k}</dt>
-                    <dd className={i === 0 ? 'ticker' : ''}>{v}</dd>
-                  </div>
-                ))}
-              </dl>
-              <p className="status-note">{t.note}</p>
-            </div>
+            <dl className="cit-strip">
+              {t.status.map(([k, v], i) => (
+                <div key={k} className={`cit-${i}`}>
+                  <dt>{k}</dt>
+                  <dd>
+                    {i === 0 ? (
+                      <span className="cit-ticker">
+                        <span className="cit-dollar">$</span>
+                        {v.replace('$', '')}
+                      </span>
+                    ) : i === 1 ? (
+                      <>
+                        <span className="cit-sq" aria-hidden="true" />
+                        {v}
+                      </>
+                    ) : (
+                      v
+                    )}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <p className="status-note">{t.note}</p>
           </aside>
         </div>
 
         <figure className="flow rv">
-          <figcaption className="mono-label sub-label">{t.flowLabel}</figcaption>
+          <figcaption className="sub-label">{t.flowLabel}</figcaption>
           <ol className="flow-nodes">
             {t.flow.map((f, i) => (
               <li key={f}>
@@ -438,13 +449,16 @@ function TokenSection({ t }: { t: Dict['token'] }) {
           </ol>
           <div className="flow-back" aria-hidden="true">
             <span className="flow-back-line" />
-            <span className="mono-label">{t.flowBack}</span>
+            <span className="flow-back-l">{t.flowBack}</span>
           </div>
         </figure>
       </div>
     </section>
   );
 }
+
+/** Index of the phase in progress: earlier phases render as done, later ones as upcoming. */
+const CURRENT_PHASE = 1;
 
 function Roadmap({ t }: { t: Dict['roadmap'] }) {
   return (
@@ -454,20 +468,21 @@ function Roadmap({ t }: { t: Dict['roadmap'] }) {
           <p className="eyebrow">{t.label}</p>
           <h2 id="roadmap-title" className="h2">{t.title}</h2>
         </header>
-        <ol className="phases">
-          {t.phases.map((p, i) => (
-            <li key={p.t} className={`rv${i === 0 ? ' is-live' : ''}`}>
-              <div className="phase-top">
-                <span className="mono-label">{t.phase} {pad(i + 1)}</span>
-                <span className="phase-s">
-                  {i === 0 && <span className="sq on" aria-hidden="true" />}
-                  {p.s}
+        <ol className="timeline rv">
+          {t.phases.map((p, i) => {
+            const state = i < CURRENT_PHASE ? 'done' : i === CURRENT_PHASE ? 'now' : 'next';
+            return (
+              <li key={p.t} className={`tl-${state}`} aria-current={state === 'now' ? 'step' : undefined}>
+                <span className="tl-phase num">
+                  {t.phase} {pad(i + 1)}
+                  <span className="sr-only">, {p.s}</span>
                 </span>
-              </div>
-              <h3>{p.t}</h3>
-              <p>{p.d}</p>
-            </li>
-          ))}
+                <span className="tl-node" aria-hidden="true" />
+                <h3>{p.t}</h3>
+                <p>{p.d}</p>
+              </li>
+            );
+          })}
         </ol>
       </div>
     </section>
@@ -505,26 +520,30 @@ function Faq({ t }: { t: Dict['faq'] }) {
               <div className="a">
                 <p>{withEmail(it.a)}</p>
                 {'table' in it && it.table ? (
-                  <div className="geo-wrap">
-                    <table className="geo">
-                      <thead>
-                        <tr>
-                          {t.geo.cols.map((c, ci) => (
-                            <th key={ci} scope="col">{c}</th>
-                          ))}
+                  <table className="geo">
+                    <thead>
+                      <tr>
+                        {t.geo.cols.map((c, ci) =>
+                          ci === 0 ? (
+                            <td key={ci} />
+                          ) : (
+                            <th key={ci} scope="col" className={ci === 2 ? 'g' : undefined}>
+                              {c}
+                            </th>
+                          ),
+                        )}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {t.geo.rows.map((r) => (
+                        <tr key={r[0]}>
+                          <th scope="row">{r[0]}</th>
+                          <td>{r[1]}</td>
+                          <td className="g">{r[2]}</td>
                         </tr>
-                      </thead>
-                      <tbody>
-                        {t.geo.rows.map((r) => (
-                          <tr key={r[0]}>
-                            <th scope="row">{r[0]}</th>
-                            <td>{r[1]}</td>
-                            <td>{r[2]}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
+                      ))}
+                    </tbody>
+                  </table>
                 ) : null}
               </div>
             </details>
@@ -614,8 +633,8 @@ export default function HomePage() {
       <main id="main">
         <Hero t={t} />
         <Shift t={t.shift} />
-        <CitoraSection t={t.citora} />
-        <AdsSection t={t.ads} />
+        <CitoraSection t={t.citora} note={t.demoNote} />
+        <AdsSection t={t.ads} note={t.demoNote} />
         <TokenSection t={t.token} />
         <Roadmap t={t.roadmap} />
         <Faq t={t.faq} />
