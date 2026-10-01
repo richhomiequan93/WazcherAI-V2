@@ -1625,6 +1625,75 @@ details[open] .plus::after {
   }
 }
 
+/* ---------- hero visual concepts (/concept-a, /concept-b) ---------- */
+
+/* isolate: the radial light (z -1) sits above the page but under the canvas (z 0). */
+.hero-concept {
+  position: relative;
+  isolation: isolate;
+}
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.hero-concept .hero-grid,
+.hero-concept .hero-grid + .wrap,
+.hero-concept > .wrap {
+  position: relative;
+}
+.hero-concept .hero-grid {
+  align-items: center;
+}
+/* Reserves the eye's box so the canvas never shifts layout; the canvas reads its rect. */
+.hero-eye {
+  position: relative;
+  height: 560px;
+}
+.hero-eye::before {
+  content: '';
+  position: absolute;
+  inset: -18% -30%;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgba(220, 226, 232, 0.055), rgba(220, 226, 232, 0.018) 55%, transparent);
+  pointer-events: none;
+}
+
+/* Static film grain over the whole page, SVG turbulence, no animation. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.4 -0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+}
+
+@media (max-width: 960px) {
+  .hero-concept .hero-grid {
+    gap: 24px;
+  }
+  .hero-eye {
+    max-width: none;
+    height: 400px;
+  }
+}
+@media (max-width: 720px) {
+  .hero-concept .hero-grid {
+    gap: 8px;
+  }
+  .hero-eye {
+    height: 300px;
+  }
+  .hero-concept .works {
+    margin-top: 40px;
+  }
+}
+
 /* ---------- responsive ---------- */
 
 @media (max-width: 1120px) {

@@ -54,6 +54,10 @@ const en = {
     period: 'Last 30 days',
     yourSite: 'Your site',
   },
+  scan: {
+    hud: 'Reading 4 AI engines',
+    fragments: ['Mentioned ×3', 'cited: your-site.com', 'Not mentioned', 'ChatGPT', 'cited: g2.com', 'Claude', 'Mentioned ×2', 'Gemini', 'Your brand', 'Perplexity', 'cited: reddit.com', 'Mention rate', 'Citation rate', 'Mentioned ×1'],
+  },
   shift: {
     label: 'The shift',
     title: 'Discovery moved into the answer.',
@@ -344,6 +348,10 @@ const zhTW: Dict = {
     period: '最近 30 天',
     yourSite: '你的網站',
   },
+  scan: {
+    hud: '正在讀取 4 個 AI 引擎',
+    fragments: ['提到 ×3', '引用：your-site.com', '沒提到', 'ChatGPT', '引用：g2.com', 'Claude', '提到 ×2', 'Gemini', '你的品牌', 'Perplexity', '引用：reddit.com', 'AI 回答提及率', '來源引用率', '提到 ×1'],
+  },
   shift: {
     label: '轉變',
     title: '被發現的地方，\n已經移到答案裡。',
@@ -627,6 +635,10 @@ const zhCN: Dict = {
     citedTitle: 'AI 搜索引用了谁',
     period: '最近 30 天',
     yourSite: '你的网站',
+  },
+  scan: {
+    hud: '正在读取 4 个 AI 引擎',
+    fragments: ['提到 ×3', '引用：your-site.com', '没提到', 'ChatGPT', '引用：g2.com', 'Claude', '提到 ×2', 'Gemini', '你的品牌', 'Perplexity', '引用：reddit.com', 'AI 回答提及率', '来源引用率', '提到 ×1'],
   },
   shift: {
     label: '变化',
