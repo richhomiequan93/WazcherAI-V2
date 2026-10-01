@@ -3,6 +3,7 @@ export type Locale = 'en' | 'zh-TW' | 'zh-CN';
 export const LOCALES: { id: Locale; short: string; name: string }[] = [
   { id: 'en', short: 'EN', name: 'English' },
   { id: 'zh-TW', short: '繁中', name: '繁體中文' },
+  { id: 'zh-CN', short: '简中', name: '简体中文' },
 ];
 
 export const EMAIL = 'service@wazcher.com';
@@ -536,9 +537,270 @@ const zhTW: Dict = {
   },
 };
 
+const zhCN: Dict = {
+  meta: { skip: '跳到主要内容' },
+  nav: {
+    citora: 'Citora',
+    ads: 'ChatGPT 广告',
+    token: '$CIT',
+    roadmap: '路线图',
+    faq: '常见问题',
+    launch: '进入 Citora',
+    openMenu: '打开菜单',
+    closeMenu: '关闭菜单',
+    language: '语言',
+    home: 'Wazcher 首页',
+  },
+  hero: {
+    title: '成为 AI\n给出的答案。',
+    sub: 'Wazcher 打造了 Citora：一个闭环 GEO 平台，让品牌被 ChatGPT、Claude、Gemini 和 Perplexity 引用，并直接在 ChatGPT 中投放广告。Citora 上的每一项操作，未来都将以 $CIT 结算。',
+    cta1: '进入 Citora',
+    cta2: '了解 $CIT',
+    works: '支持引擎',
+    metricsLabel: 'Citora 概览',
+    metrics: [
+      { v: '4', l: '个 AI 引擎' },
+      { v: '6 步', l: '闭环流程' },
+      { v: '13', l: '种语言' },
+      { v: '24/7', l: '全天候监测' },
+      { v: '+339%', l: '平均引用提升', n: 'Citora 客户平均数据' },
+    ],
+  },
+  test: {
+    tag: '示例',
+    title: 'AI 搜索测试',
+    queryLabel: '查询',
+    query: '“适合小型网店的数据分析工具推荐”',
+    brandLabel: '品牌',
+    brand: 'Northlight Analytics',
+    cols: ['引擎', '引用', '排名', '情感'],
+    yes: '是',
+    no: '否',
+    positive: '正面',
+    neutral: '中性',
+    rateLabel: '引用率',
+    rate: '4 个引擎中有 3 个',
+    na: '未出现',
+  },
+  shift: {
+    label: '变化',
+    title: '用户发现品牌的地方，\n已经转移到答案里。',
+    items: [
+      {
+        t: '搜索从链接变成了答案。',
+        d: '用户直接问 ChatGPT、Claude、Gemini 或 Perplexity，然后根据一个答案做决定，很多时候根本不会打开搜索结果页。',
+      },
+      {
+        t: '推荐谁，由 AI 决定。',
+        d: 'AI 引擎推荐的是它能解析、能核实、能信任的内容。Google 排名再高，也不会自动带到 AI 的答案里。',
+      },
+      {
+        t: '被引用，就是新的被发现。',
+        d: '答案旁边现在也有付费广告位：ChatGPT 已向 Free 和 Go 用户展示广告。品牌既要赢得引用，也要买到广告位。',
+      },
+    ],
+  },
+  citora: {
+    label: 'Citora',
+    title: '让品牌在 AI 答案中\n被看到的闭环。',
+    intro: 'Citora 是首个闭环 GEO（生成式引擎优化）平台。大多数工具给出一个分数就结束了；Citora 会衡量每个引擎如何看待品牌，改写引擎读取的内容，测试改动，上线胜出版本，然后重新开始。',
+    loopLabel: '优化闭环',
+    steps: [
+      {
+        n: '监测',
+        d: '按计划每天或每周在 ChatGPT、Claude、Gemini 和 Perplexity 上运行查询。',
+        k: ['引用率', '排名位置', '情感倾向', '下降超过 10% 即预警'],
+      },
+      {
+        n: '分析',
+        d: '哪些引擎引用了品牌、哪些查询会触发引用，以及竞争对手在哪里取代了你。',
+        k: ['品牌分析', '竞品对比', '关键词挖掘'],
+      },
+      {
+        n: '优化',
+        d: '根据品牌官网自动生成结构化的 AI Profile，编辑后同步到 /llms.txt。',
+        k: ['AI Profile', '/llms.txt', '版本记录'],
+      },
+      {
+        n: '实验',
+        d: '两个内容版本在各引擎上同场对比，由统计结果决定胜负，而不是凭感觉。',
+        k: ['卡方检验', 'Cohen’s h', 'UCB 算法'],
+      },
+      {
+        n: '部署',
+        d: '胜出版本一步上线，优化后的帖子也可以同步发布到社交平台。',
+        k: ['一步部署', 'Facebook', 'Instagram', 'X', 'Threads'],
+      },
+      {
+        n: '循环',
+        d: '以新的基线重新开始监测，整个闭环全天候运行。',
+        k: ['24/7', '13 种语言'],
+      },
+    ],
+    exp: {
+      tag: '示例',
+      title: 'A/B 实验',
+      variant: '版本',
+      rate: '引用率',
+      a: '当前 AI Profile',
+      b: '改写后的 FAQ 模块',
+      rows: [
+        ['抽样查询', '480 次，覆盖 4 个引擎'],
+        ['卡方检验', 'p < 0.001'],
+        ['Cohen’s h', '0.32'],
+        ['流量分配', 'UCB 算法'],
+      ],
+      result: '结果',
+      resultV: '部署 B，+16 个百分点',
+    },
+    modulesLabel: '功能模块',
+    modules: [
+      ['AI Profile 编辑器', 'AI 引擎能解析的结构化内容，同步到 /llms.txt。'],
+      ['AI 搜索测试', '一次查询，同时覆盖 4 个引擎：引用率、排名、情感。'],
+      ['品牌分析', '每个引擎如何描述品牌，以及还有哪些不足。'],
+      ['品牌监测', '定时追踪，曝光下降超过 10% 即发出预警。'],
+      ['A/B 实验', '卡方检验、Cohen’s h 效应量、UCB 算法。'],
+      ['关键词挖掘', '客户真正会问的问题，按意图分类。'],
+      ['社交发布', 'Facebook、Instagram、X 和 Threads，一站完成。'],
+      ['支持语言', '13 种。'],
+    ],
+    liveLabel: 'Citora 已正式上线',
+    liveLink: 'citora.ai',
+  },
+  ads: {
+    label: 'ChatGPT 广告',
+    kicker: '在 ChatGPT 投放广告',
+    title: '用 GEO 数据\n规划 ChatGPT 广告。',
+    intro: 'OpenAI 已开始向 ChatGPT Free 和 ChatGPT Go 用户展示广告。品牌可以通过 Citora 在 ChatGPT 投放广告：Citora 先分析品牌、受众，以及 AI 目前如何描述这个品牌，制定广告策略并完成投放，再把效果数据反馈到 GEO 闭环。',
+    tiersLabel: '广告资源',
+    tiers: [
+      { n: 'ChatGPT Free', d: '免费版，展示广告。' },
+      { n: 'ChatGPT Go', d: '低价付费版，展示广告。' },
+    ],
+    flowLabel: 'Citora 如何执行',
+    flow: [
+      { n: '分析', d: '品牌、受众，以及各个 AI 引擎目前如何描述它。' },
+      { n: '策略', d: '出现在哪些提问和话题旁、如何定位、用什么创意角度。' },
+      { n: '投放', d: '由 Citora 在 ChatGPT 中投放广告。' },
+      { n: '衡量', d: '效果数据回到 GEO 闭环，决定下一轮的调整。' },
+    ],
+    card: {
+      tag: '示例',
+      title: '广告策略',
+      rows: [
+        ['品类', '网店数据分析软件'],
+        ['受众', '店主，团队 1 到 20 人'],
+        ['广告资源', 'ChatGPT Free、ChatGPT Go'],
+        ['AI 现状', '4 个引擎中有 3 个引用，Gemini 未引用'],
+        ['话题', '小型网店数据分析；追踪复购客户'],
+        ['定位', '一个下午就能上手，不需要数据分析师'],
+        ['创意角度', '先回答问题，再展示数据看板'],
+        ['衡量指标', '点击、转化、引用率变化'],
+      ],
+      paidLabel: '支付方式',
+    },
+    paid: 'Citora 上的广告预算，未来将以 $CIT 支付。',
+  },
+  token: {
+    label: '$CIT',
+    title: 'Citora 上的一切，\n用同一个代币。',
+    intro: 'Citora 上的每一笔支出，未来都将以 $CIT 支付。套餐、额度、实验和 ChatGPT 广告预算都使用同一个单位，使用产品和使用代币是同一件事。',
+    utilLabel: '以 $CIT 支付',
+    utils: [
+      ['GEO 套餐', '监测、AI Profile 和完整闭环。'],
+      ['搜索与分析额度', '覆盖 4 个引擎的查询和品牌分析。'],
+      ['A/B 实验', '具备统计显著性的版本测试。'],
+      ['ChatGPT 广告预算', '通过 Citora 投放的广告支出。'],
+    ],
+    flowLabel: '价值如何流转',
+    flow: [
+      '品牌获取 $CIT',
+      '在 Citora 上使用',
+      '在 AI 答案和 ChatGPT 广告中获得曝光',
+      '效果带来更多品牌',
+    ],
+    flowBack: '回到 01',
+    statusLabel: '状态',
+    status: [
+      ['代号', '$CIT'],
+      ['状态', '尚未发行'],
+      ['网络', '另行公布'],
+      ['详细信息', '投资人资料可按需提供'],
+    ],
+    note: '$CIT 尚未上线，目前没有价格、发售或交易。',
+  },
+  roadmap: {
+    label: '路线图',
+    title: '从 GEO 平台\n走向代币经济。',
+    phase: '阶段',
+    phases: [
+      { s: '已上线', t: 'Citora 上线', d: 'GEO 平台已在 ChatGPT、Claude、Gemini 和 Perplexity 上运行。' },
+      { s: '开发中', t: '通过 Citora 投放 ChatGPT 广告', d: '广告策略、投放和效果衡量，都在同一个闭环内完成。' },
+      { s: '下一步', t: '$CIT 发行', d: '网络和发行细节将提前公布。' },
+      { s: '规划中', t: 'Citora 支出全面使用 $CIT', d: 'Citora 上的每一笔购买都以 $CIT 结算，并扩展生态。' },
+    ],
+  },
+  faq: {
+    label: '常见问题',
+    title: '投资人常问的问题。',
+    items: [
+      {
+        q: 'Wazcher 是什么？',
+        a: 'Wazcher 是打造 Citora 的公司，专注于品牌如何在 AI 助手中被找到、被引用，以及如何在其中投放广告。',
+      },
+      {
+        q: 'Citora 是什么？',
+        a: 'Citora 是一个闭环 GEO 平台，已在 citora.ai 上线。它测试 ChatGPT、Claude、Gemini 和 Perplexity 如何回答与品牌相关的问题，找出差距，改写引擎读取的内容，运行 A/B 实验并部署胜出版本，然后持续循环。支持 13 种语言。',
+      },
+      {
+        q: '什么是 GEO？和 SEO 有什么区别？',
+        a: 'GEO（生成式引擎优化）是让品牌在 AI 生成的答案中被引用的工作。SEO 争取的是链接列表里的排名。两者看重的东西不同：',
+        table: true,
+      },
+      {
+        q: 'Citora 如何做 ChatGPT 广告？',
+        a: 'OpenAI 会向 ChatGPT Free 和 Go 用户展示广告。Citora 先分析品牌、受众，以及 AI 目前如何描述这个品牌，再给出策略：出现在哪些提问和话题旁、如何定位、用什么创意角度。随后完成投放，并把效果数据反馈到 GEO 闭环，让自然曝光和付费曝光统一管理。',
+      },
+      {
+        q: '$CIT 已经上线了吗？',
+        a: '还没有。$CIT 目前尚未发行，没有价格、发售或交易。网络和发行细节将在之后公布。',
+      },
+      {
+        q: '$CIT 将来用于什么？',
+        a: '支付 Citora 上的所有支出：GEO 套餐、搜索与分析额度、A/B 实验，以及 ChatGPT 广告预算。',
+      },
+      {
+        q: '如何联系或洽谈投资？',
+        a: '请发邮件至 service@wazcher.com，投资人资料可按需提供。',
+      },
+    ],
+    geo: {
+      cols: ['', 'SEO', 'GEO'],
+      rows: [
+        ['目标', 'Google、Bing', 'ChatGPT、Claude、Gemini、Perplexity'],
+        ['目的', '在搜索结果中排名', '在 AI 答案中被引用'],
+        ['关键信号', '外链、关键词', '结构化、准确的内容'],
+        ['衡量方式', '排名位置、点击率', '引用率、答案中的位置、情感倾向'],
+      ],
+    },
+  },
+  close: {
+    title: 'Citora 已上线，\n下一步是 $CIT。',
+    sub: '如需投资人资料或产品演示，欢迎发邮件联系我们。',
+  },
+  footer: {
+    desc: 'Wazcher 打造 Citora：让品牌在 AI 答案中被看到、并能在 ChatGPT 投放广告的闭环 GEO 平台。',
+    product: '产品',
+    company: '公司',
+    social: '社交媒体',
+    contact: '联系我们',
+    legal: '$CIT 目前尚未推出。本网站的任何内容均不构成出售任何代币或证券的要约，也不构成购买邀约。ChatGPT 和 OpenAI 是 OpenAI 的商标。Claude、Gemini 和 Perplexity 是其各自所有者的商标。',
+    copy: '© 2026 Wazcher',
+  },
+};
 
 export const DICT: Record<Locale, Dict> = {
   en,
   'zh-TW': zhTW,
-  'zh-CN': zhTW, // Simplified dictionary added separately
+  'zh-CN': zhCN,
 };
