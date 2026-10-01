@@ -27,7 +27,7 @@ const en = {
   },
   hero: {
     title: 'Be the answer\nAI gives.',
-    sub: 'Wazcher builds Citora, the world’s first closed-loop GEO platform. It shows whether ChatGPT, Claude, Gemini and Perplexity mention and cite a brand, helps it get recommended, and places its ads inside ChatGPT. Every action on Citora will settle in $CIT.',
+    sub: 'Wazcher brings Citora onchain. Citora, the world’s first closed-loop GEO platform, is live today: it shows whether ChatGPT, Claude, Gemini and Perplexity mention and cite a brand, helps it get recommended, and places its ads inside ChatGPT. Every action on Citora will settle in $CIT.',
     cta1: 'Launch Citora',
     cta2: 'Explore $CIT',
     works: 'Works across',
@@ -169,9 +169,9 @@ const en = {
   },
   ads: {
     label: 'Ads in ChatGPT',
-    kicker: 'Place ads in ChatGPT',
+    kicker: 'Place ads in ChatGPT through Citora',
     title: 'Ads in ChatGPT, aimed with mention and citation data.',
-    intro: 'OpenAI shows ads to ChatGPT Free and ChatGPT Go users. Through Citora, brands can place ads in ChatGPT. Citora already knows how AI describes a brand, which questions are still blue ocean, and where the brand is mentioned and where it is not. It uses that to choose which conversations to place ads against, then measures mention rate, citation rate and ad results in the same loop.',
+    intro: 'OpenAI shows ads to ChatGPT Free and ChatGPT Go users. Brands can place ads in ChatGPT through Citora. Citora already knows how AI describes a brand, which questions are still blue ocean, and where the brand is mentioned and where it is not. It uses that to choose which conversations to place ads against, then measures mention rate, citation rate and ad results in the same loop.',
     tiersLabel: 'Ad inventory',
     tiers: [
       { n: 'ChatGPT Free', d: 'Free plan. Ads shown.' },
@@ -235,7 +235,7 @@ const en = {
     phase: 'Phase',
     phases: [
       { s: 'Live', t: 'Citora live', d: 'GEO platform tracking mentions and citations across ChatGPT, Claude, Gemini and Perplexity.' },
-      { s: 'Building', t: 'Ads in ChatGPT through Citora', d: 'Ads placed against conversations chosen from mention and citation data, measured in the same loop.' },
+      { s: 'In progress', t: 'Ads in ChatGPT through Citora', d: 'Ads placed against conversations chosen from mention and citation data, measured in the same loop.' },
       { s: 'Next', t: '$CIT launch', d: 'Network and launch details announced beforehand.' },
       { s: 'Planned', t: 'All Citora spend in $CIT', d: 'Every purchase on Citora settled in $CIT, plus ecosystem expansion.' },
     ],
@@ -246,7 +246,7 @@ const en = {
     items: [
       {
         q: 'What is Wazcher?',
-        a: 'Wazcher is the company that builds Citora. We work on how brands are mentioned, cited and advertised inside AI assistants.',
+        a: 'Wazcher is taking Citora onchain. We are building the $CIT economy and the community around Citora, so that every action on the platform will settle in one token.',
       },
       {
         q: 'What is Citora?',
@@ -289,7 +289,7 @@ const en = {
     sub: 'For investor materials or a product walkthrough, write to us.',
   },
   footer: {
-    desc: 'Wazcher builds Citora, the closed-loop GEO platform that gets brands mentioned and cited in AI answers and places their ads in ChatGPT.',
+    desc: 'Wazcher × Citora: the closed-loop GEO platform, onchain with $CIT.',
     product: 'Product',
     company: 'Company',
     social: 'Social',
@@ -317,7 +317,7 @@ const zhTW: Dict = {
   },
   hero: {
     title: '成為 AI\n給出的答案。',
-    sub: 'Wazcher 打造 Citora：全世界第一個閉環式 GEO 平台。它讓你看見 ChatGPT、Claude、Gemini 與 Perplexity 有沒有提到、引用你的品牌，一步步讓 AI 推薦你，並直接在 ChatGPT 裡投放廣告。Citora 上的每一筆操作，未來都將以 $CIT 結算。',
+    sub: 'Wazcher 將 Citora 帶上鏈。Citora 是全世界第一個閉環式 GEO 平台，現已上線：它讓你看見 ChatGPT、Claude、Gemini 與 Perplexity 有沒有提到、引用你的品牌，一步步讓 AI 推薦你，並直接在 ChatGPT 裡投放廣告。Citora 上的每一筆操作，未來都將以 $CIT 結算。',
     cta1: '前往 Citora',
     cta2: '了解 $CIT',
     works: '支援引擎',
@@ -455,7 +455,7 @@ const zhTW: Dict = {
   },
   ads: {
     label: 'ChatGPT 廣告',
-    kicker: '在 ChatGPT 投放廣告',
+    kicker: '透過 Citora 在 ChatGPT 投放廣告',
     title: '用提及與引用數據\n規劃 ChatGPT 廣告。',
     intro: 'OpenAI 已開始向 ChatGPT Free 與 ChatGPT Go 用戶顯示廣告。品牌可以透過 Citora 在 ChatGPT 投放廣告。Citora 已經知道 AI 怎麼描述你、哪些問題還是藍海、你在哪裡被提到、在哪裡沒有，並用這些數據決定廣告要出現在哪些對話旁，再把提及率、引用率與廣告成效放進同一個閉環衡量。',
     tiersLabel: '廣告版位',
@@ -521,7 +521,7 @@ const zhTW: Dict = {
     phase: '階段',
     phases: [
       { s: '已上線', t: 'Citora 上線', d: 'GEO 平台已在 ChatGPT、Claude、Gemini 與 Perplexity 上追蹤提及與引用。' },
-      { s: '建置中', t: '透過 Citora 投放 ChatGPT 廣告', d: '依提及與引用數據挑選要投放的對話，並在同一個閉環內衡量。' },
+      { s: '進行中', t: '透過 Citora 投放 ChatGPT 廣告', d: '依提及與引用數據挑選要投放的對話，並在同一個閉環內衡量。' },
       { s: '下一步', t: '$CIT 發行', d: '網路與發行細節將事先公布。' },
       { s: '規劃中', t: 'Citora 支出全面使用 $CIT', d: 'Citora 上的每一筆購買都以 $CIT 結算，並擴展生態系。' },
     ],
@@ -532,7 +532,7 @@ const zhTW: Dict = {
     items: [
       {
         q: 'Wazcher 是什麼？',
-        a: 'Wazcher 是打造 Citora 的公司，專注於品牌如何在 AI 助理中被提到、被引用，以及如何在其中投放廣告。',
+        a: 'Wazcher 正在將 Citora 帶上鏈。我們要建立 $CIT 經濟，以及圍繞 Citora 的社群，讓平台上的每一筆操作，未來都以同一個代幣結算。',
       },
       {
         q: 'Citora 是什麼？',
@@ -575,7 +575,7 @@ const zhTW: Dict = {
     sub: '索取投資人資料或預約產品導覽，歡迎來信。',
   },
   footer: {
-    desc: 'Wazcher 打造 Citora：讓品牌在 AI 回答中被提到、被引用，並能在 ChatGPT 投放廣告的閉環式 GEO 平台。',
+    desc: 'Wazcher × Citora：閉環式 GEO 平台，以 $CIT 上鏈。',
     product: '產品',
     company: '公司',
     social: '社群',
@@ -601,7 +601,7 @@ const zhCN: Dict = {
   },
   hero: {
     title: '成为 AI\n给出的答案。',
-    sub: 'Wazcher 打造了 Citora：全球第一个闭环式 GEO 平台。它让你看清 ChatGPT、Claude、Gemini 和 Perplexity 有没有提到、引用你的品牌，一步步让 AI 推荐你，并直接在 ChatGPT 中投放广告。Citora 上的每一项操作，未来都将以 $CIT 结算。',
+    sub: 'Wazcher 将 Citora 带上链。Citora 是全球第一个闭环式 GEO 平台，现已上线：它让你看清 ChatGPT、Claude、Gemini 和 Perplexity 有没有提到、引用你的品牌，一步步让 AI 推荐你，并直接在 ChatGPT 中投放广告。Citora 上的每一项操作，未来都将以 $CIT 结算。',
     cta1: '进入 Citora',
     cta2: '了解 $CIT',
     works: '支持引擎',
@@ -739,7 +739,7 @@ const zhCN: Dict = {
   },
   ads: {
     label: 'ChatGPT 广告',
-    kicker: '在 ChatGPT 投放广告',
+    kicker: '通过 Citora 在 ChatGPT 投放广告',
     title: '用提及和引用数据\n规划 ChatGPT 广告。',
     intro: 'OpenAI 已开始向 ChatGPT Free 和 ChatGPT Go 用户展示广告。品牌可以通过 Citora 在 ChatGPT 投放广告。Citora 已经掌握 AI 怎么描述你、哪些问题还是蓝海、你在哪里被提到、在哪里没有，并据此决定广告出现在哪些对话旁，再把提及率、引用率和广告效果放进同一个闭环来衡量。',
     tiersLabel: '广告资源',
@@ -805,7 +805,7 @@ const zhCN: Dict = {
     phase: '阶段',
     phases: [
       { s: '已上线', t: 'Citora 上线', d: 'GEO 平台已在 ChatGPT、Claude、Gemini 和 Perplexity 上追踪提及和引用。' },
-      { s: '开发中', t: '通过 Citora 投放 ChatGPT 广告', d: '根据提及和引用数据选择投放的对话，并在同一个闭环内衡量。' },
+      { s: '进行中', t: '通过 Citora 投放 ChatGPT 广告', d: '根据提及和引用数据选择投放的对话，并在同一个闭环内衡量。' },
       { s: '下一步', t: '$CIT 发行', d: '网络和发行细节将提前公布。' },
       { s: '规划中', t: 'Citora 支出全面使用 $CIT', d: 'Citora 上的每一笔购买都以 $CIT 结算，并扩展生态。' },
     ],
@@ -816,7 +816,7 @@ const zhCN: Dict = {
     items: [
       {
         q: 'Wazcher 是什么？',
-        a: 'Wazcher 是打造 Citora 的公司，专注于品牌如何在 AI 助手中被提到、被引用，以及如何在其中投放广告。',
+        a: 'Wazcher 正在将 Citora 带上链。我们要建立 $CIT 经济，以及围绕 Citora 的社区，让平台上的每一项操作，将来都用同一个代币结算。',
       },
       {
         q: 'Citora 是什么？',
@@ -859,7 +859,7 @@ const zhCN: Dict = {
     sub: '如需投资人资料或产品演示，欢迎发邮件联系我们。',
   },
   footer: {
-    desc: 'Wazcher 打造 Citora：让品牌在 AI 回答中被提到、被引用，并能在 ChatGPT 投放广告的闭环式 GEO 平台。',
+    desc: 'Wazcher × Citora：闭环式 GEO 平台，以 $CIT 上链。',
     product: '产品',
     company: '公司',
     social: '社交媒体',
