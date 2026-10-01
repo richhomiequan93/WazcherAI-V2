@@ -27,16 +27,16 @@ const en = {
   },
   hero: {
     title: 'Be the answer\nAI gives.',
-    sub: 'Wazcher brings Citora onchain. Citora, the world’s first closed-loop GEO platform, is live today: it shows whether ChatGPT, Claude, Gemini and Perplexity mention and cite a brand, helps it get recommended, and places its ads inside ChatGPT. Every action on Citora will settle in $CIT.',
+    sub: 'Citora is the world’s first closed-loop GEO platform. It shows whether ChatGPT, Claude, Gemini and Perplexity mention and cite your brand, helps you get recommended, and places your ads inside ChatGPT.',
     cta1: 'Launch Citora',
     cta2: 'Explore $CIT',
     works: 'Works across',
     metricsLabel: 'Citora at a glance',
     metrics: [
-      { v: '4', l: 'AI engines, asked at once' },
-      { v: '5-step', l: 'Closed loop' },
-      { v: '2', l: 'Signals per answer: mentioned, cited' },
-      { v: 'Daily', l: 'Tracking, with alerts' },
+      { v: '4', l: 'AI engines' },
+      { v: '5-step', l: 'closed loop' },
+      { v: 'Mentioned', l: '+ cited' },
+      { v: 'Daily', l: 'tracking' },
     ],
   },
   ask: {
@@ -63,7 +63,7 @@ const en = {
     title: 'Discovery moved into the answer.',
     statsLabel: 'Why now',
     stats: [
-      { v: '900M', d: 'People who use ChatGPT every week.', s: 'OpenAI, reported by TechCrunch, February 2026' },
+      { v: '900M', d: 'People who use ChatGPT every week.', s: 'Reported by TechCrunch, February 2026' },
       {
         v: '51%',
         d: 'B2B software buyers who start their research with an AI chatbot, not a search engine.',
@@ -175,7 +175,7 @@ const en = {
     label: 'Ads in ChatGPT',
     kicker: 'Place ads in ChatGPT through Citora',
     title: 'Ads in ChatGPT, aimed with mention and citation data.',
-    intro: 'OpenAI shows ads to ChatGPT Free and ChatGPT Go users. Brands can place ads in ChatGPT through Citora. Citora already knows how AI describes a brand, which questions are still blue ocean, and where the brand is mentioned and where it is not. It uses that to choose which conversations to place ads against, then measures mention rate, citation rate and ad results in the same loop.',
+    intro: 'ChatGPT shows ads to its Free and Go users. Brands can place ads in ChatGPT through Citora. Citora already knows how AI describes a brand, which questions are still blue ocean, and where the brand is mentioned and where it is not. It uses that to choose which conversations to place ads against, then measures mention rate, citation rate and ad results in the same loop.',
     tiersLabel: 'Ad inventory',
     tiers: [
       { n: 'ChatGPT Free', d: 'Free plan. Ads shown.' },
@@ -263,7 +263,7 @@ const en = {
       },
       {
         q: 'How do ads in ChatGPT work with Citora?',
-        a: 'OpenAI shows ads to ChatGPT Free and Go users. Citora already knows how AI describes the brand, which questions are blue ocean, and where the brand is mentioned and where it is not. It uses that data to choose which conversations to place ads against and how to position them, places the ads, then measures mention rate, citation rate and ad results in the same loop, so earned and paid visibility are managed together.',
+        a: 'ChatGPT shows ads to its Free and Go users. Citora already knows how AI describes the brand, which questions are blue ocean, and where the brand is mentioned and where it is not. It uses that data to choose which conversations to place ads against and how to position them, places the ads, then measures mention rate, citation rate and ad results in the same loop, so earned and paid visibility are managed together.',
       },
       {
         q: 'Is $CIT live?',
@@ -321,16 +321,16 @@ const zhTW: Dict = {
   },
   hero: {
     title: '成為 AI\n給出的答案。',
-    sub: 'Wazcher 將 Citora 帶上鏈。Citora 是全世界第一個閉環式 GEO 平台，現已上線：它讓你看見 ChatGPT、Claude、Gemini 與 Perplexity 有沒有提到、引用你的品牌，一步步讓 AI 推薦你，並直接在 ChatGPT 裡投放廣告。Citora 上的每一筆操作，未來都將以 $CIT 結算。',
+    sub: 'Citora 是全世界第一個閉環式 GEO 平台。它讓你看見 ChatGPT、Claude、Gemini 與 Perplexity 有沒有提到、引用你的品牌，一步步讓 AI 推薦你，並直接在 ChatGPT 裡投放廣告。',
     cta1: '前往 Citora',
     cta2: '了解 $CIT',
     works: '支援引擎',
     metricsLabel: 'Citora 概況',
     metrics: [
-      { v: '4', l: '個 AI 同時回答' },
-      { v: '5', l: '步閉環流程' },
-      { v: '2', l: '項訊號：提及、引用' },
-      { v: '每天', l: '自動追蹤，有變化就通知' },
+      { v: '4', l: '個 AI 引擎' },
+      { v: '5', l: '步閉環' },
+      { v: '提到', l: '+ 引用' },
+      { v: '每日', l: '追蹤' },
     ],
   },
   ask: {
@@ -357,7 +357,7 @@ const zhTW: Dict = {
     title: '被發現的地方，\n已經移到答案裡。',
     statsLabel: '為什麼是現在',
     stats: [
-      { v: '9億', d: '每週使用 ChatGPT 的人數。', s: 'OpenAI，TechCrunch 報導，2026 年 2 月' },
+      { v: '9億', d: '每週使用 ChatGPT 的人數。', s: 'TechCrunch 報導，2026 年 2 月' },
       { v: '51%', d: 'B2B 軟體買家採購第一步先問 AI，而不是搜尋引擎。', s: 'G2 買家調查，2026 年 4 月，1,076 位軟體買家' },
       { v: '+120%', d: '品牌被 Google AI 摘要引用時，自然點擊多出的比例。', s: 'Seer Interactive，2026 年 4 月，53 個品牌' },
     ],
@@ -465,7 +465,7 @@ const zhTW: Dict = {
     label: 'ChatGPT 廣告',
     kicker: '透過 Citora 在 ChatGPT 投放廣告',
     title: '用提及與引用數據\n規劃 ChatGPT 廣告。',
-    intro: 'OpenAI 已開始向 ChatGPT Free 與 ChatGPT Go 用戶顯示廣告。品牌可以透過 Citora 在 ChatGPT 投放廣告。Citora 已經知道 AI 怎麼描述你、哪些問題還是藍海、你在哪裡被提到、在哪裡沒有，並用這些數據決定廣告要出現在哪些對話旁，再把提及率、引用率與廣告成效放進同一個閉環衡量。',
+    intro: 'ChatGPT 已開始向 Free 與 Go 用戶顯示廣告。品牌可以透過 Citora 在 ChatGPT 投放廣告。Citora 已經知道 AI 怎麼描述你、哪些問題還是藍海、你在哪裡被提到、在哪裡沒有，並用這些數據決定廣告要出現在哪些對話旁，再把提及率、引用率與廣告成效放進同一個閉環衡量。',
     tiersLabel: '廣告版位',
     tiers: [
       { n: 'ChatGPT Free', d: '免費方案，會顯示廣告。' },
@@ -553,7 +553,7 @@ const zhTW: Dict = {
       },
       {
         q: 'Citora 如何處理 ChatGPT 廣告？',
-        a: 'OpenAI 會向 ChatGPT Free 與 Go 用戶顯示廣告。Citora 已經知道 AI 怎麼描述品牌、哪些問題還是藍海、品牌在哪裡被提到、在哪裡沒有，並用這些數據決定廣告要出現在哪些對話旁、如何定位。接著完成投放，再把提及率、引用率與廣告成效放進同一個閉環衡量，讓自然曝光與付費曝光一起管理。',
+        a: 'ChatGPT 會向 Free 與 Go 用戶顯示廣告。Citora 已經知道 AI 怎麼描述品牌、哪些問題還是藍海、品牌在哪裡被提到、在哪裡沒有，並用這些數據決定廣告要出現在哪些對話旁、如何定位。接著完成投放，再把提及率、引用率與廣告成效放進同一個閉環衡量，讓自然曝光與付費曝光一起管理。',
       },
       {
         q: '$CIT 已經上線了嗎？',
@@ -609,16 +609,16 @@ const zhCN: Dict = {
   },
   hero: {
     title: '成为 AI\n给出的答案。',
-    sub: 'Wazcher 将 Citora 带上链。Citora 是全球第一个闭环式 GEO 平台，现已上线：它让你看清 ChatGPT、Claude、Gemini 和 Perplexity 有没有提到、引用你的品牌，一步步让 AI 推荐你，并直接在 ChatGPT 中投放广告。Citora 上的每一项操作，未来都将以 $CIT 结算。',
+    sub: 'Citora 是全球第一个闭环式 GEO 平台。它让你看清 ChatGPT、Claude、Gemini 和 Perplexity 有没有提到、引用你的品牌，一步步让 AI 推荐你，并直接在 ChatGPT 中投放广告。',
     cta1: '进入 Citora',
     cta2: '了解 $CIT',
     works: '支持引擎',
     metricsLabel: 'Citora 概览',
     metrics: [
-      { v: '4', l: '个 AI 同时回答' },
-      { v: '5', l: '步闭环流程' },
-      { v: '2', l: '项信号：提及、引用' },
-      { v: '每天', l: '自动追踪，有变化即提醒' },
+      { v: '4', l: '个 AI 引擎' },
+      { v: '5', l: '步闭环' },
+      { v: '提到', l: '+ 引用' },
+      { v: '每日', l: '追踪' },
     ],
   },
   ask: {
@@ -645,7 +645,7 @@ const zhCN: Dict = {
     title: '用户发现品牌的地方，\n已经转移到答案里。',
     statsLabel: '为什么是现在',
     stats: [
-      { v: '9亿', d: '每周使用 ChatGPT 的人数。', s: 'OpenAI，TechCrunch 报道，2026 年 2 月' },
+      { v: '9亿', d: '每周使用 ChatGPT 的人数。', s: 'TechCrunch 报道，2026 年 2 月' },
       { v: '51%', d: 'B2B 软件买家采购的第一步是问 AI，而不是用搜索引擎。', s: 'G2 买家调查，2026 年 4 月，1,076 位软件买家' },
       { v: '+120%', d: '品牌被 Google AI 摘要引用时，自然点击增加的比例。', s: 'Seer Interactive，2026 年 4 月，53 个品牌' },
     ],
@@ -753,7 +753,7 @@ const zhCN: Dict = {
     label: 'ChatGPT 广告',
     kicker: '通过 Citora 在 ChatGPT 投放广告',
     title: '用提及和引用数据\n规划 ChatGPT 广告。',
-    intro: 'OpenAI 已开始向 ChatGPT Free 和 ChatGPT Go 用户展示广告。品牌可以通过 Citora 在 ChatGPT 投放广告。Citora 已经掌握 AI 怎么描述你、哪些问题还是蓝海、你在哪里被提到、在哪里没有，并据此决定广告出现在哪些对话旁，再把提及率、引用率和广告效果放进同一个闭环来衡量。',
+    intro: 'ChatGPT 已开始向 Free 和 Go 用户展示广告。品牌可以通过 Citora 在 ChatGPT 投放广告。Citora 已经掌握 AI 怎么描述你、哪些问题还是蓝海、你在哪里被提到、在哪里没有，并据此决定广告出现在哪些对话旁，再把提及率、引用率和广告效果放进同一个闭环来衡量。',
     tiersLabel: '广告资源',
     tiers: [
       { n: 'ChatGPT Free', d: '免费版，展示广告。' },
@@ -841,7 +841,7 @@ const zhCN: Dict = {
       },
       {
         q: 'Citora 如何做 ChatGPT 广告？',
-        a: 'OpenAI 会向 ChatGPT Free 和 Go 用户展示广告。Citora 已经掌握 AI 怎么描述品牌、哪些问题还是蓝海、品牌在哪里被提到、在哪里没有，并据此决定广告出现在哪些对话旁、如何定位。随后完成投放，再把提及率、引用率和广告效果放进同一个闭环衡量，让自然曝光和付费曝光统一管理。',
+        a: 'ChatGPT 会向 Free 和 Go 用户展示广告。Citora 已经掌握 AI 怎么描述品牌、哪些问题还是蓝海、品牌在哪里被提到、在哪里没有，并据此决定广告出现在哪些对话旁、如何定位。随后完成投放，再把提及率、引用率和广告效果放进同一个闭环衡量，让自然曝光和付费曝光统一管理。',
       },
       {
         q: '$CIT 已经上线了吗？',

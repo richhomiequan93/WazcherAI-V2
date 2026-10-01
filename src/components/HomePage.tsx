@@ -5,7 +5,7 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { CITORA_URL, EMAIL, LINKEDIN_URL, LOCALES, X_URL, type Dict, type Locale } from './i18n';
 import { useLocale } from './useLocale';
-import { AdStrategyCard, AskAICard, ENGINES, Mark, OpportunityMap } from './Visuals';
+import { AdStrategyCard, AskAICard, ChatGPTLogo, ENGINES, Mark, OpportunityMap } from './Visuals';
 
 // Hero visual concepts load client side only: canvas code never runs during SSR, and `/` never ships it.
 const EyeParticles = dynamic(() => import('./hero/EyeParticles'), { ssr: false });
@@ -203,19 +203,22 @@ function Hero({ t, concept }: { t: Dict; concept?: HeroConcept }) {
           <ul className="engine-row">
             {ENGINES.map((e) => (
               <li key={e.id}>
-                <Mark id={`${e.id}-text`} label={e.id === 'openai' ? 'OpenAI ChatGPT' : e.name} className="wordmark" />
+                {e.id === 'chatgpt' ? (
+                  <ChatGPTLogo className="wordmark" />
+                ) : (
+                  <Mark id={`${e.id}-text`} label={e.name} className="wordmark" />
+                )}
               </li>
             ))}
           </ul>
         </div>
-        <dl className="metrics" aria-label={h.metricsLabel}>
+        <ul className="metrics" aria-label={h.metricsLabel}>
           {h.metrics.map((m) => (
-            <div key={m.l} className="metric">
-              <dt className="metric-l">{m.l}</dt>
-              <dd className="metric-v">{m.v}</dd>
-            </div>
+            <li key={m.l} className="metric">
+              <span className="metric-v">{m.v}</span> <span className="metric-l">{m.l}</span>
+            </li>
           ))}
-        </dl>
+        </ul>
       </div>
     </section>
   );
@@ -353,7 +356,7 @@ function AdsSection({ t }: { t: Dict['ads'] }) {
         <header className="sec-head rv">
           <p className="eyebrow">{t.label}</p>
           <p className="ads-kicker">
-            <Mark id="openai" label="OpenAI" className="ads-logo" />
+            <ChatGPTLogo className="ads-logo" />
             <span>{t.kicker}</span>
           </p>
           <h2 id="ads-title" className="h2">{t.title}</h2>

@@ -212,9 +212,22 @@ ul {
   -webkit-mask-size: contain;
   mask-size: contain;
 }
-.m-openai-text {
-  width: auto;
-  aspect-ratio: 86 / 24;
+.gpt-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28em;
+  height: 1em;
+  line-height: 1;
+}
+.gpt-knot {
+  font-size: 1.08em;
+}
+.gpt-word {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 1em;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
 }
 .m-claude-text {
   width: auto;
@@ -222,7 +235,7 @@ ul {
 }
 .m-gemini-text {
   width: auto;
-  aspect-ratio: 98 / 24;
+  aspect-ratio: 82 / 24;
 }
 .m-perplexity-text {
   width: auto;
@@ -604,31 +617,37 @@ html[lang='zh-CN'] .h2 {
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
+/* value and label share one baseline, so each cell reads as a single confident phrase */
 .metric {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 28px 24px 26px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: 0.32em;
+  padding: 30px 28px 28px;
   border-left: 1px solid var(--line);
+  font-family: var(--f-display);
+  font-size: clamp(22px, 1.9vw, 27px);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 .metric:first-child {
   border-left: 0;
   padding-left: 0;
 }
 .metric-v {
-  order: -1;
-  font-family: var(--font-mono), monospace;
-  font-size: 30px;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  color: var(--text);
   font-variant-numeric: tabular-nums;
 }
 .metric-l {
-  font-size: 14px;
   color: var(--text-2);
-  line-height: 1.4;
 }
+html[lang='zh-TW'] .metric,
+html[lang='zh-CN'] .metric {
+  column-gap: 0.18em;
+  letter-spacing: 0;
+}
+
 /* ---------- cards (example product surfaces) ---------- */
 
 .card {
@@ -1825,17 +1844,13 @@ details[open] .plus::after {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .metric {
-    padding: 22px 0 20px 18px;
+    padding: 22px 0 20px 16px;
+    font-size: 18px;
+    letter-spacing: -0.015em;
   }
   .metric:nth-child(odd) {
     border-left: 0;
     padding-left: 0;
-  }
-  .metric-v {
-    font-size: 26px;
-  }
-  .metric-l {
-    font-size: 13.5px;
   }
 
   .stats {

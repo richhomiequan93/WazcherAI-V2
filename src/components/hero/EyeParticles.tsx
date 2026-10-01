@@ -366,7 +366,7 @@ export default function EyeParticles() {
       setup,
       draw,
     });
-    Promise.all(['openai', 'claude', 'gemini', 'perplexity'].map(loadMark)).then((imgs) => {
+    Promise.all(['chatgpt', 'claude', 'gemini', 'perplexity'].map(loadMark)).then((imgs) => {
       if (!alive) return;
       imgs.forEach((img, i) => (marks[i] = img));
       stage.redraw();

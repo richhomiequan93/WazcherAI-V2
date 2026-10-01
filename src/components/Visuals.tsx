@@ -1,10 +1,10 @@
 import type { CSSProperties } from 'react';
 import type { Dict } from './i18n';
 
-export type EngineId = 'openai' | 'claude' | 'gemini' | 'perplexity';
+export type EngineId = 'chatgpt' | 'claude' | 'gemini' | 'perplexity';
 
 export const ENGINES: { id: EngineId; name: string }[] = [
-  { id: 'openai', name: 'ChatGPT' },
+  { id: 'chatgpt', name: 'ChatGPT' },
   { id: 'claude', name: 'Claude' },
   { id: 'gemini', name: 'Gemini' },
   { id: 'perplexity', name: 'Perplexity' },
@@ -25,6 +25,18 @@ export function Mark({ id, label, className = '' }: { id: string; label?: string
   );
 }
 
+/** ChatGPT lockup: the knot mark plus a live text wordmark, labelled for assistive tech as one image. */
+export function ChatGPTLogo({ className = '' }: { className?: string }) {
+  return (
+    <span className={`gpt-logo ${className}`} role="img" aria-label="ChatGPT">
+      <Mark id="chatgpt" className="gpt-knot" />
+      <span className="gpt-word" aria-hidden="true">
+        ChatGPT
+      </span>
+    </span>
+  );
+}
+
 function CardHead({ tag, title }: { tag: string; title: string }) {
   return (
     <div className="card-head">
@@ -36,7 +48,7 @@ function CardHead({ tag, title }: { tag: string; title: string }) {
 
 /* Example values only, mirroring the illustration on citora.ai. Every card is labelled "Example" in the UI. */
 const MENTIONS: { id: EngineId; n: number }[] = [
-  { id: 'openai', n: 3 },
+  { id: 'chatgpt', n: 3 },
   { id: 'claude', n: 2 },
   { id: 'gemini', n: 0 },
   { id: 'perplexity', n: 1 },
@@ -150,7 +162,7 @@ export function AdStrategyCard({ t }: { t: Dict['ads']['card'] }) {
     <figure className="card ad" aria-label={`${t.tag}: ${t.title}`}>
       <div className="card-head">
         <span className="card-title">
-          <Mark id="openai" />
+          <Mark id="chatgpt" />
           {t.title}
         </span>
         <span className="tag">{t.tag}</span>
