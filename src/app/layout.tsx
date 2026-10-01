@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Fragment_Mono, Funnel_Display, Inter, Noto_Sans_SC, Noto_Sans_TC } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 
 // Display: Funnel Display, variable wght axis (one file serves the 300 to 500 headings).
@@ -68,7 +69,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       className={`${display.variable} ${inter.variable} ${mono.variable} ${notoTC.variable} ${notoSC.variable}`}
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: langScript }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -83,7 +83,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <Script id="wlang-init" strategy="beforeInteractive">{langScript}</Script>
+        {children}
+      </body>
     </html>
   );
 }

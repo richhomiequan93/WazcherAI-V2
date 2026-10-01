@@ -1657,10 +1657,10 @@ details[open] .plus::after {
   }
 }
 
-/* ---------- hero visual concepts (/concept-a, /concept-b) ---------- */
+/* ---------- hero stage: scanning eye canvas, faint light, film grain ---------- */
 
 /* isolate: the radial light (z -1) sits above the page but under the canvas (z 0). */
-.hero-concept {
+.hero-stage {
   position: relative;
   isolation: isolate;
   /* the eye's radial light extends past the viewport; clip it sideways only */
@@ -1674,12 +1674,12 @@ details[open] .plus::after {
   height: 100%;
   pointer-events: none;
 }
-.hero-concept .hero-grid,
-.hero-concept .hero-grid + .wrap,
-.hero-concept > .wrap {
+.hero-stage .hero-grid,
+.hero-stage .hero-grid + .wrap,
+.hero-stage > .wrap {
   position: relative;
 }
-.hero-concept .hero-grid {
+.hero-stage .hero-grid {
   align-items: center;
 }
 /* Reserves the eye's box so the canvas never shifts layout; the canvas reads its rect. */
@@ -1708,22 +1708,23 @@ details[open] .plus::after {
 }
 
 @media (max-width: 960px) {
-  .hero-concept .hero-grid {
+  .hero-stage .hero-grid {
     gap: 24px;
   }
-  .hero-eye {
+  /* Full row width so the eye centres under the copy (beats the 560px .hero-visual cap). */
+  .hero-stage .hero-eye {
     max-width: none;
     height: 400px;
   }
 }
 @media (max-width: 720px) {
-  .hero-concept .hero-grid {
+  .hero-stage .hero-grid {
     gap: 8px;
   }
-  .hero-eye {
+  .hero-stage .hero-eye {
     height: 300px;
   }
-  .hero-concept .works {
+  .hero-stage .works {
     margin-top: 40px;
   }
 }

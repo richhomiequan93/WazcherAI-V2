@@ -5,14 +5,11 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { CITORA_URL, EMAIL, LINKEDIN_URL, LOCALES, X_URL, type Dict, type Locale } from './i18n';
 import { useLocale } from './useLocale';
-import { AdStrategyCard, AskAICard, ENGINES, EngineLogo, OpportunityMap } from './Visuals';
+import { AdStrategyCard, ENGINES, EngineLogo, OpportunityMap } from './Visuals';
 
-// Hero visual concepts load client side only: canvas code never runs during SSR, and `/` never ships it.
-const EyeParticles = dynamic(() => import('./hero/EyeParticles'), { ssr: false });
+// The scanning eye is canvas only: it loads in its own client chunk after hydration and never
+// runs during SSR. The .hero-eye box below reserves its space, so the late mount causes no shift.
 const EyeScan = dynamic(() => import('./hero/EyeScan'), { ssr: false });
-
-/** Which hero visual to render. Undefined keeps the original Ask AI card. */
-export type HeroConcept = 'a' | 'b';
 
 const pad = (n: number) => String(n).padStart(2, '0');
 
@@ -171,12 +168,11 @@ function Nav({ t, locale, setLocale }: { t: Dict; locale: Locale; setLocale: (l:
   );
 }
 
-function Hero({ t, concept }: { t: Dict; concept?: HeroConcept }) {
+function Hero({ t }: { t: Dict }) {
   const h = t.hero;
   return (
-    <section className={concept ? `hero hero-concept hero-${concept}` : 'hero'} id="top" aria-labelledby="hero-title">
-      {concept === 'a' && <EyeParticles />}
-      {concept === 'b' && <EyeScan fragments={t.scan.fragments} hud={t.scan.hud} />}
+    <section className="hero hero-stage" id="top" aria-labelledby="hero-title">
+      <EyeScan fragments={t.scan.fragments} hud={t.scan.hud} />
       <div className="wrap hero-grid">
         <div className="hero-copy">
           <h1 id="hero-title" className="display">{h.title}</h1>
@@ -189,13 +185,7 @@ function Hero({ t, concept }: { t: Dict; concept?: HeroConcept }) {
             </a>
           </div>
         </div>
-        {concept ? (
-          <div className="hero-visual hero-eye" data-eye-host aria-hidden="true" />
-        ) : (
-          <div className="hero-visual">
-            <AskAICard t={t.ask} />
-          </div>
-        )}
+        <div className="hero-visual hero-eye" data-eye-host aria-hidden="true" />
       </div>
       <div className="wrap">
         <div className="works">
@@ -608,7 +598,7 @@ function Footer({ t }: { t: Dict }) {
   );
 }
 
-export default function HomePage({ concept }: { concept?: HeroConcept } = {}) {
+export default function HomePage() {
   const { locale, setLocale, t } = useLocale();
   useReveal();
 
@@ -622,7 +612,7 @@ export default function HomePage({ concept }: { concept?: HeroConcept } = {}) {
       <a href="#main" className="skip">{t.meta.skip}</a>
       <Nav t={t} locale={locale} setLocale={setLocale} />
       <main id="main">
-        <Hero t={t} concept={concept} />
+        <Hero t={t} />
         <Shift t={t.shift} />
         <CitoraSection t={t.citora} />
         <AdsSection t={t.ads} />
@@ -632,7 +622,7 @@ export default function HomePage({ concept }: { concept?: HeroConcept } = {}) {
         <Closing t={t} />
       </main>
       <Footer t={t} />
-      {concept && <div className="grain" aria-hidden="true" />}
+      <div className="grain" aria-hidden="true" />
     </>
   );
 }

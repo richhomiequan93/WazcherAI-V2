@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { EYE, createStage, lid, rng, type Frame } from './stage';
 
 /**
- * Concept B: the Wazcher eye as a hairline instrument.
+ * Hero visual: the Wazcher eye as a hairline instrument.
  * Engraved lid contours, a lens bezel with ticks, concentric iris rings and the
  * play-mark pupil, all in fine strokes. A slow green sweep circles the iris.
  * Fragments of AI answers and cited domains drift in from the edges and fade as
@@ -77,47 +77,82 @@ export default function EyeScan({ fragments, hud }: Props) {
     let lastLocale = '';
     let monoFamily = 'ui-monospace, monospace';
 
-    const fontFor = (f: Frame) => `400 ${f.compact ? 10 : 11}px ${monoFamily}`;
+    const isCJK = () => document.documentElement.lang.startsWith('zh');
+    // CJK glyphs are denser, so they get one extra pixel to read at the same weight as Latin.
+    const fontFor = (f: Frame) => `400 ${(f.compact ? 10 : 11) + (isCJK() ? 1 : 0)}px ${monoFamily}`;
+    /** Leader hairline length and the gap between its end and the text. */
+    const LEAD = 18;
+    const GAP = 6;
+    /** Fragments travel on a flattened ellipse so they hug the lens shape. */
+    const FLAT = 0.78;
 
-    /** Pick an approach angle whose start position keeps the label inside the visual column and clear of others. */
-    const pickAngle = (f: Frame, w: number, r0: number) => {
-      const lead = 24;
-      for (let tries = 0; tries < 24; tries++) {
-        const a = R() * Math.PI * 2;
-        const ca = Math.cos(a);
-        const sa = Math.sin(a);
-        if (Math.abs(sa) < 0.14) continue; // corners belong to the lids
-        const ax = f.cx + ca * r0 * f.r;
-        const ay = f.cy + sa * r0 * f.r * 0.78;
-        const x0 = ca >= 0 ? ax : ax - lead - w;
-        const x1 = ca >= 0 ? ax + lead + w : ax;
-        const minX = f.compact ? 8 : f.hx - 8;
-        if (x0 < minX || x1 > f.w - 8) continue;
-        if (ay < 64 || ay > f.h - 16) continue;
-        // Keep clear of the caption line under the eye.
-        const capY = f.cy + (EYE.outer.e + EYE.outer.a) * f.r + (f.compact ? 26 : 34);
-        if (ay > capY - 22 && x1 > f.cx - 150 && x0 < f.cx + 150) continue;
-        if (ay > capY + 8) continue;
-        if (frags.every((q) => Math.abs(Math.atan2(Math.sin(q.ang - a), Math.cos(q.ang - a))) > 0.6)) return a;
-      }
-      return null;
+    /** Text box of a fragment whose anchor sits at radius rr (eye units) on angle ang. */
+    const boxAt = (f: Frame, ang: number, rr: number, w: number) => {
+      const ca = Math.cos(ang);
+      const ax = f.cx + ca * rr * f.r;
+      const ay = f.cy + Math.sin(ang) * rr * f.r * FLAT;
+      const x0 = ca >= 0 ? ax - 3 : ax - LEAD - GAP - w;
+      const x1 = ca >= 0 ? ax + LEAD + GAP + w : ax + 3;
+      return { x0, x1, y0: ay - 9, y1: ay + 9 };
     };
+
+    /**
+     * Whether a label at this spot stays inside the eye's own column (the reserved host box),
+     * clear of the HUD caption, so it can never touch the hero copy or the strip below.
+     * Fragments only move inward from here, so checking the start position is enough.
+     */
+    const fits = (f: Frame, ang: number, rr: number, w: number) => {
+      if (Math.abs(Math.sin(ang)) < 0.2) return false; // the lid corners stay clean
+      const b = boxAt(f, ang, rr, w);
+      const m = 12; // room for pointer parallax
+      // Side by side layout: the copy is on the left, so the right edge may use the page gutter.
+      const right = f.compact ? f.hx + f.hw - m : Math.max(f.hx + f.hw - m, f.w - 28);
+      if (b.x0 < f.hx + m || b.x1 > right) return false;
+      if (b.y0 < f.hy + m || b.y1 > f.hy + f.hh - m) return false;
+      const capY = f.cy + (EYE.outer.e + EYE.outer.a) * f.r + (f.compact ? 26 : 34);
+      if (b.y1 > capY - 14) return false;
+      return true;
+    };
+
+    const clearOf = (f: Frame, ang: number, rr: number, w: number, now: number) => {
+      const b = boxAt(f, ang, rr, w);
+      return frags.every((q) => {
+        if (Math.abs(Math.atan2(Math.sin(q.ang - ang), Math.cos(q.ang - ang))) < 0.55) return false;
+        const u = Math.min(1, Math.max(0, (now - q.born) / q.life));
+        const c = boxAt(f, q.ang, radiusAt(q, u), q.w);
+        return b.x1 + 16 < c.x0 || c.x1 + 16 < b.x0 || b.y1 + 6 < c.y0 || c.y1 + 6 < b.y0;
+      });
+    };
+
+    const ease = (u: number) => u * u * (1.6 - 0.6 * u);
+    function radiusAt(q: Frag, u: number) {
+      return q.r0 + (EYE.irisOuter - q.r0) * ease(u);
+    }
 
     const spawn = (f: Frame, born: number) => {
       const { fragments: list } = textRef.current;
       if (!list.length) return;
-      const text = list[cursor++ % list.length];
       f.ctx.font = fontFor(f);
-      const w = f.ctx.measureText(text).width;
-      const r0 = 1.12 + R() * 0.3;
-      const ang = pickAngle(f, w, r0);
-      if (ang === null) return;
-      frags.push({ text, ang, born, life: 9 + R() * 4, r0, w });
+      // Try the next few phrases so a long one never blocks the queue.
+      for (let k = 0; k < 3; k++) {
+        const text = list[(cursor + k) % list.length];
+        const w = f.ctx.measureText(text).width;
+        const r0 = 1.1 + R() * 0.22;
+        for (let tries = 0; tries < 40; tries++) {
+          const ang = R() * Math.PI * 2;
+          if (fits(f, ang, r0, w) && clearOf(f, ang, r0, w, born)) {
+            cursor += k + 1;
+            frags.push({ text, ang, born, life: 9 + R() * 4, r0, w });
+            return;
+          }
+        }
+      }
+      cursor++;
     };
 
     const setup = (f: Frame) => {
-      const v = getComputedStyle(document.body).getPropertyValue('--font-mono').trim();
-      if (v) monoFamily = `${v}, ui-monospace, monospace`;
+      const v = getComputedStyle(document.body).getPropertyValue('--f-mono').trim();
+      if (v) monoFamily = v;
       const loc = document.documentElement.lang;
       if (loc !== lastLocale) {
         lastLocale = loc;
@@ -127,15 +162,28 @@ export default function EyeScan({ fragments, hud }: Props) {
         seeded = false;
       }
       if (f.reduced) {
-        // A composed still: four fragments mid-flight and two marks on the ring.
+        // A composed still: a few fragments part way in, placed on fixed angles that fit, and two marks on the ring.
         const list = textRef.current.fragments;
         f.ctx.font = fontFor(f);
-        const angs = f.compact ? [-2.3, 0.75, 2.4, -0.75] : [-1.05, 0.7, 2.2, -2.15];
-        const us = [0.3, 0.5, 0.4, 0.62];
-        frags = angs.map((ang, i) => {
-          const text = list[i % Math.max(1, list.length)] ?? '';
-          return { text, ang, born: -us[i] * 10, life: 10, r0: 1.25, w: f.ctx.measureText(text).width };
-        });
+        frags = [];
+        const want = f.w <= 720 ? 2 : 3;
+        // Spread around the eye: upper left, upper right, lower right first.
+        const pref = [-1.95, -0.75, 0.62, 2.3];
+        // Preferred spots first, then a fine sweep so narrow columns still get their phrases.
+        const sweep = Array.from({ length: 84 }, (_, k) => -Math.PI + (k / 84) * Math.PI * 2);
+        let i = 0;
+        for (const u of [0.35, 0.55]) {
+          for (const ang of [...pref, ...sweep]) {
+            if (frags.length >= want || !list.length) break;
+            const text = list[i % list.length];
+            const w = f.ctx.measureText(text).width;
+            const q: Frag = { text, ang, born: -u * 10, life: 10, r0: 1.2, w };
+            if (fits(f, ang, radiusAt(q, u), w) && clearOf(f, ang, radiusAt(q, u), w, 0)) {
+              frags.push(q);
+              i++;
+            }
+          }
+        }
         blips = [
           { ang: -1.6, born: -0.6 },
           { ang: 0.4, born: -1.4 },
@@ -146,6 +194,8 @@ export default function EyeScan({ fragments, hud }: Props) {
     const draw = (f: Frame) => {
       const { ctx, cx, cy, r, t, compact, reduced } = f;
       const now = reduced ? 0 : t;
+      // Hairlines are one device pixel on 2x screens (0.5 CSS px), a touch heavier at 1x so they hold.
+      const hair = f.dpr >= 1.5 ? 0.5 : 0.75;
       const sh = (d: number): [number, number] => [cx + f.px * d * 9, cy + f.py * d * 6];
 
       const sweepAng = reduced ? -0.7 : (now / SWEEP_PERIOD) * Math.PI * 2 - Math.PI / 2;
@@ -168,16 +218,16 @@ export default function EyeScan({ fragments, hud }: Props) {
               p: 0.95,
             };
             const edge = i === 0 || i === n;
-            ctx.strokeStyle = `rgba(${W},${edge ? (i === n ? 0.62 : 0.4) : 0.07 + 0.05 * u})`;
-            ctx.lineWidth = edge ? 1 : 0.75;
+            ctx.strokeStyle = `rgba(${W},${edge ? (i === n ? 0.6 : 0.42) : 0.09 + 0.06 * u})`;
+            ctx.lineWidth = i === n ? 1 : hair;
             ctx.beginPath();
             lidPath(ctx, x, y, r, c, sign);
             ctx.stroke();
           }
         }
         // Corner hairlines, like registration marks on a drawing.
-        ctx.strokeStyle = `rgba(${W},0.16)`;
-        ctx.lineWidth = 0.75;
+        ctx.strokeStyle = `rgba(${W},0.2)`;
+        ctx.lineWidth = hair;
         ctx.beginPath();
         for (const s of [-1, 1]) {
           ctx.moveTo(x + s * r * 1.04, y);
@@ -193,11 +243,11 @@ export default function EyeScan({ fragments, hud }: Props) {
         aperturePath(ctx, x, y, r);
         ctx.clip();
         // Faint guide rings in the sclera.
-        ctx.lineWidth = 0.75;
+        ctx.lineWidth = hair;
         for (const [rr, a] of [
-          [0.56, 0.07],
-          [0.72, 0.05],
-          [0.88, 0.04],
+          [0.56, 0.09],
+          [0.72, 0.065],
+          [0.88, 0.05],
         ] as const) {
           ctx.strokeStyle = `rgba(${W},${a})`;
           ctx.beginPath();
@@ -205,7 +255,7 @@ export default function EyeScan({ fragments, hud }: Props) {
           ctx.stroke();
         }
         // Crosshair hairline through the centre.
-        ctx.strokeStyle = `rgba(${W},0.07)`;
+        ctx.strokeStyle = `rgba(${W},0.09)`;
         ctx.beginPath();
         ctx.moveTo(x - r, y);
         ctx.lineTo(x - EYE.irisOuter * r * 1.12, y);
@@ -227,8 +277,8 @@ export default function EyeScan({ fragments, hud }: Props) {
           ctx.moveTo(x + ca * r1, y + sa * r1);
           ctx.lineTo(x + ca * r2, y + sa * r2);
         }
-        ctx.strokeStyle = `rgba(${W},0.22)`;
-        ctx.lineWidth = 0.75;
+        ctx.strokeStyle = `rgba(${W},0.26)`;
+        ctx.lineWidth = hair;
         ctx.stroke();
 
         // Green sweep across the iris and sclera, clipped to the aperture.
@@ -242,8 +292,8 @@ export default function EyeScan({ fragments, hud }: Props) {
           const g = ctxAny.createConicGradient(sweep - tail, ix, iy);
           const k = tail / (Math.PI * 2);
           g.addColorStop(0, `rgba(${G},0)`);
-          g.addColorStop(k * 0.7, `rgba(${G},0.035)`);
-          g.addColorStop(k, `rgba(${G},0.11)`);
+          g.addColorStop(k * 0.7, `rgba(${G},0.025)`);
+          g.addColorStop(k, `rgba(${G},0.08)`);
           g.addColorStop(Math.min(1, k + 0.0005), `rgba(${G},0)`);
           g.addColorStop(1, `rgba(${G},0)`);
           ctx.fillStyle = g;
@@ -256,8 +306,8 @@ export default function EyeScan({ fragments, hud }: Props) {
         const ca = Math.cos(sweep);
         const sa = Math.sin(sweep);
         const lg = ctx.createLinearGradient(ix + ca * EYE.irisInner * r, iy + sa * EYE.irisInner * r, ix + ca * r, iy + sa * r);
-        lg.addColorStop(0, `rgba(${G},0.75)`);
-        lg.addColorStop(0.45, `rgba(${G},0.35)`);
+        lg.addColorStop(0, `rgba(${G},0.62)`);
+        lg.addColorStop(0.45, `rgba(${G},0.26)`);
         lg.addColorStop(1, `rgba(${G},0)`);
         ctx.strokeStyle = lg;
         ctx.lineWidth = 1;
@@ -279,13 +329,16 @@ export default function EyeScan({ fragments, hud }: Props) {
           [EYE.irisInner, 0.6, null],
         ];
         for (const [rr, a, dash] of rings) {
-          ctx.strokeStyle = `rgba(${W},${a})`;
+          const main = a >= 0.5;
+          ctx.lineWidth = main ? 1 : hair;
+          ctx.strokeStyle = `rgba(${W},${main ? a : Math.min(0.3, a * 1.35)})`;
           ctx.setLineDash(dash ?? []);
           ctx.beginPath();
           ctx.arc(ix, iy, rr * r, 0, Math.PI * 2);
           ctx.stroke();
         }
         ctx.setLineDash([]);
+        ctx.lineWidth = 1;
 
         // Counter-rotating short arcs between the rings.
         const arcs: [number, number, number, number][] = [
@@ -308,7 +361,7 @@ export default function EyeScan({ fragments, hud }: Props) {
         ctx.lineWidth = 1.5;
         for (const b of blips) {
           const k = 1 - (now - b.born) / 2.4;
-          ctx.strokeStyle = `rgba(${G},${0.85 * k * k})`;
+          ctx.strokeStyle = `rgba(${G},${0.72 * k * k})`;
           ctx.beginPath();
           ctx.arc(ix, iy, EYE.irisOuter * r, b.ang - 0.07, b.ang + 0.07);
           ctx.stroke();
@@ -323,9 +376,9 @@ export default function EyeScan({ fragments, hud }: Props) {
         ctx.lineTo(px + x1 * r, py);
         ctx.lineTo(px + x0 * r, py + h * r);
         ctx.closePath();
-        ctx.fillStyle = `rgba(${G},0.08)`;
+        ctx.fillStyle = `rgba(${G},0.05)`;
         ctx.fill();
-        ctx.strokeStyle = `rgba(${G},0.9)`;
+        ctx.strokeStyle = `rgba(${G},0.85)`;
         ctx.lineJoin = 'round';
         ctx.stroke();
       }
@@ -334,13 +387,14 @@ export default function EyeScan({ fragments, hud }: Props) {
       if (!reduced && !seeded) {
         // Start with a few already in flight so the first view is not empty.
         seeded = true;
-        for (const age of compact ? [3.5, 6.5] : [2.5, 5, 7.5]) spawn(f, now - age);
+        for (const age of compact ? [4.5] : [3, 6.5]) spawn(f, now - age);
       }
       if (!reduced) {
-        const max = compact ? 3 : 5;
+        // Sparse: a handful at most, so the eye stays the subject and the phrases read as signal.
+        const max = f.w <= 720 ? 2 : compact ? 3 : 4;
         if (now >= nextSpawn) {
           if (frags.length < max) spawn(f, now);
-          nextSpawn = now + (compact ? 3.2 : 2.1) + R() * 1.2;
+          nextSpawn = now + (compact ? 3.4 : 2.6) + R() * 1.4;
         }
       }
       ctx.font = fontFor(f);
@@ -349,13 +403,11 @@ export default function EyeScan({ fragments, hud }: Props) {
       const keep: Frag[] = [];
       for (const q of frags) {
         const u = Math.min(1, Math.max(0, (now - q.born) / q.life));
-        // Ease in: slow drift at the edge, drawn in faster near the eye.
-        const e = u * u * (1.6 - 0.6 * u);
         const ca = Math.cos(q.ang);
         const sa = Math.sin(q.ang);
-        // Radius in eye units, on a flattened path so fragments hug the lens shape.
-        const flat = 0.78;
-        const rr = q.r0 + (EYE.irisOuter - q.r0) * e;
+        // Slow drift at the edge, drawn in faster near the eye; flattened path hugs the lens.
+        const flat = FLAT;
+        const rr = radiusAt(q, u);
         const ax = ix + ca * rr * r;
         const ay = iy + sa * rr * r * flat;
         if (u >= 1) {
@@ -370,9 +422,9 @@ export default function EyeScan({ fragments, hud }: Props) {
         if (a <= 0.01) continue;
         // Leader hairline toward the iris, text sits on the far side.
         const right = ca >= 0;
-        const lead = 18;
-        ctx.strokeStyle = `rgba(${W},${0.28 * a})`;
-        ctx.lineWidth = 0.75;
+        const lead = LEAD;
+        ctx.strokeStyle = `rgba(${W},${0.32 * a})`;
+        ctx.lineWidth = hair;
         ctx.beginPath();
         ctx.moveTo(ax, ay);
         ctx.lineTo(ax + (right ? lead : -lead), ay);
@@ -381,11 +433,11 @@ export default function EyeScan({ fragments, hud }: Props) {
         const fa = Math.atan2(sa * flat, ca);
         const since = (((sweepAng - fa) % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
         const lit = reduced ? 0 : Math.exp(-since * 2.2);
-        ctx.fillStyle = `rgba(${G},${(0.55 + 0.45 * lit) * a})`;
-        ctx.fillRect(ax - 1.5, ay - 1.5, 3, 3);
-        ctx.fillStyle = `rgba(${W},${(0.6 + 0.35 * lit) * a})`;
+        ctx.fillStyle = `rgba(${G},${(0.5 + 0.4 * lit) * a})`;
+        ctx.fillRect(ax - 1, ay - 1, 2, 2);
+        ctx.fillStyle = `rgba(${W},${(0.58 + 0.32 * lit) * a})`;
         ctx.textAlign = right ? 'left' : 'right';
-        ctx.fillText(q.text, ax + (right ? lead + 6 : -lead - 6), ay + 0.5);
+        ctx.fillText(q.text, ax + (right ? lead + GAP : -lead - GAP), ay + 0.5);
       }
       frags = keep;
 
@@ -398,18 +450,18 @@ export default function EyeScan({ fragments, hud }: Props) {
         ctx.textAlign = 'center';
         const deg = reduced ? 312 : Math.floor((((now / SWEEP_PERIOD) * 360) % 360 + 360) % 360);
         const txt = `${label.toUpperCase()}   ${String(deg).padStart(3, '0')}°`;
-        ctx.fillStyle = `rgba(${W},0.38)`;
+        ctx.fillStyle = `rgba(${W},0.42)`;
         ctx.fillText(txt, x, yy);
         const tw = ctx.measureText(txt).width;
-        ctx.fillStyle = `rgba(${G},0.9)`;
-        ctx.fillRect(x - tw / 2 - 12, yy - 2, 4, 4);
+        ctx.fillStyle = `rgba(${G},0.8)`;
+        ctx.fillRect(Math.round(x - tw / 2 - 12), Math.round(yy - 2), 3, 3);
       }
     };
 
     const stage = createStage({
       canvas,
       host,
-      radius: (w, h, compact) => (compact ? Math.min(w * 0.42, 170) : Math.min(w * 0.5, h * 0.56, 290)),
+      radius: (w, h, compact) => (compact ? Math.min(w * 0.42, 170) : Math.min(w * 0.46, h * 0.52, 270)),
       setup,
       draw,
     });

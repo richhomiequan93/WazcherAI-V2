@@ -1,5 +1,5 @@
 /**
- * Shared runtime for the hero canvases: DPR-aware sizing, a single rAF loop that
+ * Runtime for the hero canvas: DPR-aware sizing, a single rAF loop that
  * pauses when the hero is offscreen or the tab is hidden, pointer tracking, and
  * prefers-reduced-motion (renders one still frame and re-renders only on resize).
  * Client only: every browser API is touched inside createStage, never at import time.
@@ -39,6 +39,8 @@ export type Frame = {
   hh: number;
   /** True on viewports at or below the mobile breakpoint. */
   compact: boolean;
+  /** Backing store scale (devicePixelRatio, capped at 2). */
+  dpr: number;
   /** Seconds since start (frozen when paused). */
   t: number;
   dt: number;
@@ -65,12 +67,9 @@ export function createStage(o: StageOptions) {
   if (!ctx) return { dispose: () => {}, redraw: () => {} };
 
   const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-  // Preview override: ?motion=1 plays the animation even when the OS asks for reduced motion,
-  // so the concepts can be reviewed on a machine with that setting on.
-  const force = new URLSearchParams(window.location.search).get('motion') === '1';
-  const isReduced = () => mq.matches && !force;
+  const isReduced = () => mq.matches;
   const f: Frame = {
-    ctx, w: 0, h: 0, cx: 0, cy: 0, r: 1, hx: 0, hy: 0, hw: 0, hh: 0, compact: false,
+    ctx, w: 0, h: 0, cx: 0, cy: 0, r: 1, hx: 0, hy: 0, hw: 0, hh: 0, compact: false, dpr: 1,
     t: 0, dt: 0, px: 0, py: 0, pointerActive: false, reduced: isReduced(),
   };
 
@@ -90,6 +89,7 @@ export function createStage(o: StageOptions) {
     canvas.width = Math.round(cr.width * dpr);
     canvas.height = Math.round(cr.height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    f.dpr = dpr;
     f.w = cr.width;
     f.h = cr.height;
     f.compact = window.innerWidth <= 960;
@@ -177,7 +177,7 @@ export function createStage(o: StageOptions) {
   document.addEventListener('visibilitychange', onVis);
   mq.addEventListener('change', onMotion);
   if (f.reduced) {
-    // Let the still frame settle once fonts are ready (canvas text in concept B).
+    // Let the still frame settle once fonts are ready (the canvas draws mono text).
     document.fonts?.ready.then(() => resize());
   }
   schedule();
@@ -208,19 +208,4 @@ export function rng(seed: number) {
     t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
-}
-
-/** Load a monochrome currentColor SVG from /public/logos as a white bitmap source. */
-export async function loadMark(id: string): Promise<HTMLImageElement | null> {
-  try {
-    const res = await fetch(`/logos/${id}.svg`);
-    const svg = (await res.text()).replace(/currentColor/g, '#ffffff').replace(/width="1em"/, 'width="64"').replace(/height="1em"/, 'height="64"');
-    const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
-    const img = new Image();
-    img.src = url;
-    await img.decode();
-    return img;
-  } catch {
-    return null;
-  }
 }
