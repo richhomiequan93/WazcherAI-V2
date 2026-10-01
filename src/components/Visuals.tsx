@@ -25,14 +25,16 @@ export function Mark({ id, label, className = '' }: { id: string; label?: string
   );
 }
 
-/** ChatGPT lockup: the knot mark plus a live text wordmark, labelled for assistive tech as one image. */
-export function ChatGPTLogo({ className = '' }: { className?: string }) {
+/**
+ * Engine lockup used wherever engines appear: the engine's symbol in a fixed square box plus its name
+ * set in our own type. Every engine gets the identical treatment; brand wordmarks are never used.
+ */
+export function EngineLogo({ id, className = '' }: { id: EngineId; className?: string }) {
+  const name = ENGINES.find((e) => e.id === id)!.name;
   return (
-    <span className={`gpt-logo ${className}`} role="img" aria-label="ChatGPT">
-      <Mark id="chatgpt" className="gpt-knot" />
-      <span className="gpt-word" aria-hidden="true">
-        ChatGPT
-      </span>
+    <span className={`engine ${className}`}>
+      <Mark id={id} className="engine-mark" />
+      <span className="engine-name">{name}</span>
     </span>
   );
 }
@@ -84,14 +86,10 @@ export function AskAICard({ t }: { t: Dict['ask'] }) {
         </div>
         <ul className="ask-rows">
           {MENTIONS.map((r) => {
-            const name = ENGINES.find((e) => e.id === r.id)!.name;
             const on = r.n > 0;
             return (
               <li key={r.id}>
-                <span className="ask-engine">
-                  <Mark id={r.id} />
-                  <span>{name}</span>
-                </span>
+                <EngineLogo id={r.id} className="ask-engine" />
                 <span className={on ? 'ask-m on' : 'ask-m'}>
                   <i aria-hidden="true" className={on ? 'sq on' : 'sq'} />
                   {on ? (

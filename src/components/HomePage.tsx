@@ -5,7 +5,7 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { CITORA_URL, EMAIL, LINKEDIN_URL, LOCALES, X_URL, type Dict, type Locale } from './i18n';
 import { useLocale } from './useLocale';
-import { AdStrategyCard, AskAICard, ChatGPTLogo, ENGINES, Mark, OpportunityMap } from './Visuals';
+import { AdStrategyCard, AskAICard, ENGINES, EngineLogo, OpportunityMap } from './Visuals';
 
 // Hero visual concepts load client side only: canvas code never runs during SSR, and `/` never ships it.
 const EyeParticles = dynamic(() => import('./hero/EyeParticles'), { ssr: false });
@@ -203,11 +203,7 @@ function Hero({ t, concept }: { t: Dict; concept?: HeroConcept }) {
           <ul className="engine-row">
             {ENGINES.map((e) => (
               <li key={e.id}>
-                {e.id === 'chatgpt' ? (
-                  <ChatGPTLogo className="wordmark" />
-                ) : (
-                  <Mark id={`${e.id}-text`} label={e.name} className="wordmark" />
-                )}
+                <EngineLogo id={e.id} />
               </li>
             ))}
           </ul>
@@ -356,7 +352,7 @@ function AdsSection({ t }: { t: Dict['ads'] }) {
         <header className="sec-head rv">
           <p className="eyebrow">{t.label}</p>
           <p className="ads-kicker">
-            <ChatGPTLogo className="ads-logo" />
+            <EngineLogo id="chatgpt" className="ads-logo" />
             <span>{t.kicker}</span>
           </p>
           <h2 id="ads-title" className="h2">{t.title}</h2>

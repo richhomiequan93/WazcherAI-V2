@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Inter_Tight, JetBrains_Mono, Noto_Sans_SC, Noto_Sans_TC } from 'next/font/google';
+import { Fragment_Mono, Funnel_Display, Inter, Noto_Sans_SC, Noto_Sans_TC } from 'next/font/google';
 import './globals.css';
 
-const interTight = Inter_Tight({
+// Display: Funnel Display, variable wght axis (one file serves the 300 to 500 headings).
+const display = Funnel_Display({
   subsets: ['latin'],
-  weight: ['300', '400', '500'],
   variable: '--font-display',
   display: 'swap',
 });
@@ -15,9 +15,10 @@ const inter = Inter({
   display: 'swap',
 });
 
-const mono = JetBrains_Mono({
+// Mono ships one weight only; hierarchy comes from size, colour and opacity, never synthetic bold.
+const mono = Fragment_Mono({
   subsets: ['latin'],
-  weight: ['400', '500'],
+  weight: '400',
   variable: '--font-mono',
   display: 'swap',
 });
@@ -64,7 +65,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${interTight.variable} ${inter.variable} ${mono.variable} ${notoTC.variable} ${notoSC.variable}`}
+      className={`${display.variable} ${inter.variable} ${mono.variable} ${notoTC.variable} ${notoSC.variable}`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: langScript }} />

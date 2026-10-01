@@ -35,8 +35,8 @@ const en = {
     metrics: [
       { v: '4', l: 'AI engines' },
       { v: '5-step', l: 'closed loop' },
-      { v: 'Mentioned', l: '+ cited' },
-      { v: 'Daily', l: 'tracking' },
+      { v: '24/7', l: 'always running' },
+      { v: '1-page', l: 'executive report' },
     ],
   },
   ask: {
@@ -327,10 +327,10 @@ const zhTW: Dict = {
     works: '支援引擎',
     metricsLabel: 'Citora 概況',
     metrics: [
-      { v: '4', l: '個 AI 引擎' },
-      { v: '5', l: '步閉環' },
-      { v: '提到', l: '+ 引用' },
-      { v: '每日', l: '追蹤' },
+      { v: '4 個', l: 'AI 引擎' },
+      { v: '5 步', l: '閉環' },
+      { v: '24/7', l: '全天候運作' },
+      { v: '1 頁', l: '高層摘要報告' },
     ],
   },
   ask: {
@@ -615,10 +615,10 @@ const zhCN: Dict = {
     works: '支持引擎',
     metricsLabel: 'Citora 概览',
     metrics: [
-      { v: '4', l: '个 AI 引擎' },
-      { v: '5', l: '步闭环' },
-      { v: '提到', l: '+ 引用' },
-      { v: '每日', l: '追踪' },
+      { v: '4 个', l: 'AI 引擎' },
+      { v: '5 步', l: '闭环' },
+      { v: '24/7', l: '全天候运行' },
+      { v: '1 页', l: '高管摘要报告' },
     ],
   },
   ask: {

@@ -18,8 +18,8 @@
   --f-mono: var(--font-mono), var(--cjk), ui-monospace, monospace;
 
   --k: 1; /* heading scale, reduced for CJK */
-  --track-d: -0.035em;
-  --track-h: -0.03em;
+  --track-d: -0.03em;
+  --track-h: -0.025em;
   --lh-body: 1.6;
   --lh-head: 1.04;
 
@@ -71,6 +71,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  font-synthesis: none;
   overflow-x: hidden;
 }
 
@@ -212,34 +213,19 @@ ul {
   -webkit-mask-size: contain;
   mask-size: contain;
 }
-.gpt-logo {
+/* engine lockup: symbol in a fixed square box + name in our own type, identical for all four */
+.engine {
   display: inline-flex;
   align-items: center;
-  gap: 0.28em;
-  height: 1em;
+  gap: 0.5em;
   line-height: 1;
+  white-space: nowrap;
 }
-.gpt-knot {
-  font-size: 1.08em;
+.engine-mark {
+  font-size: 1.2em;
 }
-.gpt-word {
-  font-family: var(--font-body), system-ui, sans-serif;
-  font-size: 1em;
-  font-weight: 500;
-  letter-spacing: -0.03em;
+.engine-name {
   line-height: 1;
-}
-.m-claude-text {
-  width: auto;
-  aspect-ratio: 97 / 24;
-}
-.m-gemini-text {
-  width: auto;
-  aspect-ratio: 82 / 24;
-}
-.m-perplexity-text {
-  width: auto;
-  aspect-ratio: 117 / 24;
 }
 
 /* ---------- type ---------- */
@@ -606,9 +592,17 @@ html[lang='zh-CN'] .h2 {
 .engine-row li {
   display: flex;
 }
-.wordmark {
-  font-size: 20px;
-  color: rgba(255, 255, 255, 0.6);
+.engine-row .engine {
+  font-family: var(--f-display);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.7);
+}
+.engine-row .engine-mark {
+  width: 21px;
+  height: 21px;
+  font-size: 21px;
 }
 
 .metrics {
@@ -617,19 +611,18 @@ html[lang='zh-CN'] .h2 {
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
-/* value and label share one baseline, so each cell reads as a single confident phrase */
+/* Latin: value over label, every cell two lines so the four read as one even row.
+   CJK labels are short enough to share the value's baseline on one line. */
 .metric {
   display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  column-gap: 0.32em;
-  padding: 30px 28px 28px;
+  flex-direction: column;
+  padding: 28px 28px 26px;
   border-left: 1px solid var(--line);
   font-family: var(--f-display);
-  font-size: clamp(22px, 1.9vw, 27px);
+  font-size: clamp(21px, 1.8vw, 26px);
   font-weight: 300;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
 }
 .metric:first-child {
   border-left: 0;
@@ -637,6 +630,7 @@ html[lang='zh-CN'] .h2 {
 }
 .metric-v {
   color: var(--text);
+  font-weight: 400;
   font-variant-numeric: tabular-nums;
 }
 .metric-l {
@@ -644,8 +638,17 @@ html[lang='zh-CN'] .h2 {
 }
 html[lang='zh-TW'] .metric,
 html[lang='zh-CN'] .metric {
-  column-gap: 0.18em;
+  flex-direction: row;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: 0.2em;
+  padding-top: 30px;
+  padding-bottom: 28px;
   letter-spacing: 0;
+}
+html[lang='zh-TW'] .metric-v,
+html[lang='zh-CN'] .metric-v {
+  font-weight: 300;
 }
 
 /* ---------- cards (example product surfaces) ---------- */
@@ -788,7 +791,9 @@ html[lang='zh-CN'] .metric {
   gap: 10px;
   color: var(--text);
 }
-.ask-engine .mark {
+.ask-engine .engine-mark {
+  width: 15px;
+  height: 15px;
   font-size: 15px;
   color: rgba(255, 255, 255, 0.6);
 }
@@ -1157,8 +1162,16 @@ html[lang='zh-CN'] .h3 {
   font-weight: 500;
 }
 .ads-logo {
-  font-size: 22px;
+  font-family: var(--f-display);
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
   color: var(--text);
+}
+.ads-logo .engine-mark {
+  width: 22px;
+  height: 22px;
+  font-size: 22px;
 }
 
 .tiers {
@@ -1650,6 +1663,8 @@ details[open] .plus::after {
 .hero-concept {
   position: relative;
   isolation: isolate;
+  /* the eye's radial light extends past the viewport; clip it sideways only */
+  overflow-x: clip;
 }
 .hero-canvas {
   position: absolute;
@@ -1837,16 +1852,17 @@ details[open] .plus::after {
     gap: 22px 24px;
     width: 100%;
   }
-  .wordmark {
-    font-size: 18px;
+  .engine-row .engine {
+    font-size: 17px;
   }
   .metrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .metric {
-    padding: 22px 0 20px 16px;
+  .metric,
+  html[lang='zh-TW'] .metric,
+  html[lang='zh-CN'] .metric {
+    padding: 20px 0 18px 16px;
     font-size: 18px;
-    letter-spacing: -0.015em;
   }
   .metric:nth-child(odd) {
     border-left: 0;
