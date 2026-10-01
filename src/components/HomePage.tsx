@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import Image from 'next/image';
 import { CITORA_URL, EMAIL, LINKEDIN_URL, LOCALES, X_URL, type Dict, type Locale } from './i18n';
 import { useLocale } from './useLocale';
-import { AdStrategyCard, CitationTable, ENGINES, ExperimentCard, Mark } from './Visuals';
+import { AdStrategyCard, AskAICard, ENGINES, Mark, OpportunityMap } from './Visuals';
 
 const pad = (n: number) => String(n).padStart(2, '0');
 
@@ -180,7 +180,7 @@ function Hero({ t }: { t: Dict }) {
           </div>
         </div>
         <div className="hero-visual">
-          <CitationTable t={t.test} />
+          <AskAICard t={t.ask} />
         </div>
       </div>
       <div className="wrap">
@@ -198,8 +198,7 @@ function Hero({ t }: { t: Dict }) {
           {h.metrics.map((m) => (
             <div key={m.l} className="metric">
               <dt className="metric-l">{m.l}</dt>
-              <dd className={`metric-v${m.v.startsWith('+') ? ' delta' : ''}`}>{m.v}</dd>
-              {'n' in m && m.n ? <dd className="metric-n">{m.n}</dd> : null}
+              <dd className="metric-v">{m.v}</dd>
             </div>
           ))}
         </dl>
@@ -216,6 +215,18 @@ function Shift({ t }: { t: Dict['shift'] }) {
           <p className="eyebrow">{t.label}</p>
           <h2 id="shift-title" className="h2">{t.title}</h2>
         </header>
+        <div className="stats rv">
+          <p className="mono-label sub-label">{t.statsLabel}</p>
+          <dl className="stat-row">
+            {t.stats.map((st) => (
+              <div key={st.v} className="stat">
+                <dt className="stat-d">{st.d}</dt>
+                <dd className="stat-v">{st.v}</dd>
+                <dd className="src">{st.s}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
         <ol className="manifesto">
           {t.items.map((it, i) => (
             <li key={it.t} className="rv">
@@ -243,25 +254,57 @@ function CitoraSection({ t }: { t: Dict['citora'] }) {
         </header>
 
         <div className="split">
-          <div>
-            <p className="mono-label sub-label rv">{t.loopLabel}</p>
-            <ol className="loop">
-              {t.steps.map((s, i) => (
-                <li key={s.n} className="rv">
-                  <span className="idx">{pad(i + 1)}</span>
-                  <h3 className="loop-n">{s.n}</h3>
-                  <p className="loop-d">{s.d}</p>
-                  <ul className="keys">
-                    {s.k.map((k) => (
-                      <li key={k}>{k}</li>
-                    ))}
-                  </ul>
-                </li>
-              ))}
-            </ol>
-          </div>
+          <ol className="pillars">
+            {t.pillars.map((p, i) => (
+              <li key={p.n} className="rv">
+                <span className="idx">{pad(i + 1)}</span>
+                <h3 className="pillar-n">{p.n}</h3>
+                <dl className="ba">
+                  <div>
+                    <dt>{t.beforeLabel}</dt>
+                    <dd>{p.before}</dd>
+                  </div>
+                  <div className="now">
+                    <dt>{t.nowLabel}</dt>
+                    <dd>{p.now}</dd>
+                  </div>
+                </dl>
+                <ul className="keys">
+                  {p.k.map((k) => (
+                    <li key={k}>{k}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ol>
           <div className="aside rv">
-            <ExperimentCard t={t.exp} />
+            <OpportunityMap t={t.map} />
+          </div>
+        </div>
+
+        <div className="loop5 rv">
+          <p className="mono-label sub-label">{t.loopLabel}</p>
+          <h3 className="h3">{t.loopTitle}</h3>
+          <p className="loop5-note">{t.loopNote}</p>
+          <ol className="flow-nodes loop-nodes">
+            {t.steps.map((s, i) => (
+              <li key={s.n}>
+                <span className="idx">{pad(i + 1)}</span>
+                <span className="flow-t">{s.n}</span>
+                <span className="loop-d">{s.d}</span>
+              </li>
+            ))}
+          </ol>
+          <div className="flow-back loop-back" aria-hidden="true">
+            <span className="flow-back-line" />
+            <span className="mono-label">{t.loopBack}</span>
+          </div>
+          <div className="research">
+            <span className="stat-v">{t.research.v}</span>
+            <div>
+              <p>{t.research.d}</p>
+              <p className="src">{t.research.s}</p>
+            </div>
           </div>
         </div>
 
@@ -556,7 +599,8 @@ export default function HomePage() {
   const { locale, setLocale, t } = useLocale();
   useReveal();
 
-  useEffect(() => {
+  // Before paint, so CJK line-height and letter-spacing switch in the same frame as the text.
+  useLayoutEffect(() => {
     document.documentElement.lang = locale;
   }, [locale]);
 

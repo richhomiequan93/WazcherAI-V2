@@ -34,101 +34,113 @@ function CardHead({ tag, title }: { tag: string; title: string }) {
   );
 }
 
-/* Example values only: every card is labelled "Example" in the UI. */
-const CITATIONS: { id: EngineId; cited: boolean; pos: string; sent: 'positive' | 'neutral' | null }[] = [
-  { id: 'openai', cited: true, pos: '#2', sent: 'positive' },
-  { id: 'claude', cited: true, pos: '#1', sent: 'positive' },
-  { id: 'gemini', cited: false, pos: '', sent: null },
-  { id: 'perplexity', cited: true, pos: '#3', sent: 'neutral' },
+/* Example values only, mirroring the illustration on citora.ai. Every card is labelled "Example" in the UI. */
+const MENTIONS: { id: EngineId; n: number }[] = [
+  { id: 'openai', n: 3 },
+  { id: 'claude', n: 2 },
+  { id: 'gemini', n: 0 },
+  { id: 'perplexity', n: 1 },
 ];
 
-export function CitationTable({ t }: { t: Dict['test'] }) {
+const CITED: { d: string | null; n: number }[] = [
+  { d: 'semrush.com', n: 4 },
+  { d: 'g2.com', n: 2 },
+  { d: 'reddit.com', n: 2 },
+  { d: null, n: 0 },
+];
+
+export function AskAICard({ t }: { t: Dict['ask'] }) {
+  const max = Math.max(...CITED.map((c) => c.n));
   return (
-    <figure className="card cite" aria-label={`${t.tag}: ${t.title}`}>
+    <figure className="card ask" aria-label={`${t.tag}: ${t.title}`}>
       <CardHead tag={t.tag} title={t.title} />
       <dl className="cite-meta">
         <div>
-          <dt>{t.queryLabel}</dt>
-          <dd>{t.query}</dd>
+          <dt>{t.qLabel}</dt>
+          <dd>{t.q}</dd>
         </div>
         <div>
           <dt>{t.brandLabel}</dt>
           <dd>{t.brand}</dd>
         </div>
       </dl>
-      <table className="cite-table">
-        <thead>
-          <tr>
-            {t.cols.map((c) => (
-              <th key={c} scope="col">{c}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {CITATIONS.map((r) => {
+
+      <div className="ask-block">
+        <div className="ask-sub">
+          <span>{t.answersTitle}</span>
+          <span>{t.today}</span>
+        </div>
+        <ul className="ask-rows">
+          {MENTIONS.map((r) => {
             const name = ENGINES.find((e) => e.id === r.id)!.name;
+            const on = r.n > 0;
             return (
-              <tr key={r.id}>
-                <th scope="row">
+              <li key={r.id}>
+                <span className="ask-engine">
                   <Mark id={r.id} />
                   <span>{name}</span>
-                </th>
-                <td>
-                  <span className={r.cited ? 'yes' : 'no'}>
-                    <i aria-hidden="true" className={r.cited ? 'sq on' : 'sq'} />
-                    {r.cited ? t.yes : t.no}
-                  </span>
-                </td>
-                <td className="num">{r.cited ? r.pos : t.na}</td>
-                <td>{r.sent === 'positive' ? t.positive : r.sent === 'neutral' ? t.neutral : t.na}</td>
-              </tr>
+                </span>
+                <span className={on ? 'ask-m on' : 'ask-m'}>
+                  <i aria-hidden="true" className={on ? 'sq on' : 'sq'} />
+                  {on ? (
+                    <>
+                      {t.mentioned} <span className="num">×{r.n}</span>
+                    </>
+                  ) : (
+                    t.notMentioned
+                  )}
+                </span>
+              </li>
             );
           })}
-        </tbody>
-      </table>
-      <div className="cite-foot">
-        <span>{t.rateLabel}</span>
-        <span className="meter" aria-hidden="true"><span style={{ width: '75%' }} /></span>
-        <span className="num">75%</span>
-        <span className="muted">{t.rate}</span>
+        </ul>
+      </div>
+
+      <div className="ask-block">
+        <div className="ask-sub">
+          <span>{t.citedTitle}</span>
+          <span>{t.period}</span>
+        </div>
+        <ul className="ask-rows ask-cited">
+          {CITED.map((c) => (
+            <li key={c.d ?? 'you'} className={c.d ? '' : 'you'}>
+              <span className={c.d ? 'mono' : ''}>{c.d ?? t.yourSite}</span>
+              <span className="meter" aria-hidden="true">
+                <span style={{ width: `${(c.n / max) * 100}%` }} />
+              </span>
+              <span className="num">×{c.n}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </figure>
   );
 }
 
-export function ExperimentCard({ t }: { t: Dict['citora']['exp'] }) {
-  const variants = [
-    { k: 'A', label: t.a, rate: 38 },
-    { k: 'B', label: t.b, rate: 54 },
-  ];
+export function OpportunityMap({ t }: { t: Dict['citora']['map'] }) {
   return (
-    <figure className="card exp" aria-label={`${t.tag}: ${t.title}`}>
+    <figure className="card omap" aria-label={`${t.tag}: ${t.title}`}>
       <CardHead tag={t.tag} title={t.title} />
-      <div className="exp-vars">
-        {variants.map((v) => (
-          <div key={v.k} className={`exp-var${v.k === 'B' ? ' win' : ''}`}>
-            <div className="exp-var-top">
-              <span className="mono-label">{t.variant} {v.k}</span>
-              <span className="num exp-rate">{v.rate}%</span>
-            </div>
-            <p>{v.label}</p>
-            <span className="meter" aria-hidden="true"><span style={{ width: `${v.rate}%` }} /></span>
-            <span className="sr-only">{t.rate}</span>
+      {t.lanes.map((lane, i) => (
+        <div key={lane.n} className={`omap-lane${i === 0 ? ' blue' : ''}`}>
+          <div className="omap-top">
+            <span className="omap-n">
+              <i aria-hidden="true" className={i === 0 ? 'sq on' : 'sq'} />
+              {lane.n}
+            </span>
+            <span className="omap-d">{lane.d}</span>
           </div>
-        ))}
-      </div>
-      <dl className="spec">
-        {t.rows.map(([k, v]) => (
-          <div key={k}>
-            <dt>{k}</dt>
-            <dd>{v}</dd>
-          </div>
-        ))}
-        <div className="spec-result">
-          <dt>{t.result}</dt>
-          <dd className="delta">{t.resultV}</dd>
+          <ul>
+            {lane.rows.map(([q, v]) => (
+              <li key={q}>
+                <span className="omap-q">{q}</span>
+                <span className="omap-v">{v}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-      </dl>
+      ))}
+      <p className="omap-foot">{t.foot}</p>
     </figure>
   );
 }

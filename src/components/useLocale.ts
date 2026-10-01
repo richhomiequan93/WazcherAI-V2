@@ -36,6 +36,8 @@ export function useLocale() {
   const locale = useSyncExternalStore(subscribe, read, () => 'en' as Locale);
   const setLocale = useCallback((l: Locale) => {
     memory = l;
+    // Set <html lang> synchronously so the CJK typography rules (html:lang(...)) apply in the same frame.
+    document.documentElement.lang = l;
     try {
       window.localStorage.setItem(KEY, l);
     } catch {
