@@ -105,8 +105,8 @@ export default function EyeScan({ fragments, hud }: Props) {
       if (Math.abs(Math.sin(ang)) < 0.2) return false; // the lid corners stay clean
       const b = boxAt(f, ang, rr, w);
       const m = 12; // room for pointer parallax
-      // Side by side layout: the copy is on the left, so the right edge may use the page gutter.
-      const right = f.compact ? f.hx + f.hw - m : Math.max(f.hx + f.hw - m, f.w - 28);
+      // Labels stay inside the eye column on every layout, never in the page gutter.
+      const right = f.hx + f.hw - m;
       if (b.x0 < f.hx + m || b.x1 > right) return false;
       if (b.y0 < f.hy + m || b.y1 > f.hy + f.hh - m) return false;
       const capY = f.cy + (EYE.outer.e + EYE.outer.a) * f.r + (f.compact ? 26 : 34);
