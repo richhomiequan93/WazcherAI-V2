@@ -2540,3 +2540,98 @@ html[lang='zh-CN'] .adwin-target {
     padding: 0;
   }
 }
+
+/* ---------- product shots as light paper objects ----------
+   The page stays dark; the three product surfaces (Ask AI field, AI Profile sheets, ad strategy
+   window) are warm paper with ink type, so they read as real objects instead of grey dark boxes.
+   Re-scoping the text and hairline tokens lets every inner rule follow without rewrites. */
+.ask-q,
+.pf-sheet,
+.adwin {
+  --text: #151513;
+  --text-2: rgba(21, 21, 19, 0.66);
+  --text-3: rgba(21, 21, 19, 0.46);
+  --hair: rgba(21, 21, 19, 0.09);
+  --hair-2: rgba(21, 21, 19, 0.14);
+  --line: rgba(21, 21, 19, 0.09);
+  --line-2: rgba(21, 21, 19, 0.14);
+  --green: #1f9a0c;
+  color: var(--text);
+  background: #ecebe5;
+  border: 0;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 30px 60px -30px rgba(0, 0, 0, 0.7),
+    0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+/* Ask AI: a real input field, with a caret after the question */
+.ask-q {
+  border-radius: 12px;
+  padding: 16px 20px 18px;
+}
+.ask-text::after {
+  content: '';
+  display: inline-block;
+  width: 1.5px;
+  height: 1.05em;
+  margin-left: 3px;
+  vertical-align: -0.16em;
+  background: var(--text);
+}
+
+/* AI Profile: two printed sheets. A sits behind, set down slightly askew; B is the live one. */
+.pf-sheet {
+  border-radius: 3px;
+  padding: 20px 22px 24px;
+}
+.pf-a {
+  opacity: 1;
+  background: #d6d4cd;
+  transform: rotate(-1.4deg) translateY(6px);
+  filter: saturate(0.8);
+}
+.pf-a .pf-name,
+.pf-a .pf-line {
+  color: rgba(21, 21, 19, 0.5);
+}
+.pf-b::before {
+  content: none;
+}
+.pf-b .pf-k {
+  color: var(--green);
+}
+.pf-bars {
+  gap: 8px;
+}
+.pf-bars i {
+  height: 4px;
+  border-radius: 0;
+  background: rgba(21, 21, 19, 0.12);
+}
+
+/* Ad strategy window: a light app window; the dark page frames it */
+.adwin {
+  border-radius: 10px;
+  overflow: hidden;
+}
+.adwin-bar {
+  background: #e2e1da;
+}
+.adwin-bar .dots i {
+  background: rgba(21, 21, 19, 0.16);
+}
+.adwin-tabs li.on {
+  background: #ecebe5;
+  color: var(--text);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+.adwin-bars .b-rival {
+  background: rgba(21, 21, 19, 0.2);
+}
+.adwin .adwin-engine {
+  color: rgba(21, 21, 19, 0.86);
+}
+.adwin .lg-rival {
+  background: rgba(21, 21, 19, 0.28);
+}
