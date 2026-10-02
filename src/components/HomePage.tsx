@@ -5,6 +5,11 @@ import { EMAIL, type Dict } from './i18n';
 import { useLocale } from './useLocale';
 import { ArrowRight, Footer, LaunchButton, Nav, useHtmlLang, useReveal } from './Shell';
 import { AdStrategyCard, ENGINES, EngineLogo, OpportunityMap } from './Visuals';
+import { BeatsCards } from './beats/BeatsCards';
+import { BeatsStage } from './beats/BeatsStage';
+
+/** Preview routes swap only the Citora beats: 'a' stacking cards, 'b' pinned stage. */
+export type BeatsConcept = 'a' | 'b';
 
 // The scanning eye is canvas only: it loads in its own client chunk after hydration and never
 // runs during SSR. The .hero-eye box below reserves its space, so the late mount causes no shift.
@@ -71,7 +76,25 @@ function Shift({ t }: { t: Dict['shift'] }) {
   );
 }
 
-function CitoraSection({ t, note }: { t: Dict['citora']; note: string }) {
+function CitoraSection({ t, note, concept }: { t: Dict['citora']; note: string; concept?: BeatsConcept }) {
+  if (concept) {
+    return (
+      <section className={`sec tone tone-ink2 sec-beats sec-beats-${concept}`} id="citora" aria-labelledby="citora-title">
+        <div className="wrap sec-in">
+          {concept === 'a' ? (
+            <header className="sec-head rv">
+              <p className="eyebrow">{t.label}</p>
+              <h2 id="citora-title" className="h2">{t.title}</h2>
+            </header>
+          ) : (
+            /* B: the stage's three stacked words read as the title, so the heading is for screen readers */
+            <h2 id="citora-title" className="sr-only">{t.title}</h2>
+          )}
+          {concept === 'a' ? <BeatsCards t={t} note={note} /> : <BeatsStage t={t} note={note} />}
+        </div>
+      </section>
+    );
+  }
   return (
     <section className="sec tone tone-ink2" id="citora" aria-labelledby="citora-title">
       <div className="wrap sec-in">
@@ -150,7 +173,7 @@ function Closing({ t }: { t: Dict }) {
   );
 }
 
-export default function HomePage() {
+export default function HomePage({ concept }: { concept?: BeatsConcept } = {}) {
   const { locale, setLocale, t } = useLocale();
   useReveal();
   useHtmlLang(locale);
@@ -162,7 +185,7 @@ export default function HomePage() {
       <main id="main">
         <Hero t={t} />
         <Shift t={t.shift} />
-        <CitoraSection t={t.citora} note={t.demoNote} />
+        <CitoraSection t={t.citora} note={t.demoNote} concept={concept} />
         <AdsSection t={t.ads} note={t.demoNote} />
         <TokenSection t={t.token} />
         <Closing t={t} />

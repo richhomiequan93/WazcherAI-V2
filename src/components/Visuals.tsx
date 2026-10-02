@@ -42,9 +42,9 @@ export function EngineLogo({ id, className = '' }: { id: EngineId; className?: s
 
 /* ---------- opportunity map ---------- */
 
-type Site = 'you' | 'g2' | 'semrush' | 'reddit' | 'wikipedia' | 'ahrefs' | 'capterra' | 'hubspot' | 'forbes' | 'youtube' | 'techradar';
+export type Site = 'you' | 'g2' | 'semrush' | 'reddit' | 'wikipedia' | 'ahrefs' | 'capterra' | 'hubspot' | 'forbes' | 'youtube' | 'techradar';
 
-const DOMAIN: Record<Exclude<Site, 'you'>, string> = {
+export const DOMAIN: Record<Exclude<Site, 'you'>, string> = {
   g2: 'g2.com',
   semrush: 'semrush.com',
   reddit: 'reddit.com',
@@ -91,7 +91,7 @@ const LANES: { tone: 'blue' | 'amber' | 'red'; count: number; rows: { cited: Sit
   },
 ];
 
-function Favicon({ site, you }: { site: Site; you: string }) {
+export function Favicon({ site, you }: { site: Site; you: string }) {
   if (site === 'you') {
     return (
       <span className="fav fav-you" role="img" aria-label={you} title={you}>
@@ -158,7 +158,7 @@ export function OpportunityMap({ t, note, rows = 4 }: { t: Dict['citora']['map']
           );
         })}
       </div>
-      <figcaption className="demo-note">{note}</figcaption>
+      {note ? <figcaption className="demo-note">{note}</figcaption> : null}
     </figure>
   );
 }
