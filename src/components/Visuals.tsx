@@ -107,7 +107,8 @@ function Favicon({ site, you }: { site: Site; you: string }) {
   );
 }
 
-export function OpportunityMap({ t, note }: { t: Dict['citora']['map']; note: string }) {
+/** `rows` caps the questions shown per lane (the home page shows three, keeping its copy short). */
+export function OpportunityMap({ t, note, rows = 4 }: { t: Dict['citora']['map']; note: string; rows?: number }) {
   return (
     <figure className="omap" aria-label={t.title}>
       <div className="omap-head">
@@ -120,7 +121,8 @@ export function OpportunityMap({ t, note }: { t: Dict['citora']['map']; note: st
       <div className="omap-lanes">
         {LANES.map((lane, li) => {
           const copy = t.lanes[li];
-          const max = Math.max(...lane.rows.map((r) => r.n));
+          const shown = lane.rows.slice(0, rows);
+          const max = Math.max(...shown.map((r) => r.n));
           return (
             <section key={lane.tone} className={`lane lane-${lane.tone}`} aria-label={copy.n}>
               <header className="lane-head">
@@ -131,11 +133,11 @@ export function OpportunityMap({ t, note }: { t: Dict['citora']['map']; note: st
               </header>
               <p className="lane-d">{copy.d}</p>
               <ul className="lane-rows">
-                {lane.rows.map((r, ri) => {
+                {shown.map((r, ri) => {
                   const mine = r.cited.includes('you');
                   const style = { '--w': `${Math.round((r.n / max) * 100)}%` } as CSSProperties;
                   return (
-                    <li key={ri} style={style} className={ri === lane.rows.length - 1 ? 'tail' : undefined}>
+                    <li key={ri} style={style} className={ri === shown.length - 1 ? 'tail' : undefined}>
                       <span className="lane-bar" aria-hidden="true" />
                       <p className="lane-q">{copy.rows[ri]}</p>
                       <div className="lane-meta">

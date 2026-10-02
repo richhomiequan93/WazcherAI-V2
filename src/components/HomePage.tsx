@@ -1,177 +1,19 @@
 'use client';
 
-import { useEffect, useLayoutEffect, useState } from 'react';
-import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import { CITORA_URL, EMAIL, LINKEDIN_URL, LOCALES, X_URL, type Dict, type Locale } from './i18n';
+import { EMAIL, type Dict } from './i18n';
 import { useLocale } from './useLocale';
-import { AdStrategyCard, ENGINES, EngineLogo, Mark, OpportunityMap } from './Visuals';
+import { ArrowRight, Footer, LaunchButton, Nav, useHtmlLang, useReveal } from './Shell';
+import { AdStrategyCard, ENGINES, EngineLogo, OpportunityMap } from './Visuals';
 
 // The scanning eye is canvas only: it loads in its own client chunk after hydration and never
 // runs during SSR. The .hero-eye box below reserves its space, so the late mount causes no shift.
 const EyeScan = dynamic(() => import('./hero/EyeScan'), { ssr: false });
 
-const pad = (n: number) => String(n).padStart(2, '0');
-
-function useReveal() {
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const els = Array.from(document.querySelectorAll<HTMLElement>('.rv'));
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) {
-            e.target.classList.add('in');
-            io.unobserve(e.target);
-          }
-        }
-      },
-      { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
-    );
-    // Only hide elements that start below the fold, so nothing already visible blinks.
-    for (const el of els) {
-      if (el.getBoundingClientRect().top > window.innerHeight) {
-        el.classList.add('rv-wait');
-        io.observe(el);
-      }
-    }
-    return () => io.disconnect();
-  }, []);
-}
-
-function ArrowOut() {
-  return (
-    <svg className="arrow" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-      <path d="M3.5 8.5l5-5M4.5 3.5h4v4" fill="none" stroke="currentColor" strokeWidth="1.2" />
-    </svg>
-  );
-}
-
-function ArrowRight() {
-  return (
-    <svg className="arrow" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-      <path d="M2 6h8M7 3l3 3-3 3" fill="none" stroke="currentColor" strokeWidth="1.2" />
-    </svg>
-  );
-}
-
-function LaunchButton({ label, className = '' }: { label: string; className?: string }) {
-  return (
-    <a className={`btn btn-primary ${className}`} href={CITORA_URL} target="_blank" rel="noopener noreferrer">
-      {label}
-      <ArrowOut />
-    </a>
-  );
-}
-
-function LangSwitch({ locale, setLocale, label }: { locale: Locale; setLocale: (l: Locale) => void; label: string }) {
-  return (
-    <div className="lang" role="group" aria-label={label}>
-      {LOCALES.map((l) => (
-        <button
-          key={l.id}
-          type="button"
-          lang={l.id}
-          className={locale === l.id ? 'on' : ''}
-          aria-pressed={locale === l.id}
-          title={l.name}
-          onClick={() => setLocale(l.id)}
-        >
-          {l.short}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-function Nav({ t, locale, setLocale }: { t: Dict; locale: Locale; setLocale: (l: Locale) => void }) {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false);
-    };
-    const onResize = () => {
-      if (window.innerWidth > 960) setOpen(false);
-    };
-    document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', onKey);
-    window.addEventListener('resize', onResize);
-    return () => {
-      document.body.style.overflow = '';
-      window.removeEventListener('keydown', onKey);
-      window.removeEventListener('resize', onResize);
-    };
-  }, [open]);
-
-  const links: [string, string][] = [
-    ['#citora', t.nav.citora],
-    ['#ads', t.nav.ads],
-    ['#token', t.nav.token],
-    ['#roadmap', t.nav.roadmap],
-    ['#faq', t.nav.faq],
-  ];
-
-  return (
-    <header className={`nav${scrolled || open ? ' nav-solid' : ''}`}>
-      <div className="wrap nav-in">
-        <a href="#top" className="nav-logo" aria-label={t.nav.home}>
-          <Image src="/logo.png" alt="Wazcher" width={4297} height={779} priority />
-        </a>
-        <nav aria-label="Primary" className="nav-links">
-          {links.map(([h, l]) => (
-            <a key={h} href={h} className={h === '#token' ? 'mono' : ''}>{l}</a>
-          ))}
-        </nav>
-        <div className="nav-end">
-          <LangSwitch locale={locale} setLocale={setLocale} label={t.nav.language} />
-          <a className="btn btn-outline btn-sm" href={CITORA_URL} target="_blank" rel="noopener noreferrer">
-            {t.nav.launch}
-            <ArrowOut />
-          </a>
-        </div>
-        <button
-          type="button"
-          className="nav-toggle"
-          aria-expanded={open}
-          aria-controls="drawer"
-          aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span className={open ? 'bars x' : 'bars'} aria-hidden="true" />
-        </button>
-      </div>
-      <div id="drawer" className="drawer" hidden={!open}>
-        <nav aria-label="Mobile" className="drawer-links">
-          {links.map(([h, l], i) => (
-            <a key={h} href={h} onClick={() => setOpen(false)}>
-              <span className="idx">{pad(i + 1)}</span>
-              <span className={h === '#token' ? 'mono' : ''}>{l}</span>
-            </a>
-          ))}
-        </nav>
-        <div className="drawer-foot">
-          <LangSwitch locale={locale} setLocale={setLocale} label={t.nav.language} />
-          <LaunchButton label={t.nav.launch} className="btn-block" />
-        </div>
-      </div>
-    </header>
-  );
-}
-
 function Hero({ t }: { t: Dict }) {
   const h = t.hero;
   return (
-    <section className="hero hero-stage" id="top" aria-labelledby="hero-title">
+    <section className="hero hero-stage tone tone-ink" id="top" aria-labelledby="hero-title">
       <EyeScan fragments={t.scan.fragments} hud={t.scan.hud} />
       <div className="wrap hero-grid">
         <div className="hero-copy">
@@ -198,13 +40,6 @@ function Hero({ t }: { t: Dict }) {
             ))}
           </ul>
         </div>
-        <ul className="metrics" aria-label={h.metricsLabel}>
-          {h.metrics.map((m) => (
-            <li key={m.l} className="metric">
-              <span className="metric-v">{m.v}</span> <span className="metric-l">{m.l}</span>
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
   );
@@ -212,38 +47,25 @@ function Hero({ t }: { t: Dict }) {
 
 function Shift({ t }: { t: Dict['shift'] }) {
   return (
-    <section className="sec" aria-labelledby="shift-title">
-      <div className="wrap">
+    <section className="sec tone tone-warm" aria-labelledby="shift-title">
+      <div className="wrap sec-in">
         <header className="sec-head rv">
           <p className="eyebrow">{t.label}</p>
           <h2 id="shift-title" className="h2">{t.title}</h2>
+          <p className="body">{t.sub}</p>
         </header>
-        <div className="stats rv">
-          <p className="sub-label">{t.statsLabel}</p>
-          <dl className="stat-row">
-            {t.stats.map((st) => (
-              <div key={st.n} className="stat">
-                <dt className="stat-d">{st.d}</dt>
-                <dd className="stat-v">
-                  {st.n}
-                  <span className="u">{st.u}</span>
-                </dd>
-                <dd className="stat-src">{st.s}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-        <ol className="manifesto">
-          {t.items.map((it, i) => (
-            <li key={it.t} className="rv">
-              <span className="idx">{pad(i + 1)}</span>
-              <div>
-                <p className="mani-t">{it.t}</p>
-                <p className="mani-d">{it.d}</p>
-              </div>
-            </li>
+        <dl className="stat-row rv">
+          {t.stats.map((st) => (
+            <div key={st.n} className="stat">
+              <dt className="stat-d">{st.d}</dt>
+              <dd className="stat-v">
+                {st.n}
+                <span className="u">{st.u}</span>
+              </dd>
+              <dd className="stat-src">{st.s}</dd>
+            </div>
           ))}
-        </ol>
+        </dl>
       </div>
     </section>
   );
@@ -251,81 +73,22 @@ function Shift({ t }: { t: Dict['shift'] }) {
 
 function CitoraSection({ t, note }: { t: Dict['citora']; note: string }) {
   return (
-    <section className="sec" id="citora" aria-labelledby="citora-title">
-      <div className="wrap">
+    <section className="sec tone tone-ink2" id="citora" aria-labelledby="citora-title">
+      <div className="wrap sec-in">
         <header className="sec-head rv">
           <p className="eyebrow">{t.label}</p>
           <h2 id="citora-title" className="h2">{t.title}</h2>
-          <p className="intro">{t.intro}</p>
         </header>
-
-        <ol className="pillars">
-          {t.pillars.map((p, i) => (
-            <li key={p.n} className="rv">
-              <span className="idx">{pad(i + 1)}</span>
-              <h3 className="pillar-n">{p.n}</h3>
-              <dl className="ba">
-                <div className="ba-before">
-                  <dt>{t.beforeLabel}</dt>
-                  <dd>{p.before}</dd>
-                </div>
-                <div className="ba-now">
-                  <dt>{t.nowLabel}</dt>
-                  <dd>{p.now}</dd>
-                </div>
-              </dl>
-              <ul className="keys">
-                {p.k.map((k) => (
-                  <li key={k}>{k}</li>
-                ))}
-              </ul>
+        <ol className="beats">
+          {t.beats.map((b, i) => (
+            <li key={b.n} className="beat rv" style={{ transitionDelay: `${i * 50}ms` }}>
+              <p className="beat-n">{b.n}</p>
+              <p className="body">{b.d}</p>
             </li>
           ))}
         </ol>
-
         <div className="omap-wrap rv">
-          <OpportunityMap t={t.map} note={note} />
-        </div>
-
-        <div className="loop5 rv">
-          <p className="sub-label">{t.loopLabel}</p>
-          <h3 className="h3">{t.loopTitle}</h3>
-          <p className="loop5-note">{t.loopNote}</p>
-          <ol className="flow-nodes loop-nodes">
-            {t.steps.map((s, i) => (
-              <li key={s.n}>
-                <span className="idx">{pad(i + 1)}</span>
-                <span className="flow-t">{s.n}</span>
-                <span className="loop-d">{s.d}</span>
-              </li>
-            ))}
-          </ol>
-          <div className="flow-back loop-back" aria-hidden="true">
-            <span className="flow-back-line" />
-            <span className="flow-back-l">{t.loopBack}</span>
-          </div>
-        </div>
-
-        <div className="modules rv">
-          <div className="mod-side">
-            <p className="mod-count">{t.modules.length}</p>
-            <p className="sub-label">{t.modulesLabel}</p>
-            <p className="live">
-              <span>{t.liveLabel}</span>
-              <a href={CITORA_URL} target="_blank" rel="noopener noreferrer" className="inline-link">
-                {t.liveLink}
-                <ArrowOut />
-              </a>
-            </p>
-          </div>
-          <dl className="mod-list">
-            {t.modules.map(([k, v]) => (
-              <div key={k}>
-                <dt>{k}</dt>
-                <dd>{v}</dd>
-              </div>
-            ))}
-          </dl>
+          <OpportunityMap t={t.map} note={note} rows={3} />
         </div>
       </div>
     </section>
@@ -334,53 +97,15 @@ function CitoraSection({ t, note }: { t: Dict['citora']; note: string }) {
 
 function AdsSection({ t, note }: { t: Dict['ads']; note: string }) {
   return (
-    <section className="sec" id="ads" aria-labelledby="ads-title">
-      <div className="wrap">
+    <section className="sec tone tone-warm" id="ads" aria-labelledby="ads-title">
+      <div className="wrap sec-in">
         <header className="sec-head rv">
           <p className="eyebrow">{t.label}</p>
-          <p className="ads-kicker">
-            <EngineLogo id="chatgpt" className="ads-logo" />
-            <span>{t.kicker}</span>
-          </p>
           <h2 id="ads-title" className="h2">{t.title}</h2>
-          <p className="intro">{t.intro}</p>
+          <p className="body">{t.sub}</p>
         </header>
-
         <div className="rv">
           <AdStrategyCard t={t.card} note={note} />
-        </div>
-
-        <div className="ads-grid">
-          <div className="rv">
-            <p className="sub-label">{t.tiersLabel}</p>
-            <dl className="tiers">
-              {t.tiers.map((x) => (
-                <div key={x.n}>
-                  <dt>
-                    <Mark id="chatgpt" />
-                    {x.n}
-                  </dt>
-                  <dd>{x.d}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-          <div className="rv">
-            <p className="sub-label">{t.flowLabel}</p>
-            <ol className="steps4">
-              {t.flow.map((s, i) => (
-                <li key={s.n}>
-                  <span className="idx">{pad(i + 1)}</span>
-                  <h3>{s.n}</h3>
-                  <p>{s.d}</p>
-                </li>
-              ))}
-            </ol>
-            <p className="paid">
-              <span className="ticker">$CIT</span>
-              <span>{t.paid}</span>
-            </p>
-          </div>
         </div>
       </div>
     </section>
@@ -389,165 +114,21 @@ function AdsSection({ t, note }: { t: Dict['ads']; note: string }) {
 
 function TokenSection({ t }: { t: Dict['token'] }) {
   return (
-    <section className="sec" id="token" aria-labelledby="token-title">
-      <div className="wrap">
+    <section className="sec tone tone-green" id="token" aria-labelledby="token-title">
+      <div className="wrap sec-in token-in">
         <header className="sec-head rv">
           <p className="eyebrow">{t.label}</p>
           <h2 id="token-title" className="h2">{t.title}</h2>
-          <p className="intro">{t.intro}</p>
+          <p className="body">{t.sub}</p>
         </header>
-
-        <div className="split">
-          <div className="rv">
-            <p className="sub-label">{t.utilLabel}</p>
-            <ol className="utils">
-              {t.utils.map(([k, v], i) => (
-                <li key={k}>
-                  <span className="idx">{pad(i + 1)}</span>
-                  <span className="util-k">{k}</span>
-                  <span className="util-v">{v}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-          <aside className="aside rv" aria-label={t.statusLabel}>
-            <dl className="cit-strip">
-              {t.status.map(([k, v], i) => (
-                <div key={k} className={`cit-${i}`}>
-                  <dt>{k}</dt>
-                  <dd>
-                    {i === 0 ? (
-                      <span className="cit-ticker">
-                        <span className="cit-dollar">$</span>
-                        {v.replace('$', '')}
-                      </span>
-                    ) : i === 1 ? (
-                      <>
-                        <span className="cit-sq" aria-hidden="true" />
-                        {v}
-                      </>
-                    ) : (
-                      v
-                    )}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-            <p className="status-note">{t.note}</p>
-          </aside>
-        </div>
-
-        <figure className="flow rv">
-          <figcaption className="sub-label">{t.flowLabel}</figcaption>
-          <ol className="flow-nodes">
-            {t.flow.map((f, i) => (
-              <li key={f}>
-                <span className="idx">{pad(i + 1)}</span>
-                <span className="flow-t">{f}</span>
-              </li>
+        <div className="token-foot rv">
+          <p className="mono-label">{t.utilLabel}</p>
+          <ul className="utils">
+            {t.utils.map((u) => (
+              <li key={u}>{u}</li>
             ))}
-          </ol>
-          <div className="flow-back" aria-hidden="true">
-            <span className="flow-back-line" />
-            <span className="flow-back-l">{t.flowBack}</span>
-          </div>
-        </figure>
-      </div>
-    </section>
-  );
-}
-
-/** Index of the phase in progress: earlier phases render as done, later ones as upcoming. */
-const CURRENT_PHASE = 1;
-
-function Roadmap({ t }: { t: Dict['roadmap'] }) {
-  return (
-    <section className="sec" id="roadmap" aria-labelledby="roadmap-title">
-      <div className="wrap">
-        <header className="sec-head rv">
-          <p className="eyebrow">{t.label}</p>
-          <h2 id="roadmap-title" className="h2">{t.title}</h2>
-        </header>
-        <ol className="timeline rv">
-          {t.phases.map((p, i) => {
-            const state = i < CURRENT_PHASE ? 'done' : i === CURRENT_PHASE ? 'now' : 'next';
-            return (
-              <li key={p.t} className={`tl-${state}`} aria-current={state === 'now' ? 'step' : undefined}>
-                <span className="tl-phase num">
-                  {t.phase} {pad(i + 1)}
-                  <span className="sr-only">, {p.s}</span>
-                </span>
-                <span className="tl-node" aria-hidden="true" />
-                <h3>{p.t}</h3>
-                <p>{p.d}</p>
-              </li>
-            );
-          })}
-        </ol>
-      </div>
-    </section>
-  );
-}
-
-function withEmail(text: string) {
-  if (!text.includes(EMAIL)) return text;
-  const [a, b] = text.split(EMAIL);
-  return (
-    <>
-      {a}
-      <a className="inline-link" href={`mailto:${EMAIL}`}>{EMAIL}</a>
-      {b}
-    </>
-  );
-}
-
-function Faq({ t }: { t: Dict['faq'] }) {
-  return (
-    <section className="sec" id="faq" aria-labelledby="faq-title">
-      <div className="wrap faq-grid">
-        <header className="sec-head rv">
-          <p className="eyebrow">{t.label}</p>
-          <h2 id="faq-title" className="h2">{t.title}</h2>
-        </header>
-        <div className="faq-list rv">
-          {t.items.map((it, i) => (
-            <details key={it.q}>
-              <summary>
-                <span className="idx">{pad(i + 1)}</span>
-                <span className="q">{it.q}</span>
-                <span className="plus" aria-hidden="true" />
-              </summary>
-              <div className="a">
-                <p>{withEmail(it.a)}</p>
-                {'table' in it && it.table ? (
-                  <table className="geo">
-                    <thead>
-                      <tr>
-                        {t.geo.cols.map((c, ci) =>
-                          ci === 0 ? (
-                            <td key={ci} />
-                          ) : (
-                            <th key={ci} scope="col" className={ci === 2 ? 'g' : undefined}>
-                              {c}
-                            </th>
-                          ),
-                        )}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {t.geo.rows.map((r) => (
-                        <tr key={r[0]}>
-                          <th scope="row">{r[0]}</th>
-                          <td>{r[1]}</td>
-                          <td className="g">{r[2]}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                ) : null}
-              </div>
-            </details>
-          ))}
+          </ul>
+          <p className="fine">{t.note}</p>
         </div>
       </div>
     </section>
@@ -556,91 +137,37 @@ function Faq({ t }: { t: Dict['faq'] }) {
 
 function Closing({ t }: { t: Dict }) {
   return (
-    <section className="close" aria-labelledby="close-title">
+    <section className="sec close tone tone-green2" aria-labelledby="close-title">
       <div className="wrap close-in rv">
-        <Image src="/eyelogo.png" alt="" width={56} height={32} className="close-eye" />
         <h2 id="close-title" className="h2">{t.close.title}</h2>
-        <p className="intro">{t.close.sub}</p>
+        <p className="body">{t.close.note}</p>
         <div className="ctas">
           <LaunchButton label={t.hero.cta1} />
-          <a className="link-cta" href="#token">
-            {t.hero.cta2}
-            <ArrowRight />
-          </a>
+          <a className="mail mono" href={`mailto:${EMAIL}`}>{EMAIL}</a>
         </div>
-        <a className="mail mono" href={`mailto:${EMAIL}`}>{EMAIL}</a>
       </div>
     </section>
-  );
-}
-
-function Footer({ t }: { t: Dict }) {
-  const f = t.footer;
-  return (
-    <footer className="foot">
-      <div className="wrap">
-        <div className="foot-top">
-          <div className="foot-brand">
-            <Image src="/logo.png" alt="Wazcher" width={4297} height={779} className="foot-logo" />
-            <p>{f.desc}</p>
-          </div>
-          <nav className="foot-cols" aria-label="Footer">
-            <div>
-              <p className="mono-label">{f.product}</p>
-              <ul>
-                <li><a href={CITORA_URL} target="_blank" rel="noopener noreferrer">Citora</a></li>
-                <li><a href="#ads">{t.nav.ads}</a></li>
-                <li><a href="#token" className="mono">$CIT</a></li>
-              </ul>
-            </div>
-            <div>
-              <p className="mono-label">{f.company}</p>
-              <ul>
-                <li><a href={`mailto:${EMAIL}`}>{f.contact}</a></li>
-              </ul>
-            </div>
-            <div>
-              <p className="mono-label">{f.social}</p>
-              <ul>
-                <li><a href={X_URL} target="_blank" rel="noopener noreferrer">X</a></li>
-                <li><a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-              </ul>
-            </div>
-          </nav>
-        </div>
-        <div className="foot-bottom">
-          <p className="legal">{f.legal}</p>
-          <p className="mono-label">{f.copy}</p>
-        </div>
-      </div>
-    </footer>
   );
 }
 
 export default function HomePage() {
   const { locale, setLocale, t } = useLocale();
   useReveal();
-
-  // Before paint, so CJK line-height and letter-spacing switch in the same frame as the text.
-  useLayoutEffect(() => {
-    document.documentElement.lang = locale;
-  }, [locale]);
+  useHtmlLang(locale);
 
   return (
     <>
       <a href="#main" className="skip">{t.meta.skip}</a>
-      <Nav t={t} locale={locale} setLocale={setLocale} />
+      <Nav t={t} locale={locale} setLocale={setLocale} home />
       <main id="main">
         <Hero t={t} />
         <Shift t={t.shift} />
         <CitoraSection t={t.citora} note={t.demoNote} />
         <AdsSection t={t.ads} note={t.demoNote} />
         <TokenSection t={t.token} />
-        <Roadmap t={t.roadmap} />
-        <Faq t={t.faq} />
         <Closing t={t} />
       </main>
-      <Footer t={t} />
+      <Footer t={t} home />
       <div className="grain" aria-hidden="true" />
     </>
   );

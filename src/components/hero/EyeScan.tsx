@@ -5,7 +5,7 @@ import { EYE, createStage, lid, rng, type Frame } from './stage';
 
 /**
  * Hero visual: the Wazcher eye as a hairline instrument.
- * Engraved lid contours, a lens bezel with ticks, concentric iris rings and the
+ * Engraved lid contours, an iris bezel with ticks, concentric iris rings and the
  * play-mark pupil, all in fine strokes. A slow green sweep circles the iris.
  * Fragments of AI answers and cited domains drift in from the edges and fade as
  * they reach the iris, each one leaving a short green mark on the ring.
@@ -83,7 +83,7 @@ export default function EyeScan({ fragments, hud }: Props) {
     /** Leader hairline length and the gap between its end and the text. */
     const LEAD = 18;
     const GAP = 6;
-    /** Fragments travel on a flattened ellipse so they hug the lens shape. */
+    /** Fragments travel on a flattened ellipse so they hug the eye shape. */
     const FLAT = 0.78;
 
     /** Text box of a fragment whose anchor sits at radius rr (eye units) on angle ang. */
@@ -236,7 +236,7 @@ export default function EyeScan({ fragments, hud }: Props) {
         ctx.stroke();
       }
 
-      // ---------- layer 2: lens bezel inside the aperture ----------
+      // ---------- layer 2: iris bezel inside the aperture ----------
       {
         const [x, y] = sh(0.7);
         ctx.save();
@@ -405,7 +405,7 @@ export default function EyeScan({ fragments, hud }: Props) {
         const u = Math.min(1, Math.max(0, (now - q.born) / q.life));
         const ca = Math.cos(q.ang);
         const sa = Math.sin(q.ang);
-        // Slow drift at the edge, drawn in faster near the eye; flattened path hugs the lens.
+        // Slow drift at the edge, drawn in faster near the eye; flattened path hugs the eye.
         const flat = FLAT;
         const rr = radiusAt(q, u);
         const ax = ix + ca * rr * r;
