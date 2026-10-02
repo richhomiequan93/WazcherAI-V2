@@ -2674,15 +2674,15 @@ html[lang='zh-CN'] .adwin-target {
 }
 
 /* ---------- livelier rhythm: dark, light, dark, dark, green, dark ----------
-   The page alternates instead of staying one dark family: "The shift" is warm paper and $CIT is
-   the brand green. Hard edges between light and dark (no smudgy dark-to-light blend). */
+   The page alternates instead of staying one dark family: "The shift" is warm paper; $CIT is a
+   deep green-tinted charcoal (a full bright green section was rejected as too harsh). Hard edges between light and dark (no smudgy dark-to-light blend). */
 :root {
   --c-ink: #0e0f11;
   --c-ink2: #131418;
   --c-warm: #17151a;
   --c-green2: #101512;
   --c-paper: #efeee8;
-  --c-lime: #38d718;
+  --c-green: #121a15;
 }
 .tone.tone-paper {
   --me: var(--c-paper);
