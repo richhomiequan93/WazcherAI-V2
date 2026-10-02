@@ -231,7 +231,7 @@ ul {
 .display {
   font-family: var(--f-display);
   font-weight: 300;
-  font-size: calc(var(--k) * clamp(48px, 6.6vw, 92px));
+  font-size: calc(var(--k) * clamp(52px, 6.4vw, 104px));
   line-height: var(--lh-head);
   letter-spacing: var(--track-d);
   text-wrap: balance;
@@ -2231,79 +2231,6 @@ html[lang='zh-CN'] .adwin-target {
   color: var(--green);
 }
 
-/* ---------- concept A: stacking cards ---------- */
-
-.ca-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.ca-card {
-  position: relative;
-  border-radius: 24px;
-  border: 1px solid var(--hair-2);
-  background: var(--card);
-  transform-origin: 50% 0;
-  overflow: hidden;
-}
-.ca-t1 {
-  --card: #111113;
-}
-.ca-t2 {
-  --card: #131316;
-}
-.ca-t3 {
-  --card: #121513;
-}
-.ca-shade {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: #050506;
-  opacity: 0;
-  pointer-events: none;
-}
-.ca-body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 40px;
-  padding: 28px 22px 26px;
-}
-.ca-copy {
-  display: flex;
-  flex-direction: column;
-}
-.ca-idx {
-  font-size: 12px;
-  color: var(--text-2);
-}
-.ca-idx span {
-  color: var(--text-3);
-}
-.ca-word {
-  margin-top: 40px;
-  font-family: var(--f-display);
-  font-weight: 300;
-  font-size: calc(var(--k) * clamp(52px, 6.4vw, 104px));
-  line-height: 1;
-  letter-spacing: var(--track-d);
-}
-html[lang='zh-TW'] .ca-word,
-html[lang='zh-CN'] .ca-word,
-html[lang='zh-TW'] .cb-word,
-html[lang='zh-CN'] .cb-word {
-  font-weight: 400;
-  line-height: var(--lh-head);
-}
-.ca-d {
-  margin-top: 24px;
-  max-width: 22em;
-  font-size: 17px;
-  line-height: var(--lh-body);
-  color: var(--text-2);
-  text-wrap: pretty;
-}
-.ca-feats,
 .cb-feats {
   display: flex;
   flex-wrap: wrap;
@@ -2314,48 +2241,13 @@ html[lang='zh-CN'] .cb-word {
   line-height: 1.4;
   color: var(--text-3);
 }
-.ca-feats li:not(:last-child)::after,
 .cb-feats li:not(:last-child)::after {
   content: '/';
   margin: 0 10px;
   color: rgba(242, 242, 240, 0.22);
 }
 
-@media (min-width: 820px) {
-  .ca-body {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: 56px;
-    align-items: center;
-    padding: 48px 52px;
-  }
-  .ca-copy {
-    align-self: stretch;
-  }
-  .ca-feats {
-    margin-top: auto;
-    padding-top: 28px;
-  }
-}
-
-@media (min-width: 820px) and (prefers-reduced-motion: no-preference) {
-  .ca-stack {
-    gap: 14vh;
-    padding-bottom: 6vh;
-  }
-  .ca-card {
-    position: sticky;
-    top: calc(92px + var(--i) * 14px);
-    height: calc(100svh - 124px);
-    min-height: 560px;
-    max-height: 860px;
-    will-change: transform;
-  }
-  .ca-body {
-    height: 100%;
-  }
-}
-
-/* ---------- concept B: pinned stage ---------- */
+/* ---------- Citora beats: pinned stage ---------- */
 
 .cb-stage {
   display: flex;

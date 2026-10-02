@@ -7,8 +7,8 @@ import { DOMAIN, EngineLogo, Favicon, Mark, OpportunityMap, ENGINES, type Engine
  *   See it   an Ask AI read-out (question field, four engine columns, a cited list)
  *   Find it  the opportunity map, compact
  *   Hit it   two AI Profile versions as sheets, the rule AI followed, the mention rate it moved
- * Values are illustrative and mirror the example on citora.ai. `className` lets a concept add
- * state classes (e.g. `go`, which plays the one-time inner animation in concept B).
+ * Values are illustrative and mirror the example on citora.ai. `className` lets the stage add
+ * state classes (e.g. `go`, which plays the one-time inner animation).
  */
 
 type Vars = CSSProperties & Record<`--${string}`, string | number>;
@@ -171,7 +171,7 @@ export function ProfileAB({ t, note, className = '' }: { t: Dict['citora']['prof
   );
 }
 
-/** The visual for beat `i`, so both concepts stay in step. */
+/** The visual for beat `i`, so the stage and mobile stack stay in step. */
 export function BeatVisual({ i, t, note, className }: { i: number; t: Dict['citora']; note: string; className?: string }) {
   if (i === 0) return <AskView t={t.ask} note={note} className={className} />;
   if (i === 1) return <MapView t={t.map} note={note} className={className} />;
