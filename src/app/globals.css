@@ -2649,7 +2649,7 @@ html[lang='zh-CN'] .adwin-target {
   height: auto;
 }
 .citora-wm-dot {
-  fill: var(--green);
+  fill: #fff;
   stroke: var(--c-ink, var(--bg));
 }
 .hero-tag {
@@ -2671,4 +2671,48 @@ html[lang='zh-CN'] .adwin-target {
   .hero-tag {
     margin-top: 28px;
   }
+}
+
+/* ---------- livelier rhythm: dark, light, dark, dark, green, dark ----------
+   The page alternates instead of staying one dark family: "The shift" is warm paper and $CIT is
+   the brand green. Hard edges between light and dark (no smudgy dark-to-light blend). */
+:root {
+  --c-ink: #0e0f11;
+  --c-ink2: #131418;
+  --c-warm: #17151a;
+  --c-green2: #101512;
+  --c-paper: #efeee8;
+  --c-lime: #38d718;
+}
+.tone.tone-paper {
+  --me: var(--c-paper);
+  --from: var(--c-paper);
+}
+.tone.tone-lime {
+  --me: var(--c-lime);
+  --from: var(--c-lime);
+}
+.tone-paper + .tone,
+.tone-lime + .tone {
+  --from: var(--me);
+}
+.tone-paper,
+.tone-lime {
+  --text: #121211;
+  --text-2: rgba(18, 18, 17, 0.7);
+  --text-3: rgba(18, 18, 17, 0.5);
+  --hair: rgba(18, 18, 17, 0.12);
+  --hair-2: rgba(18, 18, 17, 0.18);
+  --line: rgba(18, 18, 17, 0.12);
+  --line-2: rgba(18, 18, 17, 0.2);
+  --line-3: rgba(18, 18, 17, 0.35);
+  color: var(--text);
+}
+.tone-paper {
+  --green: #1f9a0c;
+}
+.tone-lime {
+  --green: #0e3b06;
+  --text-2: rgba(10, 30, 6, 0.78);
+  --text-3: rgba(10, 30, 6, 0.6);
 }

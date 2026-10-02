@@ -53,7 +53,7 @@ function Hero({ t }: { t: Dict }) {
 
 function Shift({ t }: { t: Dict['shift'] }) {
   return (
-    <section className="sec tone tone-warm" aria-labelledby="shift-title">
+    <section className="sec tone tone-paper" aria-labelledby="shift-title">
       <div className="wrap sec-in">
         <header className="sec-head rv">
           <p className="eyebrow">{t.label}</p>
@@ -108,7 +108,7 @@ function AdsSection({ t, note }: { t: Dict['ads']; note: string }) {
 
 function TokenSection({ t }: { t: Dict['token'] }) {
   return (
-    <section className="sec tone tone-green" id="token" aria-labelledby="token-title">
+    <section className="sec tone tone-lime" id="token" aria-labelledby="token-title">
       <div className="wrap sec-in token-in">
         <header className="sec-head rv">
           <p className="eyebrow">{t.label}</p>
