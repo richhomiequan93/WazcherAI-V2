@@ -206,6 +206,18 @@ const en = {
       ],
     },
   },
+  dataroom: {
+    label: 'Data room',
+    title: 'Investor materials.',
+    intro: 'Shared privately. Please do not forward this link.',
+    view: 'View',
+    download: 'Download',
+    pages: 'pages',
+    docs: [
+      { t: 'Pre-seed deck', d: 'Wazcher and Citora: product, market, traction, team and the round.' },
+    ],
+    contact: 'Questions or more documents: ',
+  },
   close: {
     title: 'Citora is live. $CIT is next.',
     note: 'Investor materials and product walkthroughs on request.',
@@ -403,6 +415,18 @@ const zhTW: Dict = {
       ],
     },
   },
+  dataroom: {
+    label: '資料室',
+    title: '投資人資料。',
+    intro: '僅供私下分享，請勿轉傳此連結。',
+    view: '檢視',
+    download: '下載',
+    pages: '頁',
+    docs: [
+      { t: '種子前輪簡報', d: 'Wazcher 與 Citora：產品、市場、進展、團隊與本輪募資。' },
+    ],
+    contact: '如有問題或需要更多文件：',
+  },
   close: {
     title: 'Citora 已上線，\n下一步是 $CIT。',
     note: '投資人資料與產品導覽，歡迎來信索取。',
@@ -597,6 +621,18 @@ const zhCN: Dict = {
         ['衡量方式', '排名位置、点击率', '提及率、引用率、AI 搜索能见度'],
       ],
     },
+  },
+  dataroom: {
+    label: '资料室',
+    title: '投资人资料。',
+    intro: '仅限私下分享，请勿转发此链接。',
+    view: '查看',
+    download: '下载',
+    pages: '页',
+    docs: [
+      { t: '种子前轮路演材料', d: 'Wazcher 与 Citora：产品、市场、进展、团队与本轮融资。' },
+    ],
+    contact: '如有问题或需要更多文件：',
   },
   close: {
     title: 'Citora 已上线，\n下一步是 $CIT。',

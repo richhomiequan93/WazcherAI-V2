@@ -2,6 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   turbopack: {},
+  // The unlisted data room and its files stay out of search engines.
+  async headers() {
+    return [
+      { source: '/dataroom', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }] },
+      { source: '/dataroom/:path*', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }] },
+    ];
+  },
   outputFileTracingIncludes: {
     '/llms.txt': ['./citora-sync.mjs'],
   },

@@ -115,6 +115,61 @@ function Roadmap({ t }: { t: Dict['roadmap'] }) {
   );
 }
 
+/** Files live in public/dataroom/. Order matches t.dataroom.docs. */
+const DATAROOM_FILES = [
+  { href: '/dataroom/Wazcher-Citora-PreSeed-Deck.pdf', cover: '/dataroom/deck-cover.jpg', pages: 14, size: '0.6 MB' },
+];
+
+function Dataroom({ t }: { t: Dict['dataroom'] }) {
+  return (
+    <section aria-labelledby="dataroom-title">
+      <header className="page-head">
+        <p className="eyebrow">{t.label}</p>
+        <h1 id="dataroom-title" className="h2">{t.title}</h1>
+        <p className="dr-intro">{t.intro}</p>
+      </header>
+      <ul className="dr-list">
+        {t.docs.map((d, i) => {
+          const f = DATAROOM_FILES[i];
+          if (!f) return null;
+          return (
+            <li key={f.href} className="dr-doc">
+              <a className="dr-cover" href={f.href} target="_blank" rel="noopener noreferrer" tabIndex={-1} aria-hidden="true">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={f.cover} alt="" width={1200} height={675} loading="lazy" />
+              </a>
+              <div className="dr-body">
+                <span className="idx num">{pad(i + 1)}</span>
+                <h2>{d.t}</h2>
+                <p>{d.d}</p>
+                <p className="dr-meta num">
+                  PDF · {f.pages} {t.pages} · {f.size}
+                </p>
+                <div className="dr-actions">
+                  <a className="btn btn-primary btn-sm" href={f.href} target="_blank" rel="noopener noreferrer">
+                    {t.view} <span className="arrow" aria-hidden="true">↗</span>
+                  </a>
+                  <a className="btn btn-outline btn-sm" href={f.href} download>
+                    {t.download}
+                  </a>
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+      <p className="dr-contact">
+        {t.contact}
+        <a className="inline-link" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+      </p>
+    </section>
+  );
+}
+
+export function DataroomPage() {
+  return <SubPage>{(t) => <Dataroom t={t.dataroom} />}</SubPage>;
+}
+
 export function FaqPage() {
   return <SubPage>{(t) => <Faq t={t.faq} />}</SubPage>;
 }
