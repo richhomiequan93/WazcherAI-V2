@@ -26,7 +26,7 @@ const en = {
     home: 'Wazcher home',
   },
   hero: {
-    title: 'Citora makes you the answer AI gives.',
+    title: 'Be the answer AI gives.',
     sub: 'See whether AI mentions and cites your brand, get recommended, and place your ads in ChatGPT.',
     cta1: 'Launch Citora',
     cta2: 'Explore $CIT',
@@ -238,7 +238,7 @@ const zhTW: Dict = {
     home: 'Wazcher 首頁',
   },
   hero: {
-    title: 'Citora 讓你成為\nAI 給出的答案。',
+    title: '成為 AI 給出的答案。',
     sub: '看清 AI 有沒有提到、引用你的品牌，讓 AI 推薦你，還能在 ChatGPT 投放廣告。',
     cta1: '前往 Citora',
     cta2: '了解 $CIT',
@@ -433,7 +433,7 @@ const zhCN: Dict = {
     home: 'Wazcher 首页',
   },
   hero: {
-    title: 'Citora 让你成为\nAI 给出的答案。',
+    title: '成为 AI 给出的答案。',
     sub: '看清 AI 有没有提到、引用你的品牌，让 AI 推荐你，还能在 ChatGPT 投放广告。',
     cta1: '进入 Citora',
     cta2: '了解 $CIT',

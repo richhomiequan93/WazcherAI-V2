@@ -5,6 +5,7 @@ import { EMAIL, type Dict } from './i18n';
 import { useLocale } from './useLocale';
 import { ArrowRight, Footer, LaunchButton, Nav, useHtmlLang, useReveal } from './Shell';
 import { AdStrategyCard, ENGINES, EngineLogo } from './Visuals';
+import { CitoraWordmark } from './CitoraWordmark';
 import { BeatsStage } from './beats/BeatsStage';
 
 // The scanning eye is canvas only: it loads in its own client chunk after hydration and never
@@ -18,7 +19,11 @@ function Hero({ t }: { t: Dict }) {
       <EyeScan fragments={t.scan.fragments} hud={t.scan.hud} />
       <div className="wrap hero-grid">
         <div className="hero-copy">
-          <h1 id="hero-title" className="display">{h.title}</h1>
+          <h1 id="hero-title" className="hero-wm">
+            <CitoraWordmark />
+            <span className="sr-only">Citora</span>
+          </h1>
+          <p className="hero-tag">{h.title}</p>
           <p className="lede">{h.sub}</p>
           <div className="ctas">
             <LaunchButton label={h.cta1} />

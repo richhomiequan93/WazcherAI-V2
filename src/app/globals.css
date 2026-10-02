@@ -2635,3 +2635,40 @@ html[lang='zh-CN'] .adwin-target {
 .adwin .lg-rival {
   background: rgba(21, 21, 19, 0.28);
 }
+
+/* ---------- brand hero: big Citora logo, tagline, description; the eye stays on the right ---------- */
+.hero-wm {
+  margin: 0;
+  line-height: 0;
+  color: var(--text);
+}
+.citora-wm {
+  display: block;
+  width: 100%;
+  max-width: 620px;
+  height: auto;
+}
+.citora-wm-dot {
+  fill: var(--green);
+  stroke: var(--c-ink, var(--bg));
+}
+.hero-tag {
+  margin-top: 40px;
+  font-family: var(--f-display);
+  font-weight: 300;
+  font-size: calc(var(--k) * clamp(30px, 3.2vw, 46px));
+  line-height: 1.08;
+  letter-spacing: var(--track-d);
+  text-wrap: balance;
+}
+.hero-stage .hero-tag + .lede {
+  margin-top: 20px;
+}
+@media (max-width: 819px) {
+  .citora-wm {
+    max-width: 100%;
+  }
+  .hero-tag {
+    margin-top: 28px;
+  }
+}
