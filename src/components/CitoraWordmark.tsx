@@ -18,13 +18,14 @@ export function CitoraWordmark({ className = '' }: { className?: string }) {
   // transparent on any background (no painted halo, nothing drawn outside the ring).
   const mask = `citora-gap-${useId().replace(/:/g, '')}`;
   return (
-    <svg className={`citora-wm ${className}`} viewBox="0 0 322.14 68.03" aria-hidden="true" focusable="false">
+    <svg className={`citora-wm ${className}`} viewBox="0 0 322.14 76.7" aria-hidden="true" focusable="false">
       <g fill="currentColor">
         {WORD.map((d) => (
           <path key={d.slice(0, 12)} d={d} />
         ))}
       </g>
-      <g transform="scale(0.40494)">
+      {/* mark centred on the lowercase x-height (17.3 to 68), as in the official lockup */}
+      <g transform="translate(0 8.65) scale(0.40494)">
         <mask id={mask} maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="168">
           <rect x="0" y="0" width="200" height="168" fill="#fff" />
           <circle cx="148" cy="84" r="33" fill="#000" />
