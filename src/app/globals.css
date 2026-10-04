@@ -3237,8 +3237,7 @@ html[lang='zh-CN'] .co-title {
   }
 }
 @media (max-width: 400px) {
-  .nav-end-co .btn .arrow,
-  .lang-trigger svg {
+  .nav-end-co .btn .arrow {
     display: none;
   }
   .nav-end-co {
