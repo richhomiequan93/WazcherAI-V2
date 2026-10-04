@@ -71,7 +71,7 @@ function Hero({ t }: { t: Dict }) {
 
 function Shift({ t }: { t: Dict['shift'] }) {
   return (
-    <section className="sec tone tone-paper" aria-labelledby="shift-title">
+    <section className="sec tone tone-paper tone-white" aria-labelledby="shift-title">
       <div className="wrap sec-in">
         <header className="sec-head rv">
           <p className="eyebrow">{t.label}</p>

@@ -3336,3 +3336,9 @@ html.cit-morph-off .nav-brand-morph .nav-parent {
   background: transparent;
   border-bottom-color: transparent;
 }
+
+/* Citora "the shift" section: pure white instead of the warm paper tone. */
+.tone.tone-white {
+  --me: #ffffff;
+  --from: #ffffff;
+}
