@@ -40,13 +40,13 @@ const notoSC = Noto_Sans_SC({
 });
 
 export const metadata: Metadata = {
-  title: 'Wazcher | Citora and $CIT',
+  title: 'Wazcher | Rebuilding how the world discovers',
   description:
-    'Wazcher × Citora: the closed-loop GEO platform, onchain with $CIT. Citora shows whether ChatGPT, Claude, Gemini and Perplexity mention and cite a brand, and places its ads in ChatGPT. Every action on Citora will settle in $CIT.',
+    'Wazcher builds products for the next era of discovery, where answers replace search and value moves onchain. Our first product is Citora.',
   openGraph: {
-    title: 'Wazcher | Citora and $CIT',
+    title: 'Wazcher',
     description:
-      'Wazcher brings Citora onchain. Citora gets brands mentioned and cited by ChatGPT, Claude, Gemini and Perplexity and places their ads in ChatGPT. $CIT is pre-launch.',
+      'Wazcher builds products for the next era of discovery, where answers replace search and value moves onchain. Our first product is Citora.',
     url: 'https://wazcher.com',
     siteName: 'Wazcher',
     type: 'website',

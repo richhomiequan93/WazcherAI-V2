@@ -89,8 +89,23 @@ function LangSwitch({ locale, setLocale, label }: { locale: Locale; setLocale: (
   );
 }
 
-/** `home` keeps in-page anchors; on other routes the same links point back to the home page. */
-export function Nav({ t, locale, setLocale, home }: { t: Dict; locale: Locale; setLocale: (l: Locale) => void; home: boolean }) {
+/**
+ * `home` keeps in-page anchors; on other routes the same links point back to /citora.
+ * `company` is the wazcher.com home page: one link to Citora, no Citora section anchors.
+ */
+export function Nav({
+  t,
+  locale,
+  setLocale,
+  home,
+  company = false,
+}: {
+  t: Dict;
+  locale: Locale;
+  setLocale: (l: Locale) => void;
+  home: boolean;
+  company?: boolean;
+}) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -119,19 +134,31 @@ export function Nav({ t, locale, setLocale, home }: { t: Dict; locale: Locale; s
     };
   }, [open]);
 
-  const base = home ? '' : '/';
-  const links: [string, string][] = [
-    [`${base}#citora`, t.nav.citora],
-    [`${base}#ads`, t.nav.ads],
-    [`${base}#token`, t.nav.token],
-  ];
+  const base = home ? '' : '/citora';
+  const links: [string, string][] = company
+    ? [
+        ['#products', t.nav.products],
+        ['/citora', t.nav.citora],
+      ]
+    : [
+        [`${base}#citora`, t.nav.citora],
+        [`${base}#ads`, t.nav.ads],
+        [`${base}#token`, t.nav.token],
+      ];
 
   return (
     <header className={`nav${scrolled || open ? ' nav-solid' : ''}`}>
       <div className="wrap nav-in">
-        <Link href={home ? '#top' : '/'} className="nav-logo" aria-label={t.nav.home}>
-          <Image src="/logo.png" alt="Wazcher" width={4297} height={779} loading="eager" />
-        </Link>
+        <div className="nav-brand">
+          <Link href={company ? '#top' : '/'} className="nav-logo" aria-label={t.nav.home}>
+            <Image src="/logo.png" alt="Wazcher" width={4297} height={779} loading="eager" />
+          </Link>
+          {!company && (
+            <Link href={home ? '#top' : '/citora'} className="nav-crumb">
+              <span aria-hidden="true">/</span> Citora
+            </Link>
+          )}
+        </div>
         <nav aria-label="Primary" className="nav-links">
           {links.map(([h, l]) => (
             <Link key={h} href={h} className={h.endsWith('#token') ? 'mono' : ''}>
@@ -175,29 +202,36 @@ export function Nav({ t, locale, setLocale, home }: { t: Dict; locale: Locale; s
   );
 }
 
-export function Footer({ t, home }: { t: Dict; home: boolean }) {
+export function Footer({ t, home, company = false }: { t: Dict; home: boolean; company?: boolean }) {
   const f = t.footer;
-  const base = home ? '' : '/';
+  const base = home ? '' : '/citora';
   return (
     <footer className="foot">
       <div className="wrap">
         <div className="foot-top">
           <div className="foot-brand">
             <Image src="/logo.png" alt="Wazcher" width={4297} height={779} className="foot-logo" />
-            <p>{f.desc}</p>
+            <p>{company ? f.descCompany : f.desc}</p>
           </div>
           <nav className="foot-cols" aria-label="Footer">
             <div>
               <p className="mono-label">{f.product}</p>
               <ul>
                 <li>
-                  <a href={CITORA_URL} target="_blank" rel="noopener noreferrer">Citora</a>
+                  <Link href="/citora">Citora</Link>
                 </li>
+                {!company && (
+                  <li>
+                    <Link href={`${base}#ads`}>{t.nav.ads}</Link>
+                  </li>
+                )}
+                {!company && (
+                  <li>
+                    <Link href={`${base}#token`} className="mono">$CIT</Link>
+                  </li>
+                )}
                 <li>
-                  <Link href={`${base}#ads`}>{t.nav.ads}</Link>
-                </li>
-                <li>
-                  <Link href={`${base}#token`} className="mono">$CIT</Link>
+                  <a href={CITORA_URL} target="_blank" rel="noopener noreferrer">citora.ai</a>
                 </li>
               </ul>
             </div>
@@ -205,10 +239,10 @@ export function Footer({ t, home }: { t: Dict; home: boolean }) {
               <p className="mono-label">{f.company}</p>
               <ul>
                 <li>
-                  <Link href="/roadmap">{t.nav.roadmap}</Link>
+                  <Link href="/citora/roadmap">{t.nav.roadmap}</Link>
                 </li>
                 <li>
-                  <Link href="/faq">{t.nav.faq}</Link>
+                  <Link href="/citora/faq">{t.nav.faq}</Link>
                 </li>
                 <li>
                   <a href={`mailto:${EMAIL}`}>{f.contact}</a>

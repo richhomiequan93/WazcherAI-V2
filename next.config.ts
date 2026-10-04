@@ -2,6 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   turbopack: {},
+  // Citora moved under /citora when wazcher.com became the company home page.
+  async redirects() {
+    return [
+      { source: '/faq', destination: '/citora/faq', permanent: true },
+      { source: '/roadmap', destination: '/citora/roadmap', permanent: true },
+    ];
+  },
   // The unlisted data room and its files stay out of search engines.
   async headers() {
     return [

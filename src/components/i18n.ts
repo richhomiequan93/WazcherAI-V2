@@ -14,6 +14,7 @@ export const LINKEDIN_URL = 'https://www.linkedin.com/company/citora-ai/';
 const en = {
   meta: { skip: 'Skip to content' },
   nav: {
+    products: 'Products',
     citora: 'Citora',
     ads: 'ChatGPT Ads',
     token: '$CIT',
@@ -24,6 +25,21 @@ const en = {
     closeMenu: 'Close menu',
     language: 'Language',
     home: 'Wazcher home',
+  },
+  company: {
+    title: 'Rebuilding how the world discovers.',
+    sub: 'Wazcher builds products for the next era of discovery, where answers replace search and value moves onchain. Our first product is Citora.',
+    cta: 'Explore Citora',
+    productsLabel: 'Our products',
+    productNo: 'Wazcher product 01',
+    status: 'Live',
+    desc: 'The closed-loop GEO platform. See whether ChatGPT, Claude, Gemini and Perplexity mention and cite a brand, then place its ads in ChatGPT.',
+    facts: [
+      { k: 'Category', v: 'GEO and AI ads' },
+      { k: 'Status', v: 'Live at citora.ai' },
+      { k: 'Token', v: '$CIT, pre-launch' },
+    ],
+    open: 'Explore Citora',
   },
   hero: {
     title: 'Be the answer AI gives.',
@@ -168,7 +184,7 @@ const en = {
     items: [
       {
         q: 'What is Wazcher?',
-        a: 'Wazcher is taking Citora onchain. We are building the $CIT economy and the community around Citora, so that every action on the platform will settle in one token.',
+        a: 'Wazcher is a technology company, and Citora is a Wazcher product. Wazcher is taking Citora onchain: we are building the $CIT economy and the community around Citora, so that every action on the platform will settle in one token.',
       },
       {
         q: 'What is Citora?',
@@ -223,7 +239,8 @@ const en = {
     note: 'Investor materials and product walkthroughs on request.',
   },
   footer: {
-    desc: 'Wazcher × Citora: the closed-loop GEO platform, onchain with $CIT.',
+    desc: 'Citora, a Wazcher product: the closed-loop GEO platform, onchain with $CIT.',
+    descCompany: 'Wazcher is a technology company. Citora is a Wazcher product.',
     product: 'Product',
     company: 'Company',
     social: 'Social',
@@ -238,6 +255,7 @@ export type Dict = typeof en;
 const zhTW: Dict = {
   meta: { skip: '跳到主要內容' },
   nav: {
+    products: '產品',
     citora: 'Citora',
     ads: 'ChatGPT 廣告',
     token: '$CIT',
@@ -248,6 +266,21 @@ const zhTW: Dict = {
     closeMenu: '關閉選單',
     language: '語言',
     home: 'Wazcher 首頁',
+  },
+  company: {
+    title: '重塑世界發現事物的方式。',
+    sub: 'Wazcher 為下一個探索時代打造產品：答案取代搜尋，價值在鏈上流動。我們的第一個產品是 Citora。',
+    cta: '認識 Citora',
+    productsLabel: '我們的產品',
+    productNo: 'Wazcher 產品 01',
+    status: '已上線',
+    desc: '閉環式 GEO 平台。查看 ChatGPT、Claude、Gemini 和 Perplexity 是否提到並引用你的品牌，再把廣告投放到 ChatGPT。',
+    facts: [
+      { k: '類別', v: 'GEO 與 AI 廣告' },
+      { k: '狀態', v: '已在 citora.ai 上線' },
+      { k: '代幣', v: '$CIT，尚未推出' },
+    ],
+    open: '認識 Citora',
   },
   hero: {
     title: '成為 AI 給出的答案。',
@@ -377,7 +410,7 @@ const zhTW: Dict = {
     items: [
       {
         q: 'Wazcher 是什麼？',
-        a: 'Wazcher 正在將 Citora 帶上鏈。我們要建立 $CIT 經濟，以及圍繞 Citora 的社群，讓平台上的每一筆操作，未來都以同一個代幣結算。',
+        a: 'Wazcher 是一家科技公司，Citora 是 Wazcher 旗下產品。Wazcher 正在將 Citora 帶上鏈：我們要建立 $CIT 經濟，以及圍繞 Citora 的社群，讓平台上的每一筆操作，未來都以同一個代幣結算。',
       },
       {
         q: 'Citora 是什麼？',
@@ -432,7 +465,8 @@ const zhTW: Dict = {
     note: '投資人資料與產品導覽，歡迎來信索取。',
   },
   footer: {
-    desc: 'Wazcher × Citora：閉環式 GEO 平台，以 $CIT 上鏈。',
+    desc: 'Citora，Wazcher 旗下產品：閉環式 GEO 平台，以 $CIT 上鏈。',
+    descCompany: 'Wazcher 是一家科技公司。Citora 是 Wazcher 旗下產品。',
     product: '產品',
     company: '公司',
     social: '社群',
@@ -445,6 +479,7 @@ const zhTW: Dict = {
 const zhCN: Dict = {
   meta: { skip: '跳到主要内容' },
   nav: {
+    products: '产品',
     citora: 'Citora',
     ads: 'ChatGPT 广告',
     token: '$CIT',
@@ -455,6 +490,21 @@ const zhCN: Dict = {
     closeMenu: '关闭菜单',
     language: '语言',
     home: 'Wazcher 首页',
+  },
+  company: {
+    title: '重塑世界发现事物的方式。',
+    sub: 'Wazcher 为下一个发现时代打造产品：答案取代搜索，价值在链上流动。我们的第一个产品是 Citora。',
+    cta: '了解 Citora',
+    productsLabel: '我们的产品',
+    productNo: 'Wazcher 产品 01',
+    status: '已上线',
+    desc: '闭环式 GEO 平台。查看 ChatGPT、Claude、Gemini 和 Perplexity 是否提到并引用你的品牌，再把广告投放到 ChatGPT。',
+    facts: [
+      { k: '类别', v: 'GEO 与 AI 广告' },
+      { k: '状态', v: '已在 citora.ai 上线' },
+      { k: '代币', v: '$CIT，尚未推出' },
+    ],
+    open: '了解 Citora',
   },
   hero: {
     title: '成为 AI 给出的答案。',
@@ -584,7 +634,7 @@ const zhCN: Dict = {
     items: [
       {
         q: 'Wazcher 是什么？',
-        a: 'Wazcher 正在将 Citora 带上链。我们要建立 $CIT 经济，以及围绕 Citora 的社区，让平台上的每一项操作，将来都用同一个代币结算。',
+        a: 'Wazcher 是一家科技公司，Citora 是 Wazcher 旗下产品。Wazcher 正在将 Citora 带上链：我们要建立 $CIT 经济，以及围绕 Citora 的社区，让平台上的每一项操作，将来都用同一个代币结算。',
       },
       {
         q: 'Citora 是什么？',
@@ -639,7 +689,8 @@ const zhCN: Dict = {
     note: '投资人资料和产品演示，欢迎发邮件索取。',
   },
   footer: {
-    desc: 'Wazcher × Citora：闭环式 GEO 平台，以 $CIT 上链。',
+    desc: 'Citora，Wazcher 旗下产品：闭环式 GEO 平台，以 $CIT 上链。',
+    descCompany: 'Wazcher 是一家科技公司。Citora 是 Wazcher 旗下产品。',
     product: '产品',
     company: '公司',
     social: '社交媒体',
