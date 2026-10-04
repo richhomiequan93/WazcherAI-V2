@@ -61,11 +61,9 @@ function Products({ t }: { t: Dict['company'] }) {
           </div>
           <div className="co-flag-copy">
             <p className="mono-label">{t.flagLabel}</p>
-            <ViewTransition name="citora-mark" share="morph">
-              <div className="co-flag-wm">
-                <CitoraWordmark />
-              </div>
-            </ViewTransition>
+            <div className="co-flag-wm">
+              <CitoraWordmark />
+            </div>
             <p className="co-flag-tag">{t.flagTag}</p>
             <p className="co-flag-desc">{t.desc}</p>
             <span className="co-open">

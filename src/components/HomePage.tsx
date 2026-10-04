@@ -7,7 +7,6 @@ import { ArrowRight, Footer, LaunchButton, Nav, useHtmlLang, useReveal } from '.
 import { AdStrategyCard, ENGINES, EngineLogo } from './Visuals';
 import { CitoraWordmark } from './CitoraWordmark';
 import { BeatsStage } from './beats/BeatsStage';
-import { ViewTransition } from 'react';
 import { PageFade } from './CompanyPage';
 
 // The scanning eye is canvas only: it loads in its own client chunk after hydration and never
@@ -22,11 +21,7 @@ function Hero({ t }: { t: Dict }) {
       <div className="wrap hero-grid">
         <div className="hero-copy">
           <h1 id="hero-title" className="hero-wm">
-            <ViewTransition name="citora-mark" share="morph">
-              <span className="hero-wm-box">
-                <CitoraWordmark />
-              </span>
-            </ViewTransition>
+            <CitoraWordmark />
             <span className="sr-only">Citora</span>
           </h1>
           <p className="hero-tag">{h.title}</p>

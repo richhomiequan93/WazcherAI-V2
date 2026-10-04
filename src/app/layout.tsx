@@ -65,6 +65,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
       className={`${display.variable} ${inter.variable} ${mono.variable} ${notoTC.variable} ${notoSC.variable}`}
     >
