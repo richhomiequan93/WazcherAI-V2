@@ -6,15 +6,12 @@ import { useLocale } from './useLocale';
 import { ArrowRight, Footer, LaunchButton, Nav, useHtmlLang, useReveal } from './Shell';
 import { AdStrategyCard, ENGINES, EngineLogo } from './Visuals';
 import { CitoraWordmark } from './CitoraWordmark';
-import { CountUp } from './CountUp';
 import { BeatsStage } from './beats/BeatsStage';
 import { PageFade } from './CompanyPage';
 
 // The scanning eye is canvas only: it loads in its own client chunk after hydration and never
 // runs during SSR. The .hero-eye box below reserves its space, so the late mount causes no shift.
 const EyeScan = dynamic(() => import('./hero/EyeScan'), { ssr: false });
-// The night sky that carries on under every section after the hero video.
-const StarField = dynamic(() => import('./hero/StarField'), { ssr: false });
 
 /**
  * Hero visual switch. 'video' plays HERO_VIDEO full-bleed behind the copy (muted, looping, autoplay);
@@ -74,7 +71,7 @@ function Hero({ t }: { t: Dict }) {
 
 function Shift({ t }: { t: Dict['shift'] }) {
   return (
-    <section className="sec tone tone-night sec-shift" aria-labelledby="shift-title">
+    <section className="sec tone tone-paper" aria-labelledby="shift-title">
       <div className="wrap sec-in">
         <header className="sec-head rv">
           <p className="eyebrow">{t.label}</p>
@@ -86,7 +83,7 @@ function Shift({ t }: { t: Dict['shift'] }) {
             <div key={st.n} className="stat">
               <dt className="stat-d">{st.d}</dt>
               <dd className="stat-v">
-                <CountUp value={st.n} />
+                {st.n}
                 <span className="u">{st.u}</span>
               </dd>
               <dd className="stat-src">{st.s}</dd>
@@ -129,12 +126,7 @@ function AdsSection({ t, note }: { t: Dict['ads']; note: string }) {
 
 function TokenSection({ t }: { t: Dict['token'] }) {
   return (
-    <section className="sec tone tone-green sec-token" id="token" aria-labelledby="token-title">
-      <div className="token-orbit" aria-hidden="true">
-        <span className="orbit-ring" />
-        <span className="orbit-ring orbit-ring-2" />
-        <span className="orbit-sat" />
-      </div>
+    <section className="sec tone tone-green" id="token" aria-labelledby="token-title">
       <div className="wrap sec-in token-in">
         <header className="sec-head rv">
           <p className="eyebrow">{t.label}</p>
@@ -157,8 +149,7 @@ function TokenSection({ t }: { t: Dict['token'] }) {
 
 function Closing({ t }: { t: Dict }) {
   return (
-    <section className="sec close tone tone-green2 sec-close" aria-labelledby="close-title">
-      <div className="close-horizon" aria-hidden="true" />
+    <section className="sec close tone tone-green2" aria-labelledby="close-title">
       <div className="wrap close-in rv">
         <h2 id="close-title" className="h2">{t.close.title}</h2>
         <p className="body">{t.close.note}</p>
@@ -181,8 +172,7 @@ export default function HomePage() {
       <a href="#main" className="skip">{t.meta.skip}</a>
       <Nav t={t} locale={locale} setLocale={setLocale} home />
       <PageFade>
-      <StarField />
-      <main id="main" className="cit-night">
+      <main id="main">
         <Hero t={t} />
         <Shift t={t.shift} />
         <CitoraSection t={t.citora} note={t.demoNote} />
