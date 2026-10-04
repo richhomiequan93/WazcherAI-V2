@@ -135,10 +135,10 @@ export function Nav({
   }, [open]);
 
   const base = home ? '' : '/citora';
-  const links: [string, string][] = company
+  const links: [string, string, string?][] = company
     ? [
         ['#products', t.nav.products],
-        ['/citora', t.nav.citora],
+        ['/citora', t.nav.citora, 'fade'],
       ]
     : [
         [`${base}#citora`, t.nav.citora],
@@ -147,10 +147,10 @@ export function Nav({
       ];
 
   return (
-    <header className={`nav${scrolled || open ? ' nav-solid' : ''}`}>
+    <header className={`nav${scrolled || open ? ' nav-solid' : ''}`} style={{ viewTransitionName: 'site-header' }}>
       <div className="wrap nav-in">
         <div className="nav-brand">
-          <Link href={company ? '#top' : '/'} className="nav-logo" aria-label={t.nav.home}>
+          <Link href={company ? '#top' : '/'} transitionTypes={company ? undefined : ['page-fade']} className="nav-logo" aria-label={t.nav.home}>
             <Image src="/logo.png" alt="Wazcher" width={4297} height={779} loading="eager" />
           </Link>
           {!company && (
@@ -160,8 +160,8 @@ export function Nav({
           )}
         </div>
         <nav aria-label="Primary" className="nav-links">
-          {links.map(([h, l]) => (
-            <Link key={h} href={h} className={h.endsWith('#token') ? 'mono' : ''}>
+          {links.map(([h, l, fx]) => (
+            <Link key={h} href={h} transitionTypes={fx ? ['page-fade'] : undefined} className={h.endsWith('#token') ? 'mono' : ''}>
               {l}
             </Link>
           ))}
@@ -186,8 +186,8 @@ export function Nav({
       </div>
       <div id="drawer" className="drawer" hidden={!open}>
         <nav aria-label="Mobile" className="drawer-links">
-          {links.map(([h, l], i) => (
-            <Link key={h} href={h} onClick={() => setOpen(false)}>
+          {links.map(([h, l, fx], i) => (
+            <Link key={h} href={h} transitionTypes={fx ? ['page-fade'] : undefined} onClick={() => setOpen(false)}>
               <span className="idx">{pad(i + 1)}</span>
               <span className={h.endsWith('#token') ? 'mono' : ''}>{l}</span>
             </Link>
@@ -218,7 +218,7 @@ export function Footer({ t, home, company = false }: { t: Dict; home: boolean; c
               <p className="mono-label">{f.product}</p>
               <ul>
                 <li>
-                  <Link href="/citora">Citora</Link>
+                  <Link href="/citora" transitionTypes={['page-fade']}>Citora</Link>
                 </li>
                 {!company && (
                   <li>

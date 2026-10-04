@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   turbopack: {},
+  experimental: {
+    viewTransition: true,
+  },
   // Citora moved under /citora when wazcher.com became the company home page.
   async redirects() {
     return [

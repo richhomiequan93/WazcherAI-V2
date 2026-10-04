@@ -7,6 +7,8 @@ import { ArrowRight, Footer, LaunchButton, Nav, useHtmlLang, useReveal } from '.
 import { AdStrategyCard, ENGINES, EngineLogo } from './Visuals';
 import { CitoraWordmark } from './CitoraWordmark';
 import { BeatsStage } from './beats/BeatsStage';
+import { ViewTransition } from 'react';
+import { PageFade } from './CompanyPage';
 
 // The scanning eye is canvas only: it loads in its own client chunk after hydration and never
 // runs during SSR. The .hero-eye box below reserves its space, so the late mount causes no shift.
@@ -20,7 +22,11 @@ function Hero({ t }: { t: Dict }) {
       <div className="wrap hero-grid">
         <div className="hero-copy">
           <h1 id="hero-title" className="hero-wm">
-            <CitoraWordmark />
+            <ViewTransition name="citora-mark" share="morph">
+              <span className="hero-wm-box">
+                <CitoraWordmark />
+              </span>
+            </ViewTransition>
             <span className="sr-only">Citora</span>
           </h1>
           <p className="hero-tag">{h.title}</p>
@@ -153,6 +159,7 @@ export default function HomePage() {
     <>
       <a href="#main" className="skip">{t.meta.skip}</a>
       <Nav t={t} locale={locale} setLocale={setLocale} home />
+      <PageFade>
       <main id="main">
         <Hero t={t} />
         <Shift t={t.shift} />
@@ -162,6 +169,7 @@ export default function HomePage() {
         <Closing t={t} />
       </main>
       <Footer t={t} home />
+      </PageFade>
       <div className="grain" aria-hidden="true" />
     </>
   );
