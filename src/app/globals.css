@@ -3304,3 +3304,35 @@ html[lang='zh-CN'] .co-title {
     opacity: 1;
   }
 }
+
+/* ---------- Citora landing: hero wordmark travels up into the header ---------- */
+/* Before JS positions it, the header logo stays hidden so it never flashes in the bar. */
+.nav-brand-morph .nav-cit-logo {
+  transform-origin: 0 0;
+  will-change: transform;
+}
+html:not(.cit-morph):not(.cit-morph-off) .nav-brand-morph .nav-cit-logo {
+  visibility: hidden;
+}
+/* Once JS is driving, the moving header copy replaces the hero one. */
+html.cit-morph .hero-wm .citora-wm {
+  visibility: hidden;
+}
+/* "A Wazcher product" only appears once the logo has landed. */
+.nav-brand-morph .nav-parent {
+  opacity: 0;
+  transform: translateY(-3px);
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), color 0.2s var(--ease);
+}
+.nav-brand-morph.cit-landed .nav-parent,
+html.cit-morph-off .nav-brand-morph .nav-parent {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+/* Keep the bar clear while the logo is in flight; it fills in once the logo lands. */
+.nav-morph.nav-solid:not(:has(.cit-landed)) {
+  background: transparent;
+  border-bottom-color: transparent;
+}

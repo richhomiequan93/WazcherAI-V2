@@ -192,12 +192,83 @@ export function Nav({
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  const morph = home && !company;
+  const brandRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  /*
+   * Citora landing: the header starts with no logo. The big hero wordmark is the logo, and as
+   * the page scrolls it travels up and shrinks until it lands in the header slot. The moving
+   * piece is the header's own wordmark (fixed, above the bar), dressed up to sit exactly over
+   * the hero one, so nothing gets clipped by the bar or the hero.
+   */
+  useEffect(() => {
+    if (!morph) return;
+    const brand = brandRef.current;
+    const logo = brand?.querySelector<HTMLElement>('.nav-cit-logo');
+    const hero = document.querySelector<SVGElement>('.hero-wm .citora-wm');
+    const root = document.documentElement;
+    if (!brand || !logo || !hero) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      root.classList.add('cit-morph-off');
+      return () => root.classList.remove('cit-morph-off');
+    }
+
+    let N = { x: 0, y: 0, w: 1 };
+    let H = { x: 0, y: 0, w: 1 };
+    let raf = 0;
+    const measure = () => {
+      logo.style.transform = 'none';
+      const n = logo.getBoundingClientRect();
+      const h = hero.getBoundingClientRect();
+      N = { x: n.left, y: n.top, w: n.width || 1 };
+      H = { x: h.left, y: h.top + window.scrollY, w: h.width || 1 };
+    };
+    const ease = (p: number) => p * p * (3 - 2 * p); // smoothstep: shrinks evenly, settles softly
+    const paint = () => {
+      raf = 0;
+      const dist = Math.max(1, H.y - N.y);
+      const p = Math.min(1, Math.max(0, window.scrollY / dist));
+      // Vertical follows the page exactly (the logo rides the scroll); size and x ease in.
+      const top = H.y - Math.min(window.scrollY, dist);
+      const e = ease(p);
+      const scale = H.w / N.w + (1 - H.w / N.w) * e;
+      const left = H.x + (N.x - H.x) * e;
+      logo.style.transform =
+        p >= 1 ? 'none' : `translate3d(${left - N.x}px, ${top - N.y}px, 0) scale(${scale})`;
+      brand.style.setProperty('--cit-p', String(p));
+      brand.classList.toggle('cit-landed', p >= 1);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(paint);
+    };
+    const onResize = () => {
+      measure();
+      paint();
+    };
+    measure();
+    paint();
+    root.classList.add('cit-morph');
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
+    const ro = new ResizeObserver(onResize);
+    ro.observe(hero);
+    document.fonts?.ready.then(onResize);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
+      ro.disconnect();
+      root.classList.remove('cit-morph');
+      logo.style.transform = '';
+    };
+  }, [morph]);
 
   useEffect(() => {
     if (!open) return;
@@ -225,7 +296,7 @@ export function Nav({
     : []; // Citora pages: logo, language and Launch only
 
   return (
-    <header className={`nav${scrolled || open ? ' nav-solid' : ''}`} style={{ viewTransitionName: 'site-header' }}>
+    <header className={`nav${scrolled || open ? ' nav-solid' : ''}${morph ? ' nav-morph' : ''}`} style={{ viewTransitionName: 'site-header' }}>
       <div className="wrap nav-in">
         {company ? (
           <div className="nav-brand">
@@ -235,7 +306,7 @@ export function Nav({
           </div>
         ) : (
           /* Citora pages: Citora is the brand; the line under it is the way back to Wazcher. */
-          <div className="nav-brand nav-brand-cit">
+          <div className={`nav-brand nav-brand-cit${morph ? ' nav-brand-morph' : ''}`} ref={brandRef}>
             <Link href={home ? '#top' : '/citora'} className="nav-cit-logo" aria-label="Citora">
               <CitoraWordmark />
             </Link>
