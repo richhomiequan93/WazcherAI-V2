@@ -101,8 +101,8 @@ export default function OrbitField() {
       ];
       for (const l of lights) {
         const g = ctx.createRadialGradient(l.x, l.y, 0, l.x, l.y, l.r);
-        g.addColorStop(0, `rgba(226,232,238,${l.a})`);
-        g.addColorStop(1, 'rgba(226,232,238,0)');
+        g.addColorStop(0, `rgba(255,255,255,${l.a})`);
+        g.addColorStop(1, 'rgba(255,255,255,0)');
         ctx.fillStyle = g;
         ctx.fillRect(0, 0, W, H);
       }
@@ -110,8 +110,8 @@ export default function OrbitField() {
       // cursor light
       if (mouse.on > 0.01) {
         const g = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 260);
-        g.addColorStop(0, `rgba(235,240,245,${0.07 * mouse.on})`);
-        g.addColorStop(1, 'rgba(235,240,245,0)');
+        g.addColorStop(0, `rgba(255,255,255,${0.07 * mouse.on})`);
+        g.addColorStop(1, 'rgba(255,255,255,0)');
         ctx.fillStyle = g;
         ctx.fillRect(0, 0, W, H);
       }
@@ -148,7 +148,7 @@ export default function OrbitField() {
           ctx.arc(x, y, size * 6, 0, Math.PI * 2);
           ctx.fill();
         }
-        ctx.fillStyle = `rgba(242,242,240,${Math.min(1, alpha)})`;
+        ctx.fillStyle = `rgba(255,255,255,${Math.min(1, alpha)})`;
         ctx.beginPath();
         ctx.arc(x, y, size, 0, Math.PI * 2);
         ctx.fill();
@@ -156,7 +156,7 @@ export default function OrbitField() {
 
       // the ring that follows the cursor
       if (mouse.on > 0.01) {
-        ctx.strokeStyle = `rgba(242,242,240,${0.22 * mouse.on})`;
+        ctx.strokeStyle = `rgba(255,255,255,${0.22 * mouse.on})`;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.ellipse(mouse.x, mouse.y, 34, 34, 0, 0, Math.PI * 2);

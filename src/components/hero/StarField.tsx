@@ -68,7 +68,7 @@ export default function StarField() {
         const y = s.y;
         const k = still ? 1 : 0.72 + 0.28 * Math.sin(t * 0.001 * s.tw + s.ph);
         ctx.globalAlpha = s.a * k;
-        ctx.fillStyle = s.blue ? '#9fbcff' : '#f2f2f0';
+        ctx.fillStyle = s.blue ? '#9fbcff' : '#fff';
         ctx.beginPath();
         ctx.arc(s.x, y, s.r, 0, Math.PI * 2);
         ctx.fill();
