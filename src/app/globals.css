@@ -2908,7 +2908,7 @@ html[lang='zh-CN'] .co-title {
 }
 .co-flag-art {
   position: absolute;
-  inset: -4% -6% -4% 30%;
+  inset: 10% 3% 10% 60%;
   z-index: -1;
   opacity: 0.55;
   transition:
@@ -3046,7 +3046,7 @@ html[lang='zh-CN'] .co-title {
     min-height: 560px;
   }
   .co-flag-art {
-    inset: -10% -30% 40% -10%;
+    inset: 4% 4% 46% 4%;
   }
   .co-flag-copy {
     padding: 32px 24px 36px;

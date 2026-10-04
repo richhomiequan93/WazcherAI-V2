@@ -57,7 +57,7 @@ function Products({ t }: { t: Dict['company'] }) {
         </header>
         <Link href="/citora" transitionTypes={['page-fade']} className="co-flag rv" aria-label={`Citora. ${t.open}`}>
           <div className="co-flag-art" aria-hidden="true">
-            <Image src="/art/citora-rings.webp" alt="" fill sizes="(max-width: 819px) 100vw, 70vw" loading="eager" className="co-flag-img" />
+            <Image src="/art/citora-ring.webp" alt="" fill sizes="(max-width: 819px) 100vw, 70vw" loading="eager" className="co-flag-img" />
           </div>
           <div className="co-flag-copy">
             <p className="mono-label">{t.flagLabel}</p>
