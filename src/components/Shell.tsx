@@ -222,13 +222,24 @@ export function Nav({
 
     let N = { x: 0, y: 0, w: 1 };
     let H = { x: 0, y: 0, w: 1 };
+    let K = 1; // hero size / header size
     let raf = 0;
+    /*
+     * Sharpness: mobile Safari rasterises a transformed layer at its layout size, so scaling the
+     * 21px header logo up to hero size looks blurry on phones. While in flight, the SVG is laid
+     * out at hero size (K times bigger, overflowing a box kept at header size) and scaled DOWN.
+     */
     const measure = () => {
+      logo.classList.remove('cit-big');
       logo.style.transform = 'none';
       const n = logo.getBoundingClientRect();
       const h = hero.getBoundingClientRect();
       N = { x: n.left, y: n.top, w: n.width || 1 };
       H = { x: h.left, y: h.top + window.scrollY, w: h.width || 1 };
+      K = Math.max(1, H.w / N.w);
+      logo.style.setProperty('--cit-nw', `${n.width}px`);
+      logo.style.setProperty('--cit-nh', `${n.height}px`);
+      logo.style.setProperty('--cit-k', String(K));
     };
     const ease = (p: number) => p * p * (3 - 2 * p); // smoothstep: shrinks evenly, settles softly
     const paint = () => {
@@ -240,8 +251,9 @@ export function Nav({
       const e = ease(p);
       const scale = H.w / N.w + (1 - H.w / N.w) * e;
       const left = H.x + (N.x - H.x) * e;
+      logo.classList.toggle('cit-big', p < 1);
       logo.style.transform =
-        p >= 1 ? 'none' : `translate3d(${left - N.x}px, ${top - N.y}px, 0) scale(${scale})`;
+        p >= 1 ? 'none' : `translate3d(${left - N.x}px, ${top - N.y}px, 0) scale(${scale / K})`;
       brand.style.setProperty('--cit-p', String(p));
       brand.classList.toggle('cit-landed', p >= 1);
     };
@@ -266,6 +278,7 @@ export function Nav({
       window.removeEventListener('resize', onResize);
       ro.disconnect();
       root.classList.remove('cit-morph');
+      logo.classList.remove('cit-big');
       logo.style.transform = '';
     };
   }, [morph]);

@@ -3311,6 +3311,18 @@ html[lang='zh-CN'] .co-title {
   transform-origin: 0 0;
   will-change: transform;
 }
+/* In flight: the box keeps its header size, the SVG inside is drawn at hero size and scaled down
+   by the transform, so phones rasterise it sharp. */
+.nav-brand-morph .nav-cit-logo.cit-big {
+  width: var(--cit-nw);
+  height: var(--cit-nh);
+  overflow: visible;
+}
+.nav-brand-morph .nav-cit-logo.cit-big .citora-wm {
+  width: calc(var(--cit-nw) * var(--cit-k));
+  height: calc(var(--cit-nh) * var(--cit-k));
+  max-width: none;
+}
 html:not(.cit-morph):not(.cit-morph-off) .nav-brand-morph .nav-cit-logo {
   visibility: hidden;
 }
