@@ -12,6 +12,8 @@ import { PageFade } from './CompanyPage';
 // The scanning eye is canvas only: it loads in its own client chunk after hydration and never
 // runs during SSR. The .hero-eye box below reserves its space, so the late mount causes no shift.
 const EyeScan = dynamic(() => import('./hero/EyeScan'), { ssr: false });
+// Twinkling stars behind the closing section and footer.
+const StarField = dynamic(() => import('./hero/StarField'), { ssr: false });
 
 /**
  * Hero visual switch. 'video' plays HERO_VIDEO full-bleed behind the copy (muted, looping, autoplay);
@@ -149,7 +151,7 @@ function TokenSection({ t }: { t: Dict['token'] }) {
 
 function Closing({ t }: { t: Dict }) {
   return (
-    <section className="sec close tone tone-green2" aria-labelledby="close-title">
+    <section className="sec close" aria-labelledby="close-title">
       <div className="wrap close-in rv">
         <h2 id="close-title" className="h2">{t.close.title}</h2>
         <p className="body">{t.close.note}</p>
@@ -172,15 +174,21 @@ export default function HomePage() {
       <a href="#main" className="skip">{t.meta.skip}</a>
       <Nav t={t} locale={locale} setLocale={setLocale} home />
       <PageFade>
-      <main id="main">
+      <main id="main" className="cit-black">
         <Hero t={t} />
         <Shift t={t.shift} />
         <CitoraSection t={t.citora} note={t.demoNote} />
         <AdsSection t={t.ads} note={t.demoNote} />
         <TokenSection t={t.token} />
-        <Closing t={t} />
+        <div className="night-end">
+          <div className="night-sky" aria-hidden="true">
+            <StarField />
+            <div className="night-ridge" />
+          </div>
+          <Closing t={t} />
+          <Footer t={t} home />
+        </div>
       </main>
-      <Footer t={t} home />
       </PageFade>
       <div className="grain" aria-hidden="true" />
     </>
