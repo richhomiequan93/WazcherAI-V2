@@ -121,14 +121,8 @@ function LangMenu({ locale, setLocale, label }: { locale: Locale; setLocale: (l:
         aria-label={`${label}: ${current.name}`}
         onClick={() => setOpen((v) => !v)}
       >
-        <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true">
-          <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" strokeWidth="1.1" />
-          <path d="M1.75 8h12.5M8 1.75c1.8 1.9 2.6 3.9 2.6 6.25S9.8 12.35 8 14.25M8 1.75C6.2 3.65 5.4 5.65 5.4 8s.8 4.35 2.6 6.25" fill="none" stroke="currentColor" strokeWidth="1.1" />
-        </svg>
-        <span lang={current.id}>{current.name}</span>
-        <svg className={`lang-chev${open ? ' up' : ''}`} viewBox="0 0 12 12" width="10" height="10" aria-hidden="true">
-          <path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" strokeWidth="1.2" />
-        </svg>
+        <span className="lang-k">{label}</span>
+        <span className="lang-v" lang={current.id}>{current.short}</span>
       </button>
       {open && (
         <ul className="lang-pop" role="menu" aria-label={label}>
@@ -145,7 +139,8 @@ function LangMenu({ locale, setLocale, label }: { locale: Locale; setLocale: (l:
                   setOpen(false);
                 }}
               >
-                {l.name}
+                <span className="lang-s">{l.short}</span>
+                <span>{l.name}</span>
               </button>
             </li>
           ))}
