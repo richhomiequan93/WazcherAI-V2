@@ -3253,3 +3253,54 @@ html[lang='zh-CN'] .co-title {
     animation: none;
   }
 }
+
+/* ---------- Citora nav: Citora wordmark leads, "A Wazcher product" under it links home ---------- */
+.nav-brand-cit {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+.nav-cit-logo {
+  display: block;
+  color: var(--text);
+  line-height: 0;
+}
+.nav-cit-logo .citora-wm {
+  height: 21px;
+  width: auto;
+}
+.nav-parent {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--text-3);
+  white-space: nowrap;
+  transition: color 0.2s var(--ease);
+}
+.nav-parent-back {
+  display: inline-flex;
+  width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: width 0.2s var(--ease), opacity 0.2s var(--ease);
+}
+.nav-parent:hover,
+.nav-parent:focus-visible {
+  color: var(--text);
+}
+.nav-parent:hover .nav-parent-back,
+.nav-parent:focus-visible .nav-parent-back {
+  width: 10px;
+  opacity: 1;
+}
+@media (hover: none) {
+  .nav-parent-back {
+    width: 10px;
+    opacity: 1;
+  }
+}

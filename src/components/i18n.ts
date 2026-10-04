@@ -14,6 +14,7 @@ export const LINKEDIN_URL = 'https://www.linkedin.com/company/citora-ai/';
 const en = {
   meta: { skip: 'Skip to content' },
   nav: {
+    productOf: 'A Wazcher product',
     selectLanguage: 'Select a language',
     close: 'Close',
     asia: 'Asia',
@@ -254,6 +255,7 @@ export type Dict = typeof en;
 const zhTW: Dict = {
   meta: { skip: '跳到主要內容' },
   nav: {
+    productOf: 'Wazcher 旗下產品',
     selectLanguage: '選擇語言',
     close: '關閉',
     asia: '亞洲',
@@ -477,6 +479,7 @@ const zhTW: Dict = {
 const zhCN: Dict = {
   meta: { skip: '跳到主要内容' },
   nav: {
+    productOf: 'Wazcher 旗下产品',
     selectLanguage: '选择语言',
     close: '关闭',
     asia: '亚洲',

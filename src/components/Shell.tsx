@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { CitoraWordmark } from './CitoraWordmark';
 import { CITORA_URL, EMAIL, LINKEDIN_URL, LOCALES, X_URL, type Dict, type Locale } from './i18n';
 
 export const pad = (n: number) => String(n).padStart(2, '0');
@@ -226,16 +227,28 @@ export function Nav({
   return (
     <header className={`nav${scrolled || open ? ' nav-solid' : ''}`} style={{ viewTransitionName: 'site-header' }}>
       <div className="wrap nav-in">
-        <div className="nav-brand">
-          <Link href={company ? '#top' : '/'} transitionTypes={company ? undefined : ['page-fade']} className="nav-logo" aria-label={t.nav.home}>
-            <Image src="/logo.png" alt="Wazcher" width={4297} height={779} loading="eager" />
-          </Link>
-          {!company && (
-            <Link href={home ? '#top' : '/citora'} className="nav-crumb">
-              <span aria-hidden="true">/</span> Citora
+        {company ? (
+          <div className="nav-brand">
+            <Link href="#top" className="nav-logo" aria-label={t.nav.home}>
+              <Image src="/logo.png" alt="Wazcher" width={4297} height={779} loading="eager" />
             </Link>
-          )}
-        </div>
+          </div>
+        ) : (
+          /* Citora pages: Citora is the brand; the line under it is the way back to Wazcher. */
+          <div className="nav-brand nav-brand-cit">
+            <Link href={home ? '#top' : '/citora'} className="nav-cit-logo" aria-label="Citora">
+              <CitoraWordmark />
+            </Link>
+            <Link href="/" transitionTypes={['page-fade']} className="nav-parent">
+              <span className="nav-parent-back" aria-hidden="true">
+                <svg viewBox="0 0 12 12" width="10" height="10">
+                  <path d="M7.5 2.5L4 6l3.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
+                </svg>
+              </span>
+              {t.nav.productOf}
+            </Link>
+          </div>
+        )}
         {links.length > 0 && (
           <nav aria-label="Primary" className="nav-links">
             {links.map(([h, l, fx]) => (
