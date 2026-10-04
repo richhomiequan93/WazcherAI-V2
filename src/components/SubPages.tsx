@@ -117,7 +117,7 @@ function Roadmap({ t }: { t: Dict['roadmap'] }) {
 
 /** Files live in public/dataroom/. Order matches t.dataroom.docs. */
 const DATAROOM_FILES = [
-  { href: '/dataroom/Wazcher-Citora-PreSeed-Deck.pdf', cover: '/dataroom/deck-cover.jpg', pages: 14, size: '0.6 MB' },
+  { href: '/citora/dataroom/Wazcher-Citora-PreSeed-Deck.pdf', cover: '/citora/dataroom/deck-cover.jpg', pages: 14, size: '0.6 MB' },
 ];
 
 function Dataroom({ t }: { t: Dict['dataroom'] }) {

@@ -10,13 +10,16 @@ const nextConfig: NextConfig = {
     return [
       { source: '/faq', destination: '/citora/faq', permanent: true },
       { source: '/roadmap', destination: '/citora/roadmap', permanent: true },
+      // Data room moved under /citora; old links (including direct file links) keep working.
+      { source: '/dataroom', destination: '/citora/dataroom', permanent: true },
+      { source: '/dataroom/:path*', destination: '/citora/dataroom/:path*', permanent: true },
     ];
   },
   // The unlisted data room and its files stay out of search engines.
   async headers() {
     return [
-      { source: '/dataroom', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }] },
-      { source: '/dataroom/:path*', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }] },
+      { source: '/citora/dataroom', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }] },
+      { source: '/citora/dataroom/:path*', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }] },
     ];
   },
   outputFileTracingIncludes: {
