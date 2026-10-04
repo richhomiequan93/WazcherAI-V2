@@ -245,19 +245,9 @@ export function Nav({
             ))}
           </nav>
         )}
-        {company ? (
-          <div className="nav-end nav-end-co">
-            <LangModal locale={locale} setLocale={setLocale} t={t.nav} />
-          </div>
-        ) : (
-          <div className="nav-end nav-end-co">
-            <LangModal locale={locale} setLocale={setLocale} t={t.nav} />
-            <a className="btn btn-outline btn-sm" href={CITORA_URL} target="_blank" rel="noopener noreferrer">
-              {t.nav.launch}
-              <ArrowOut />
-            </a>
-          </div>
-        )}
+        <div className="nav-end nav-end-co">
+          <LangModal locale={locale} setLocale={setLocale} t={t.nav} />
+        </div>
         {links.length > 0 && (
         <button
           type="button"
@@ -282,9 +272,6 @@ export function Nav({
             ))}
           </nav>
         )}
-        <div className="drawer-foot">
-          {!company && <LaunchButton label={t.nav.launch} className="btn-block" />}
-        </div>
       </div>
     </header>
   );
