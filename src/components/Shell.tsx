@@ -134,17 +134,12 @@ export function Nav({
     };
   }, [open]);
 
-  const base = home ? '' : '/citora';
   const links: [string, string, string?][] = company
     ? [
         ['#products', t.nav.products],
         ['/citora', t.nav.citora, 'fade'],
       ]
-    : [
-        [`${base}#citora`, t.nav.citora],
-        [`${base}#ads`, t.nav.ads],
-        [`${base}#token`, t.nav.token],
-      ];
+    : []; // Citora pages: logo, language and Launch only
 
   return (
     <header className={`nav${scrolled || open ? ' nav-solid' : ''}`} style={{ viewTransitionName: 'site-header' }}>
@@ -159,13 +154,15 @@ export function Nav({
             </Link>
           )}
         </div>
-        <nav aria-label="Primary" className="nav-links">
-          {links.map(([h, l, fx]) => (
-            <Link key={h} href={h} transitionTypes={fx ? ['page-fade'] : undefined} className={h.endsWith('#token') ? 'mono' : ''}>
-              {l}
-            </Link>
-          ))}
-        </nav>
+        {links.length > 0 && (
+          <nav aria-label="Primary" className="nav-links">
+            {links.map(([h, l, fx]) => (
+              <Link key={h} href={h} transitionTypes={fx ? ['page-fade'] : undefined} className={h.endsWith('#token') ? 'mono' : ''}>
+                {l}
+              </Link>
+            ))}
+          </nav>
+        )}
         <div className="nav-end">
           <LangSwitch locale={locale} setLocale={setLocale} label={t.nav.language} />
           <a className="btn btn-outline btn-sm" href={CITORA_URL} target="_blank" rel="noopener noreferrer">
@@ -185,14 +182,16 @@ export function Nav({
         </button>
       </div>
       <div id="drawer" className="drawer" hidden={!open}>
-        <nav aria-label="Mobile" className="drawer-links">
-          {links.map(([h, l, fx], i) => (
-            <Link key={h} href={h} transitionTypes={fx ? ['page-fade'] : undefined} onClick={() => setOpen(false)}>
-              <span className="idx">{pad(i + 1)}</span>
-              <span className={h.endsWith('#token') ? 'mono' : ''}>{l}</span>
-            </Link>
-          ))}
-        </nav>
+        {links.length > 0 && (
+          <nav aria-label="Mobile" className="drawer-links">
+            {links.map(([h, l, fx], i) => (
+              <Link key={h} href={h} transitionTypes={fx ? ['page-fade'] : undefined} onClick={() => setOpen(false)}>
+                <span className="idx">{pad(i + 1)}</span>
+                <span className={h.endsWith('#token') ? 'mono' : ''}>{l}</span>
+              </Link>
+            ))}
+          </nav>
+        )}
         <div className="drawer-foot">
           <LangSwitch locale={locale} setLocale={setLocale} label={t.nav.language} />
           <LaunchButton label={t.nav.launch} className="btn-block" />

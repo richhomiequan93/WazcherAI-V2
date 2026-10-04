@@ -3063,3 +3063,49 @@ html[lang='zh-CN'] .co-title {
 .foot-brand p {
   text-wrap: balance;
 }
+
+/* ---------- Citora hero: full-bleed background video (eye kept in code, switched off) ---------- */
+.hero-has-video {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 0;
+}
+.hero-has-video .hero-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+.hero-video {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: #0e0f11;
+}
+.hero-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  animation: hero-video-in 1.6s 0.2s var(--ease) forwards;
+}
+/* darken for legibility: strong on the left behind the copy and at the bottom edge */
+.hero-video::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, rgba(14, 15, 17, 0.88) 0%, rgba(14, 15, 17, 0.55) 45%, rgba(14, 15, 17, 0.25) 100%),
+    linear-gradient(to bottom, rgba(14, 15, 17, 0.55) 0%, transparent 25%, transparent 60%, #0e0f11 100%);
+}
+@keyframes hero-video-in {
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-video video {
+    animation: none;
+    opacity: 1;
+  }
+}

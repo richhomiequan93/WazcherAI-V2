@@ -13,11 +13,28 @@ import { PageFade } from './CompanyPage';
 // runs during SSR. The .hero-eye box below reserves its space, so the late mount causes no shift.
 const EyeScan = dynamic(() => import('./hero/EyeScan'), { ssr: false });
 
+/**
+ * Hero visual switch. 'video' plays HERO_VIDEO full-bleed behind the copy (muted, looping, autoplay);
+ * 'eye' brings back the scanning eye on the right. The eye code is kept on purpose.
+ */
+const HERO_VISUAL: 'video' | 'eye' = 'video';
+const HERO_VIDEO = { src: '/video/hero.mp4', poster: '/video/hero-poster.jpg' };
+
+function HeroVideo() {
+  return (
+    <div className="hero-video" aria-hidden="true">
+      <video autoPlay muted loop playsInline preload="auto" poster={HERO_VIDEO.poster}>
+        <source src={HERO_VIDEO.src} type="video/mp4" />
+      </video>
+    </div>
+  );
+}
+
 function Hero({ t }: { t: Dict }) {
   const h = t.hero;
   return (
-    <section className="hero hero-stage tone tone-ink" id="top" aria-labelledby="hero-title">
-      <EyeScan fragments={t.scan.fragments} hud={t.scan.hud} />
+    <section className={`hero hero-stage tone tone-ink${HERO_VISUAL === 'video' ? ' hero-has-video' : ''}`} id="top" aria-labelledby="hero-title">
+      {HERO_VISUAL === 'video' ? <HeroVideo /> : <EyeScan fragments={t.scan.fragments} hud={t.scan.hud} />}
       <div className="wrap hero-grid">
         <div className="hero-copy">
           <h1 id="hero-title" className="hero-wm">
@@ -34,7 +51,7 @@ function Hero({ t }: { t: Dict }) {
             </a>
           </div>
         </div>
-        <div className="hero-visual hero-eye" data-eye-host aria-hidden="true" />
+        {HERO_VISUAL === 'eye' && <div className="hero-visual hero-eye" data-eye-host aria-hidden="true" />}
       </div>
       <div className="wrap">
         <div className="works">
