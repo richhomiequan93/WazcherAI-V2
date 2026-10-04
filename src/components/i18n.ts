@@ -14,6 +14,9 @@ export const LINKEDIN_URL = 'https://www.linkedin.com/company/citora-ai/';
 const en = {
   meta: { skip: 'Skip to content' },
   nav: {
+    selectLanguage: 'Select a language',
+    close: 'Close',
+    asia: 'Asia',
     products: 'Products',
     citora: 'Citora',
     ads: 'ChatGPT Ads',
@@ -251,6 +254,9 @@ export type Dict = typeof en;
 const zhTW: Dict = {
   meta: { skip: '跳到主要內容' },
   nav: {
+    selectLanguage: '選擇語言',
+    close: '關閉',
+    asia: '亞洲',
     products: '產品',
     citora: 'Citora',
     ads: 'ChatGPT 廣告',
@@ -471,6 +477,9 @@ const zhTW: Dict = {
 const zhCN: Dict = {
   meta: { skip: '跳到主要内容' },
   nav: {
+    selectLanguage: '选择语言',
+    close: '关闭',
+    asia: '亚洲',
     products: '产品',
     citora: 'Citora',
     ads: 'ChatGPT 广告',

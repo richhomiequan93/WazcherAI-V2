@@ -89,64 +89,105 @@ function LangSwitch({ locale, setLocale, label }: { locale: Locale; setLocale: (
   );
 }
 
-/** One button showing the current language; opens a small menu of the three locales. */
-function LangMenu({ locale, setLocale, label }: { locale: Locale; setLocale: (l: Locale) => void; label: string }) {
+function LangItem({ id, name, locale, pick }: { id: Locale; name: string; locale: Locale; pick: (l: Locale) => void }) {
+  return (
+    <li>
+      <button type="button" lang={id} aria-current={id === locale ? 'true' : undefined} onClick={() => pick(id)}>
+        {name}
+        {id === locale && (
+          <svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true">
+            <path d="M2 6.4l2.6 2.6L10 3.4" fill="none" stroke="currentColor" strokeWidth="1.3" />
+          </svg>
+        )}
+      </button>
+    </li>
+  );
+}
+
+/**
+ * Tools for Humanity style: a small "globe + EN" trigger in the nav opens a centred sheet
+ * listing the languages. Esc, the close button or a click on the dimmed page closes it.
+ */
+function LangModal({
+  locale,
+  setLocale,
+  t,
+}: {
+  locale: Locale;
+  setLocale: (l: Locale) => void;
+  t: Dict['nav'];
+}) {
   const [open, setOpen] = useState(false);
-  const box = useRef<HTMLDivElement>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const closeBtn = useRef<HTMLButtonElement>(null);
   const current = LOCALES.find((l) => l.id === locale) ?? LOCALES[0];
+  const close = () => {
+    setOpen(false);
+    trigger.current?.focus();
+  };
+  const pick = (id: Locale) => {
+    setLocale(id);
+    close();
+  };
 
   useEffect(() => {
     if (!open) return;
-    const onDown = (e: PointerEvent) => {
-      if (box.current && !box.current.contains(e.target as Node)) setOpen(false);
-    };
+    closeBtn.current?.focus();
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false);
+      if (e.key === 'Escape') {
+        setOpen(false);
+        trigger.current?.focus();
+      }
     };
-    document.addEventListener('pointerdown', onDown);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     document.addEventListener('keydown', onKey);
     return () => {
-      document.removeEventListener('pointerdown', onDown);
+      document.body.style.overflow = prev;
       document.removeEventListener('keydown', onKey);
     };
   }, [open]);
 
   return (
-    <div className="lang-menu" ref={box}>
+    <>
       <button
+        ref={trigger}
         type="button"
-        className="lang-btn"
-        aria-haspopup="menu"
+        className="lang-trigger"
+        aria-haspopup="dialog"
         aria-expanded={open}
-        aria-label={`${label}: ${current.name}`}
-        onClick={() => setOpen((v) => !v)}
+        aria-label={`${t.language}: ${current.name}`}
+        onClick={() => setOpen(true)}
       >
-        <span className="lang-k">{label}</span>
-        <span className="lang-v" lang={current.id}>{current.short}</span>
+        <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
+          <circle cx="8" cy="8" r="6.4" fill="none" stroke="currentColor" strokeWidth="1.2" />
+          <path d="M1.6 8h12.8M8 1.6c1.9 1.9 2.7 4 2.7 6.4S9.9 12.5 8 14.4M8 1.6C6.1 3.5 5.3 5.6 5.3 8s.8 4.5 2.7 6.4" fill="none" stroke="currentColor" strokeWidth="1.2" />
+        </svg>
+        <span>{current.id === 'en' ? 'EN' : current.short}</span>
       </button>
       {open && (
-        <ul className="lang-pop" role="menu" aria-label={label}>
-          {LOCALES.map((l) => (
-            <li key={l.id} role="none">
-              <button
-                type="button"
-                role="menuitemradio"
-                aria-checked={l.id === locale}
-                lang={l.id}
-                className={l.id === locale ? 'on' : ''}
-                onClick={() => {
-                  setLocale(l.id);
-                  setOpen(false);
-                }}
-              >
-                <span className="lang-s">{l.short}</span>
-                <span>{l.name}</span>
+        <div className="lang-scrim" onPointerDown={(e) => e.target === e.currentTarget && close()}>
+          <div className="lang-sheet" role="dialog" aria-modal="true" aria-labelledby="lang-title">
+            <div className="lang-sheet-head">
+              <h2 id="lang-title">{t.selectLanguage}</h2>
+              <button ref={closeBtn} type="button" className="lang-x" aria-label={t.close} onClick={close}>
+                <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+                  <path d="M3 3l10 10M13 3L3 13" fill="none" stroke="currentColor" strokeWidth="1.4" />
+                </svg>
               </button>
-            </li>
-          ))}
-        </ul>
+            </div>
+            <ul className="lang-list">
+              <LangItem id="en" name="English" locale={locale} pick={pick} />
+            </ul>
+            <p className="lang-group">{t.asia}</p>
+            <ul className="lang-list lang-cols">
+              <LangItem id="zh-TW" name="繁體中文" locale={locale} pick={pick} />
+              <LangItem id="zh-CN" name="简体中文" locale={locale} pick={pick} />
+            </ul>
+          </div>
+        </div>
       )}
-    </div>
+    </>
   );
 }
 
@@ -226,7 +267,7 @@ export function Nav({
         )}
         {company ? (
           <div className="nav-end nav-end-co">
-            <LangMenu locale={locale} setLocale={setLocale} label={t.nav.language} />
+            <LangModal locale={locale} setLocale={setLocale} t={t.nav} />
           </div>
         ) : (
           <div className="nav-end">
