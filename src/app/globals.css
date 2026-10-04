@@ -3132,16 +3132,17 @@ html[lang='zh-CN'] .co-title {
   align-items: flex-start;
   justify-content: center;
   padding: 36px 20px;
-  background: rgba(10, 10, 11, 0.55);
+  background: rgba(8, 8, 9, 0.72);
   animation: lang-fade 0.18s ease-out;
 }
 .lang-sheet {
   width: min(100%, 396px);
   max-height: calc(100svh - 72px);
   overflow: auto;
-  padding: 20px 14px 40px;
-  background: #fff;
-  color: #121211;
+  padding: 22px 24px 36px;
+  background: #141518;
+  color: #f2f2f0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   animation: lang-rise 0.22s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 .lang-sheet-head {
@@ -3151,21 +3152,32 @@ html[lang='zh-CN'] .co-title {
   margin-bottom: 24px;
 }
 .lang-sheet h2 {
-  font-family: var(--f-body);
-  font-size: 12.5px;
-  font-weight: 500;
-  letter-spacing: 0;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(242, 242, 240, 0.44);
 }
 .lang-x {
   display: inline-flex;
   margin: -8px -6px -8px 0;
   padding: 8px;
-  color: #121211;
+  color: rgba(242, 242, 240, 0.64);
+  transition: color 0.2s var(--ease);
+}
+.lang-x:hover {
+  color: #f2f2f0;
 }
 .lang-group {
-  margin: 32px 0 10px;
-  font-size: 12.5px;
-  color: rgba(18, 18, 17, 0.4);
+  margin: 28px 0 6px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(242, 242, 240, 0.44);
 }
 .lang-list.lang-cols {
   display: grid;
@@ -3175,13 +3187,19 @@ html[lang='zh-CN'] .co-title {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 0;
-  font-size: 12.5px;
-  color: #121211;
-  transition: opacity 0.15s ease;
+  gap: 10px;
+  padding: 8px 0;
+  font-family: var(--f-display);
+  font-size: 17px;
+  color: rgba(242, 242, 240, 0.64);
+  transition: color 0.15s ease;
 }
-.lang-list button:hover {
-  opacity: 0.6;
+.lang-list button:hover,
+.lang-list button[aria-current='true'] {
+  color: #f2f2f0;
+}
+.lang-list button svg {
+  color: var(--green);
 }
 @keyframes lang-fade {
   from {
