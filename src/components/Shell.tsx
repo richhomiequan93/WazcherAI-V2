@@ -69,26 +69,6 @@ export function LaunchButton({ label, className = '' }: { label: string; classNa
   );
 }
 
-function LangSwitch({ locale, setLocale, label }: { locale: Locale; setLocale: (l: Locale) => void; label: string }) {
-  return (
-    <div className="lang" role="group" aria-label={label}>
-      {LOCALES.map((l) => (
-        <button
-          key={l.id}
-          type="button"
-          lang={l.id}
-          className={locale === l.id ? 'on' : ''}
-          aria-pressed={locale === l.id}
-          title={l.name}
-          onClick={() => setLocale(l.id)}
-        >
-          {l.short}
-        </button>
-      ))}
-    </div>
-  );
-}
-
 function LangItem({ id, name, locale, pick }: { id: Locale; name: string; locale: Locale; pick: (l: Locale) => void }) {
   return (
     <li>
@@ -270,14 +250,15 @@ export function Nav({
             <LangModal locale={locale} setLocale={setLocale} t={t.nav} />
           </div>
         ) : (
-          <div className="nav-end">
-            <LangSwitch locale={locale} setLocale={setLocale} label={t.nav.language} />
+          <div className="nav-end nav-end-co">
+            <LangModal locale={locale} setLocale={setLocale} t={t.nav} />
             <a className="btn btn-outline btn-sm" href={CITORA_URL} target="_blank" rel="noopener noreferrer">
               {t.nav.launch}
               <ArrowOut />
             </a>
           </div>
         )}
+        {links.length > 0 && (
         <button
           type="button"
           className="nav-toggle"
@@ -288,6 +269,7 @@ export function Nav({
         >
           <span className={open ? 'bars x' : 'bars'} aria-hidden="true" />
         </button>
+        )}
       </div>
       <div id="drawer" className="drawer" hidden={!open}>
         {links.length > 0 && (
@@ -301,7 +283,6 @@ export function Nav({
           </nav>
         )}
         <div className="drawer-foot">
-          <LangSwitch locale={locale} setLocale={setLocale} label={t.nav.language} />
           {!company && <LaunchButton label={t.nav.launch} className="btn-block" />}
         </div>
       </div>

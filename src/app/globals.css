@@ -3114,6 +3114,8 @@ html[lang='zh-CN'] .co-title {
 .lang-trigger {
   display: inline-flex;
   align-items: center;
+  flex: none;
+  white-space: nowrap;
   gap: 6px;
   padding: 8px 0;
   font-size: 13px;
@@ -3219,6 +3221,31 @@ html[lang='zh-CN'] .co-title {
   }
   .nav-end-co + .nav-toggle {
     margin-left: 12px;
+  }
+  /* Citora pages have no menu links: the bar keeps the globe and a compact Launch button */
+  .nav-end-co {
+    gap: 16px;
+  }
+  .nav-end-co .btn {
+    height: 34px;
+    padding: 0 12px;
+    font-size: 13px;
+    flex: none;
+  }
+  .nav-end-co .btn .arrow {
+    flex: none;
+  }
+}
+@media (max-width: 400px) {
+  .nav-end-co .btn .arrow,
+  .lang-trigger svg {
+    display: none;
+  }
+  .nav-end-co {
+    gap: 12px;
+  }
+  .nav-brand {
+    gap: 8px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
