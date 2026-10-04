@@ -2649,8 +2649,8 @@ html[lang='zh-CN'] .adwin-target {
   height: auto;
 }
 .citora-wm-dot {
-  fill: #fff;
-  stroke: var(--c-ink, var(--bg));
+  /* Citora brand blue (citora.ai) */
+  fill: #2563eb;
 }
 .hero-tag {
   margin-top: 40px;
