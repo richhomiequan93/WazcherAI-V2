@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { CITORA_URL, EMAIL, LINKEDIN_URL, LOCALES, X_URL, type Dict, type Locale } from './i18n';
@@ -89,6 +89,72 @@ function LangSwitch({ locale, setLocale, label }: { locale: Locale; setLocale: (
   );
 }
 
+/** One button showing the current language; opens a small menu of the three locales. */
+function LangMenu({ locale, setLocale, label }: { locale: Locale; setLocale: (l: Locale) => void; label: string }) {
+  const [open, setOpen] = useState(false);
+  const box = useRef<HTMLDivElement>(null);
+  const current = LOCALES.find((l) => l.id === locale) ?? LOCALES[0];
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: PointerEvent) => {
+      if (box.current && !box.current.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('pointerdown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('pointerdown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+
+  return (
+    <div className="lang-menu" ref={box}>
+      <button
+        type="button"
+        className="lang-btn"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-label={`${label}: ${current.name}`}
+        onClick={() => setOpen((v) => !v)}
+      >
+        <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true">
+          <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" strokeWidth="1.1" />
+          <path d="M1.75 8h12.5M8 1.75c1.8 1.9 2.6 3.9 2.6 6.25S9.8 12.35 8 14.25M8 1.75C6.2 3.65 5.4 5.65 5.4 8s.8 4.35 2.6 6.25" fill="none" stroke="currentColor" strokeWidth="1.1" />
+        </svg>
+        <span lang={current.id}>{current.name}</span>
+        <svg className={`lang-chev${open ? ' up' : ''}`} viewBox="0 0 12 12" width="10" height="10" aria-hidden="true">
+          <path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" strokeWidth="1.2" />
+        </svg>
+      </button>
+      {open && (
+        <ul className="lang-pop" role="menu" aria-label={label}>
+          {LOCALES.map((l) => (
+            <li key={l.id} role="none">
+              <button
+                type="button"
+                role="menuitemradio"
+                aria-checked={l.id === locale}
+                lang={l.id}
+                className={l.id === locale ? 'on' : ''}
+                onClick={() => {
+                  setLocale(l.id);
+                  setOpen(false);
+                }}
+              >
+                {l.name}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 /**
  * `home` keeps in-page anchors; on other routes the same links point back to /citora.
  * `company` is the wazcher.com home page: one link to Citora, no Citora section anchors.
@@ -163,13 +229,19 @@ export function Nav({
             ))}
           </nav>
         )}
-        <div className="nav-end">
-          <LangSwitch locale={locale} setLocale={setLocale} label={t.nav.language} />
-          <a className="btn btn-outline btn-sm" href={CITORA_URL} target="_blank" rel="noopener noreferrer">
-            {t.nav.launch}
-            <ArrowOut />
-          </a>
-        </div>
+        {company ? (
+          <div className="nav-end nav-end-co">
+            <LangMenu locale={locale} setLocale={setLocale} label={t.nav.language} />
+          </div>
+        ) : (
+          <div className="nav-end">
+            <LangSwitch locale={locale} setLocale={setLocale} label={t.nav.language} />
+            <a className="btn btn-outline btn-sm" href={CITORA_URL} target="_blank" rel="noopener noreferrer">
+              {t.nav.launch}
+              <ArrowOut />
+            </a>
+          </div>
+        )}
         <button
           type="button"
           className="nav-toggle"
@@ -194,7 +266,7 @@ export function Nav({
         )}
         <div className="drawer-foot">
           <LangSwitch locale={locale} setLocale={setLocale} label={t.nav.language} />
-          <LaunchButton label={t.nav.launch} className="btn-block" />
+          {!company && <LaunchButton label={t.nav.launch} className="btn-block" />}
         </div>
       </div>
     </header>

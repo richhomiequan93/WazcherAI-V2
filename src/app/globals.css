@@ -3109,3 +3109,90 @@ html[lang='zh-CN'] .co-title {
     opacity: 1;
   }
 }
+
+/* ---------- company nav: one language button with a small menu ---------- */
+.lang-menu {
+  position: relative;
+}
+.lang-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--line-3);
+  border-radius: 8px;
+  font-size: 13.5px;
+  color: var(--text);
+  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease);
+}
+.lang-btn:hover,
+.lang-btn[aria-expanded='true'] {
+  border-color: rgba(242, 242, 240, 0.5);
+  background: rgba(255, 255, 255, 0.04);
+}
+.lang-chev {
+  color: var(--text-3);
+  transition: transform 0.2s var(--ease);
+}
+.lang-chev.up {
+  transform: rotate(180deg);
+}
+.lang-pop {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 168px;
+  padding: 6px;
+  border-radius: 10px;
+  background: #17181b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.6);
+  animation: lang-pop-in 0.16s var(--ease);
+  z-index: 60;
+}
+.lang-pop button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--text-2);
+  text-align: left;
+}
+.lang-pop button:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+.lang-pop button.on {
+  color: var(--text);
+}
+.lang-pop button.on::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text);
+}
+@keyframes lang-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+@media (max-width: 960px) {
+  .nav-end.nav-end-co {
+    display: flex;
+    margin-left: auto;
+  }
+  .nav-end-co + .nav-toggle {
+    margin-left: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lang-pop {
+    animation: none;
+  }
+}
