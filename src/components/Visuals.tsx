@@ -11,30 +11,11 @@ export const ENGINES: { id: EngineId; name: string }[] = [
   { id: 'perplexity', name: 'Perplexity' },
 ];
 
-/** Monochrome logo rendered through a CSS mask so it inherits currentColor. */
-export function Mark({ id, label, className = '' }: { id: string; label?: string; className?: string }) {
-  const url = `url(/logos/${id}.svg)`;
-  const style: CSSProperties = { WebkitMaskImage: url, maskImage: url };
-  return (
-    <span
-      className={`mark m-${id} ${className}`}
-      style={style}
-      role={label ? 'img' : undefined}
-      aria-label={label}
-      aria-hidden={label ? undefined : true}
-    />
-  );
-}
-
-/**
- * Engine lockup used wherever engines appear: the engine's symbol in a fixed square box plus its name
- * set in our own type. Every engine gets the identical treatment; brand wordmarks are never used.
- */
+/** Engine name set in our own type. Text only: no AI brand logos anywhere on the site. */
 export function EngineLogo({ id, className = '' }: { id: EngineId; className?: string }) {
   const name = ENGINES.find((e) => e.id === id)!.name;
   return (
     <span className={`engine ${className}`}>
-      <Mark id={id} className="engine-mark" />
       <span className="engine-name">{name}</span>
     </span>
   );
@@ -198,7 +179,6 @@ export function AdStrategyCard({ t, note }: { t: Dict['ads']['card']; note: stri
             <p className="adwin-target">{t.target}</p>
             <p className="adwin-angle">{t.angle}</p>
             <p className="adwin-placed">
-              <Mark id="chatgpt" />
               <span>{t.placed}</span>
             </p>
           </div>

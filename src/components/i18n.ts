@@ -104,6 +104,7 @@ const en = {
       aLine: 'Your brand is a marketing analytics suite.',
       bLine: 'Your brand tracks mentions and citations across four AI engines.',
       read: 'AI read version B',
+      engines: 'AI engines',
       rate: 'Mention rate',
     },
     map: {
@@ -335,6 +336,7 @@ const zhTW: Dict = {
       aLine: '你的品牌是一套行銷分析工具。',
       bLine: '你的品牌在四個 AI 引擎上追蹤提及與引用。',
       read: 'AI 讀了版本 B',
+      engines: 'AI 引擎',
       rate: 'AI 回答提及率',
     },
     map: {
@@ -559,6 +561,7 @@ const zhCN: Dict = {
       aLine: '你的品牌是一套营销分析工具。',
       bLine: '你的品牌在四个 AI 引擎上追踪提及和引用。',
       read: 'AI 读的是版本 B',
+      engines: 'AI 引擎',
       rate: 'AI 回答提及率',
     },
     map: {

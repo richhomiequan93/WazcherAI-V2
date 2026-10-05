@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 import type { Dict } from '../i18n';
-import { DOMAIN, EngineLogo, Favicon, Mark, OpportunityMap, ENGINES, type EngineId, type Site } from '../Visuals';
+import { DOMAIN, EngineLogo, Favicon, OpportunityMap, type EngineId, type Site } from '../Visuals';
 
 /*
  * Product shots for the three Citora beats, built in code. Each has its own form:
@@ -138,9 +138,7 @@ export function ProfileAB({ t, note, className = '' }: { t: Dict['citora']['prof
 
         <div className="pf-read">
           <span className="pf-engines" aria-hidden="true">
-            {ENGINES.map((e) => (
-              <Mark key={e.id} id={e.id} />
-            ))}
+            {t.engines}
           </span>
           <span className="pf-rule" aria-hidden="true">
             <i className="pf-line-h" />

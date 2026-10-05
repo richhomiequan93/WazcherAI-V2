@@ -196,30 +196,13 @@ ul {
 }
 
 
-/* logos rendered as masks so they inherit currentColor */
-.mark {
-  display: inline-block;
-  height: 1em;
-  width: 1em;
-  flex: none;
-  background-color: currentColor;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-}
-/* engine lockup: symbol in a fixed square box + name in our own type, identical for all four */
+/* engine name in our own type, text only (no AI logos) */
 .engine {
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
   line-height: 1;
   white-space: nowrap;
-}
-.engine-mark {
-  font-size: 1.2em;
 }
 .engine-name {
   line-height: 1;
@@ -645,11 +628,6 @@ html[lang='zh-CN'] .h2 {
   font-weight: 400;
   letter-spacing: -0.01em;
   color: rgba(255, 255, 255, 0.7);
-}
-.engine-row .engine-mark {
-  width: 21px;
-  height: 21px;
-  font-size: 21px;
 }
 
 /* isolate: the radial light (z -1) sits above the page but under the canvas (z 0). */
@@ -1301,10 +1279,6 @@ body:has(.close) .foot {
   font-size: 13px;
   color: var(--text-3);
 }
-.adwin-placed .mark {
-  font-size: 15px;
-  color: var(--text-2);
-}
 .adwin-data {
   padding: 36px 40px 36px;
 }
@@ -1348,11 +1322,6 @@ body:has(.close) .foot {
 .adwin-engine {
   font-size: 14.5px;
   color: rgba(255, 255, 255, 0.86);
-}
-.adwin-engine .engine-mark {
-  width: 21px;
-  height: 21px;
-  font-size: 21px;
 }
 .adwin-bars {
   display: grid;
@@ -1744,11 +1713,6 @@ html[lang='zh-CN'] .adwin-target {
   }
   .adwin-engine {
     font-size: 13.5px;
-  }
-  .adwin-engine .engine-mark {
-    width: 18px;
-    height: 18px;
-    font-size: 18px;
   }
   .adwin-total-v {
     font-size: 52px;
