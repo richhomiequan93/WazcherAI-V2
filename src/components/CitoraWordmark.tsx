@@ -1,8 +1,6 @@
-import { useId } from 'react';
-
 /*
- * Citora logo (mark + wordmark), paths from citora.ai/logo/logo-full.svg.
- * Light on dark pages; the satellite dot is Citora blue and sits in a transparent gap cut from the ring.
+ * Citora name, text only: the letter paths from citora.ai/logo/logo-full.svg with the ring mark removed.
+ * JJ's rule: no logo marks on the site, only the written name.
  */
 const WORD = [
   'M122.27,26.93c-2-1.69-4.69-2.53-8.07-2.53-2.88,0-5.29.53-7.23,1.6-1.94,1.06-3.49,2.47-4.65,4.22-1.16,1.75-1.99,3.77-2.49,6.05-.5,2.28-.75,4.65-.75,7.08,0,2.25.27,4.44.8,6.57.53,2.13,1.36,4.02,2.49,5.68,1.13,1.66,2.6,2.99,4.41,3.99,1.81,1,3.97,1.5,6.47,1.5,3.94,0,7.02-1.03,9.24-3.1,2.22-2.06,3.58-4.97,4.08-8.73h8.16c-.88,6.01-3.11,10.64-6.71,13.89-3.6,3.25-8.49,4.88-14.69,4.88-3.69,0-6.96-.6-9.81-1.78-2.85-1.19-5.22-2.88-7.13-5.07-1.91-2.19-3.35-4.8-4.32-7.84-.97-3.03-1.45-6.37-1.45-9.99s.47-7.02,1.41-10.18c.94-3.16,2.36-5.91,4.27-8.26,1.91-2.35,4.3-4.19,7.18-5.54,2.88-1.35,6.22-2.02,10.04-2.02,2.75,0,5.33.33,7.74.99,2.41.66,4.53,1.67,6.38,3.05,1.84,1.38,3.36,3.11,4.55,5.21,1.19,2.1,1.94,4.58,2.25,7.46h-8.26c-.63-3.06-1.94-5.44-3.94-7.13Z',
@@ -14,24 +12,12 @@ const WORD = [
 ];
 
 export function CitoraWordmark({ className = '' }: { className?: string }) {
-  // The gap around the satellite dot is cut out of the ring with a mask, so it is truly
-  // transparent on any background (no painted halo, nothing drawn outside the ring).
-  const mask = `citora-gap-${useId().replace(/:/g, '')}`;
   return (
-    <svg className={`citora-wm ${className}`} viewBox="0 0 322.14 76.7" aria-hidden="true" focusable="false">
+    <svg className={`citora-wm ${className}`} viewBox="90.5 0 231.74 68.1" aria-hidden="true" focusable="false">
       <g fill="currentColor">
         {WORD.map((d) => (
           <path key={d.slice(0, 12)} d={d} />
         ))}
-      </g>
-      {/* mark centred on the lowercase x-height (17.3 to 68), as in the official lockup */}
-      <g transform="translate(0 8.65) scale(0.40494)">
-        <mask id={mask} maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="168">
-          <rect x="0" y="0" width="200" height="168" fill="#fff" />
-          <circle cx="148" cy="84" r="33" fill="#000" />
-        </mask>
-        <circle cx="84" cy="84" r="66" fill="none" stroke="currentColor" strokeWidth="32" mask={`url(#${mask})`} />
-        <circle className="citora-wm-dot" cx="148" cy="84" r="19" />
       </g>
     </svg>
   );

@@ -2612,10 +2612,6 @@ html[lang='zh-CN'] .adwin-target {
   max-width: 620px;
   height: auto;
 }
-.citora-wm-dot {
-  /* Citora brand blue (citora.ai) */
-  fill: #2563eb;
-}
 .hero-tag {
   margin-top: 40px;
   font-family: var(--f-display);
