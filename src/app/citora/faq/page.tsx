@@ -3,7 +3,7 @@ import { FaqPage } from '@/components/SubPages';
 
 export const metadata: Metadata = {
   title: 'FAQ | Citora, a Wazcher product',
-  description: 'Questions investors ask about Wazcher, Citora, GEO, ads in ChatGPT and $CIT.',
+  description: 'Questions investors ask about Wazcher, Citora, GEO and $CIT.',
 };
 
 export default function Page() {

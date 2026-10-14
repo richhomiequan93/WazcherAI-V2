@@ -394,11 +394,6 @@ export function Footer({ t, home, company = false }: { t: Dict; home: boolean; c
                 </li>
                 {!company && (
                   <li>
-                    <Link href={`${base}#ads`}>{t.nav.ads}</Link>
-                  </li>
-                )}
-                {!company && (
-                  <li>
                     <Link href={`${base}#token`} className="mono">$CIT</Link>
                   </li>
                 )}

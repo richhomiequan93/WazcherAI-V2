@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { EMAIL, type Dict } from './i18n';
 import { useLocale } from './useLocale';
 import { ArrowRight, Footer, LaunchButton, Nav, useHtmlLang, useReveal } from './Shell';
-import { AdStrategyCard, ENGINES, EngineLogo } from './Visuals';
+import { ENGINES, EngineLogo } from './Visuals';
 import { CitoraWordmark } from './CitoraWordmark';
 import { BeatsStage } from './beats/BeatsStage';
 import { PageFade } from './CompanyPage';
@@ -109,23 +109,6 @@ function CitoraSection({ t, note }: { t: Dict['citora']; note: string }) {
   );
 }
 
-function AdsSection({ t, note }: { t: Dict['ads']; note: string }) {
-  return (
-    <section className="sec tone tone-warm" id="ads" aria-labelledby="ads-title">
-      <div className="wrap sec-in">
-        <header className="sec-head rv">
-          <p className="eyebrow">{t.label}</p>
-          <h2 id="ads-title" className="h2">{t.title}</h2>
-          <p className="body">{t.sub}</p>
-        </header>
-        <div className="rv">
-          <AdStrategyCard t={t.card} note={note} />
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function TokenSection({ t }: { t: Dict['token'] }) {
   return (
     <section className="sec tone tone-green" id="token" aria-labelledby="token-title">
@@ -178,7 +161,6 @@ export default function HomePage() {
         <Hero t={t} />
         <Shift t={t.shift} />
         <CitoraSection t={t.citora} note={t.demoNote} />
-        <AdsSection t={t.ads} note={t.demoNote} />
         <TokenSection t={t.token} />
         <div className="night-end">
           <div className="night-sky" aria-hidden="true">
